@@ -97,6 +97,7 @@ Options.Triggers.push({
         text: {
           en: 'Go Front and Under',
           de: 'Geh nach Vorne und Unter den Boss',
+          fr: 'Allez devant et sous le boss',
           ja: '前 => 中へ',
           cn: '去正面靠近',
           ko: '보스 앞 그리고 안으로',
@@ -242,7 +243,6 @@ Options.Triggers.push({
     },
     {
       'locale': 'fr',
-      'missingTranslations': true,
       'replaceSync': {
         'Comet': 'Comète',
         'Fire Sphere': 'Sphère de feu',
@@ -283,7 +283,6 @@ Options.Triggers.push({
     },
     {
       'locale': 'ja',
-      'missingTranslations': true,
       'replaceSync': {
         'Comet': 'コメット',
         'Fire Sphere': 'ファイアスフィア',

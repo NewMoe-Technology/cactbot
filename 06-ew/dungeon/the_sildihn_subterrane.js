@@ -778,7 +778,6 @@ Options.Triggers.push({
     },
     {
       'locale': 'fr',
-      'missingTranslations': true,
       'replaceSync': {
         'Amalj\'aa Artillery Carriage': 'canon de campagne amalj\'aa',
         'Antique Boulder': 'roche instable',
@@ -805,6 +804,12 @@ Options.Triggers.push({
         'Thorne Knight': 'chevalier-mage des Thorne',
       },
       'replaceText': {
+        '--draw in--': '--Attirez dedans--',
+        '\\(in\\)': '(Intérieur)',
+        '\\(out\\)': '(Extérieur)',
+        '\\(far\\)': '(Éloigné)',
+        '\\(near\\)': '(Proche)',
+        '\\(mid\\)': '(Milieu)',
         'Amalj\'aa Artillery': 'Artillerie amalj\'aa',
         'Biting Wind': 'Tornade',
         'Blaze of Glory': 'Croix des flammes sacrées',

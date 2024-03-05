@@ -15,6 +15,7 @@ Options.Triggers.push({
   zoneLabel: {
     en: 'SS Rank Hunts',
     de: 'SS Jagdziele',
+    fr: 'Objectifs de chasse SS',
     ja: 'SSモブ',
     cn: 'SS 级狩猎怪',
     ko: 'SS급 마물',

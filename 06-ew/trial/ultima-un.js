@@ -18,6 +18,7 @@ Options.Triggers.push({
         text: {
           en: 'Spread--Homing Lasers',
           de: 'Verteilen--Leitlaser',
+          fr: 'Écartez-vous -- Lasers autoguidés',
           cn: '分散--追踪激光',
           ko: '산개--유도 레이저',
         },

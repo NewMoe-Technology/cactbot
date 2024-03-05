@@ -44,6 +44,7 @@ Options.Triggers.push({
         text: {
           en: 'Stop attacking ${target}',
           de: 'Stoppe Angriffe auf ${target}',
+          fr: 'Arrêtez d\'attaquer ${target}',
           ja: '攻撃禁止: ${target}',
           cn: '停止攻击 ${target}',
           ko: '${target} 공격 중지',

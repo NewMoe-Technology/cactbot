@@ -13,6 +13,7 @@ Options.Triggers.push({
         text: {
           en: 'Heal to full',
           de: 'Voll heilen',
+          fr: 'Soignez complètement',
           ja: 'HPを全回復する',
           cn: '奶满全队',
           ko: '체력 풀피로',
@@ -29,6 +30,7 @@ Options.Triggers.push({
         text: {
           en: 'Away from glowing circles',
           de: 'Weg von den leuchtenden Kreisen',
+          fr: 'Loin des cercles brillants',
           ja: '光っている円から離れる',
           cn: '远离黑洞',
           ko: '빛나는 원에서 멀리 떨어지기',
@@ -46,6 +48,7 @@ Options.Triggers.push({
         lineStackOn: {
           en: '5x line stack on ${player}',
           de: '5x in einer Linie Sammeln auf ${player}',
+          fr: 'Package en ligne x5 sur ${player}',
           ja: '${player}に5回の直線頭割り',
           cn: '${player} 直线分摊 (5次)',
           ko: '${player} 직선 쉐어 5번',
@@ -63,6 +66,7 @@ Options.Triggers.push({
         text: {
           en: '${dir1} / ${dir2}',
           de: '${dir1} / ${dir2}',
+          fr: '${dir1} / ${dir2}',
           ja: '${dir1} / ${dir2}',
           cn: '${dir1} / ${dir2}',
           ko: '${dir1} / ${dir2}',
@@ -82,6 +86,7 @@ Options.Triggers.push({
         text: {
           en: '${dir1} / ${dir2}',
           de: '${dir1} / ${dir2}',
+          fr: '${dir1} / ${dir2}',
           ja: '${dir1} / ${dir2}',
           cn: '${dir1} / ${dir2}',
           ko: '${dir1} / ${dir2}',
@@ -130,6 +135,7 @@ Options.Triggers.push({
         tower: {
           en: 'Stand in Tower',
           de: 'Steh im Turm',
+          fr: 'Restez dans une tour',
           ja: '塔を踏む',
           cn: '踩塔',
           ko: '기둥 밟기',
@@ -192,6 +198,7 @@ Options.Triggers.push({
         text: {
           en: 'Spread + Stay Out',
           de: 'Verteilen + Draußen stehen',
+          fr: 'Écartez-vous + Extérieur',
           ja: '散開 + 範囲から離れる',
           cn: '分散 + 远离',
           ko: '산개 + 범위에서 벗어나기',
@@ -239,7 +246,6 @@ Options.Triggers.push({
     },
     {
       'locale': 'fr',
-      'missingTranslations': true,
       'replaceSync': {
         'Comet': 'comète',
         'Zeromus': 'Zeromus',
@@ -306,6 +312,43 @@ Options.Triggers.push({
         'Visceral Whirl': 'ヴィセラルワール',
         'Void Bio': 'ヴォイド・バイオ',
         'Void Meteor': 'ヴォイド・メテオ',
+      },
+    },
+    {
+      'locale': 'cn',
+      'replaceSync': {
+        'Comet': '彗星',
+        'Zeromus': '泽罗姆斯',
+      },
+      'replaceText': {
+        '\\(cast\\)': '(咏唱)',
+        '\\(proximity\\)': '(接近)',
+        'Abyssal Echoes': '深渊回声',
+        'Abyssal Nox': '深渊之夜',
+        'Big Bang': '宇宙大爆炸',
+        'Big Crunch': '宇宙大挤压',
+        'Black Hole': '黑洞',
+        'Bury': '塌方',
+        'Chasmic Nails': '深渊连爪',
+        'Dark Matter': '暗物质',
+        'Dimensional Surge': '次元涌动',
+        'Explosion': '爆炸',
+        'Flare': '核爆',
+        'Flow of the Abyss': '深渊激流',
+        'Fractured Eventide': '黑龙闪',
+        'Meteor Impact': '陨石冲击',
+        'Nostalgia': '望乡',
+        '(?<! )Nox': '夜',
+        'Primal Roar': '大咆哮',
+        'Prominence Spine': '日珥焰棘',
+        'Rend the Rift': '次元干涉',
+        '(?<! )Roar': '咆哮',
+        'Sable Thread': '漆黑射线',
+        'The Dark Beckons': '黑暗侵蚀：重击',
+        'The Dark Divides': '黑暗侵蚀：飞散',
+        'Visceral Whirl': '旋骨利爪',
+        'Void Bio': '虚空毒菌',
+        'Void Meteor': '虚空陨石',
       },
     },
   ],

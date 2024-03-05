@@ -166,11 +166,11 @@ Options.Triggers.push({
   timelineReplace: [
     {
       'locale': 'de',
-      'missingTranslations': true,
       'replaceSync': {
         'Engaging Delta Attack protocol': 'Reinitialisiere Deltaprotokoll',
         'Level Checker': 'Monitor',
         'Omega': 'Omega',
+        'Program failure detected': '<biep> Programmfehler registriert.',
         'Rocket Punch': 'Raketenschlag',
       },
       'replaceText': {
@@ -194,11 +194,11 @@ Options.Triggers.push({
     },
     {
       'locale': 'fr',
-      'missingTranslations': true,
       'replaceSync': {
         'Engaging Delta Attack protocol': 'Nécessité d\'utiliser l\'attaque Delta',
         'Level Checker': 'vérifiniveau',
         'Omega': 'Oméga',
+        'Program failure detected': 'Arrêt de la boucle de programme Alpha...',
         'Rocket Punch': 'Astéropoing',
       },
       'replaceText': {
@@ -228,6 +228,7 @@ Options.Triggers.push({
         'Engaging Delta Attack protocol': 'デルタアタックの必要性を認定します',
         'Level Checker': 'レベルチェッカー',
         'Omega': 'オメガ',
+        'Program failure detected': 'サークルプログラム・アルファの失敗を確認……',
         'Rocket Punch': 'ロケットパンチ',
       },
       'replaceText': {
@@ -251,11 +252,11 @@ Options.Triggers.push({
     },
     {
       'locale': 'cn',
-      'missingTranslations': true,
       'replaceSync': {
         'Engaging Delta Attack protocol': '认定有必要使用三角攻击。',
         'Level Checker': '等级检测仪',
         'Omega': '欧米茄',
+        'Program failure detected': '确认到循环程序·阿尔法启动失败……',
         'Rocket Punch': '火箭飞拳',
       },
       'replaceText': {
@@ -279,11 +280,11 @@ Options.Triggers.push({
     },
     {
       'locale': 'ko',
-      'missingTranslations': true,
       'replaceSync': {
         'Engaging Delta Attack protocol': '델타 공격의 필요성을 인정합니다',
         'Level Checker': '레벨 측정기',
         'Omega': '오메가',
+        'Program failure detected': '순환 프로그램 알파 실패 확인…….',
         'Rocket Punch': '로켓 주먹',
       },
       'replaceText': {

@@ -882,7 +882,6 @@ Options.Triggers.push({
     },
     {
       'locale': 'fr',
-      'missingTranslations': true,
       'replaceSync': {
         'Ball of Levin': 'orbe de foudre',
         'Comet': 'Comète',
@@ -934,7 +933,6 @@ Options.Triggers.push({
     },
     {
       'locale': 'ja',
-      'missingTranslations': true,
       'replaceSync': {
         'Ball of Levin': '雷球',
         'Comet': 'コメット',

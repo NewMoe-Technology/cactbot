@@ -262,7 +262,6 @@ Options.Triggers.push({
     },
     {
       'locale': 'fr',
-      'missingTranslations': true,
       'replaceSync': {
         'Bomb': 'bombe',
         'Boomtype Magitek Gobwalker G-VII': 'gobblindé magitek G-VII Lamineur',
@@ -275,19 +274,27 @@ Options.Triggers.push({
         'The electrocution gallery': 'square d\'exécution publique',
       },
       'replaceText': {
+        'Big Doll': 'Grosse poupée',
         'Bomb': 'Bombe',
+        '(?<! )Doll': 'Poupée',
         'Flamethrower': 'Lance-flammes',
         'Hammertime': 'Coup de marteau',
+        'Jails': 'Prison',
+        'Get Prey': 'Prenez le repère',
+        'Get Tether': 'Prenez le lien',
+        'Kill Heart': 'Tuez le cœur',
+        'Resync': 'Resynchro',
         'Sizzlebeam': 'Gobrayon',
         'Sizzlespark': 'Gobétincelle',
+        'Small Doll(?!s)': 'Petite poupée',
+        'Small Dolls': 'Petites poupées',
+        'Stun Heart': 'Étourdissez le cœur',
         'Uplander Doom': 'Fusillade',
         'Zoomdoom': 'Gobroquette',
-        'Jails': 'Prison',
       },
     },
     {
       'locale': 'ja',
-      'missingTranslations': true,
       'replaceSync': {
         'Bomb': '爆弾',
         'Boomtype Magitek Gobwalker G-VII': 'VII号ゴブリウォーカーL型',

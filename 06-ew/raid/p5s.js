@@ -384,12 +384,12 @@ Options.Triggers.push({
     },
     {
       'locale': 'fr',
-      'missingTranslations': true,
       'replaceSync': {
         'Lively Bait': 'amuse-gueule',
         'Proto-Carbuncle': 'Proto-Carbuncle',
       },
       'replaceText': {
+        '--towers--': '--Tours--',
         'Acidic Slaver': 'Salive acide',
         'Claw to Tail': 'Griffes et queue',
         'Devour': 'Dévoration',

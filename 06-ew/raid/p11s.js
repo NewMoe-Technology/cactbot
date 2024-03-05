@@ -876,7 +876,6 @@ Options.Triggers.push({
     },
     {
       'locale': 'fr',
-      'missingTranslations': true,
       'replaceSync': {
         'Arcane Cylinder': 'sphère arcanique orientée',
         'Arcane Sphere': 'sphère arcanique',
@@ -915,7 +914,6 @@ Options.Triggers.push({
     },
     {
       'locale': 'ja',
-      'missingTranslations': true,
       'replaceSync': {
         'Arcane Cylinder': '指向魔法陣',
         'Arcane Sphere': '立体魔法陣',

@@ -62,22 +62,32 @@ Options.Triggers.push({
         orbDirFront: {
           en: 'Face Towards Orb',
           de: 'Den Orb anschauen',
+          fr: 'Pointez l\'orbe',
+          cn: '面向球',
         },
         orbDirBack: {
           en: 'Face Away from Orb',
           de: 'Weg vom Orb schauen',
+          fr: 'Ne pointez pas l\'orbe',
+          cn: '背对球',
         },
         orbDirLeft: {
           en: 'Point Left at Orb',
           de: 'Zeige links auf den Orb',
+          fr: 'Pointez à gauche de l\'orbe',
+          cn: '左侧看向球',
         },
         orbDirRight: {
           en: 'Point Right at Orb',
           de: 'Zeige Rechts auf den Orb',
+          fr: 'Pointez à droite de l\'orbe',
+          cn: '右侧看向球',
         },
         orbGeneral: {
           en: 'Point opening at Orb',
           de: 'Zeige die Öffnung auf den Orb',
+          fr: 'Pointez l\'orbe',
+          cn: '开口侧看向球',
         },
       },
     },
@@ -94,10 +104,14 @@ Options.Triggers.push({
           tankBusterOnYou: {
             en: '3x Tankbuster on YOU',
             de: '3x Tankbuster auf DIR',
+            fr: 'Tankbuster x3 sur VOUS',
+            cn: '3x 坦克死刑点名',
           },
           tankBusterOnPlayer: {
             en: '3x Tankbuster on ${player}',
             de: '3x Tankbuster auf ${player}',
+            fr: 'Tankbuster x3 sur ${player}',
+            cn: '3x 坦克死刑点 ${player}',
           },
         };
         if (matches.target === data.me)
@@ -239,10 +253,14 @@ Options.Triggers.push({
         fetters: {
           en: 'Fetters (w/${player})',
           de: 'Fesseln (mit ${player})',
+          fr: 'Entraves (avec ${player})',
+          cn: '止步 (和 ${player})',
         },
         bubble: {
           en: 'Bubble (w/${player})',
           de: 'Blase (mit ${player})',
+          fr: 'Bulles (avec ${player})',
+          cn: '泡泡 (和 ${player})',
         },
       },
     },
@@ -269,6 +287,14 @@ Options.Triggers.push({
              Quadranten wie der angegebene Kristall liegt.
              Der Einfachheit halber bedeutet "neben" immer horizontal östlich/westlich von etwas.
              Siehe Triggerquelle für Diagramme in den Kommentaren.`,
+        fr: `Ces instructions supposent que vous choisissez toujours une case dans le même
+             quadrant que le cristal spécifié.
+             Par souci de concision, "à côté de" signifie toujours horizontal
+             à l'est ou à l'ouest de quelque chose.
+             Voir le déclencheur source pour les diagrammes dans les commentaires.`,
+        cn: `这些方向假设你一直选的是同一面向的四块地板方格上的水晶。
+             简洁起见，"相邻" 指的是左右水平相邻的某一个水晶。
+             请参阅触发器源代码注释中的图表。`,
       },
       type: 'StartsUsing',
       netRegex: { id: ['8AB8', '8AB4'], source: 'Ketuduke' },
@@ -379,43 +405,63 @@ Options.Triggers.push({
         bubbleNetMech: {
           en: '${fettersBubble} + ${spreadStack}',
           de: '${fettersBubble} + ${spreadStack}',
+          fr: '${fettersBubble} + ${spreadStack}',
+          cn: '${fettersBubble} + ${spreadStack}',
         },
         bubbleNetMechPartner: {
           en: '${fettersBubble} + ${spreadStack} (w/${player})',
           de: '${fettersBubble} + ${spreadStack} (mit ${player})',
+          fr: '${fettersBubble} + ${spreadStack} (avec ${player})',
+          cn: '${fettersBubble} + ${spreadStack} (和 ${player})',
         },
         bubbleBuff: {
           en: 'Bubble',
           de: 'Blase',
+          fr: 'Bulle',
+          cn: '泡泡',
         },
         fettersBuff: {
           en: 'Fetters',
           de: 'Ketten',
+          fr: 'Entraves',
+          cn: '止步',
         },
         spread: Outputs.spread,
         stacks: {
           en: 'Stacks',
           de: 'Sammeln',
+          fr: 'Package',
+          cn: '分摊',
         },
         bubbleAnything: {
           en: 'Diagonal of Vertical / Next to Horizontal ',
           de: 'Diagonale der Vertikalen / Neben Horizontal',
+          fr: 'Diagonale de la verticale / À côté de l\'horizontale',
+          cn: '竖水晶对角线 / 左右相邻的横水晶',
         },
         fettersSpreadSplit: {
           en: 'Diagonal of Vertical',
           de: 'Diagonale der Vertikalen',
+          fr: 'Diagonale de la verticale',
+          cn: '竖水晶对角线',
         },
         fettersSpreadColumn: {
           en: 'Next to Vertical',
           de: 'Neben Vertikal',
+          fr: 'À côté de la verticale',
+          cn: '左右相邻的竖水晶',
         },
         fettersStackSplit: {
           en: 'On Horizontal',
           de: 'Auf Horizontal',
+          fr: 'Sur l\'horizontale',
+          cn: '横水晶上',
         },
         fettersStackColumn: {
           en: 'Diagonal of Horizontal',
           de: 'Diagonale der Horizontalen',
+          fr: 'Diagonale de l\'horizontale',
+          cn: '横水晶对角线',
         },
       },
     },
@@ -432,10 +478,14 @@ Options.Triggers.push({
         spread: {
           en: 'Spread => Stacks',
           de: 'Verteilen => Sammeln',
+          fr: 'Écarté => Package',
+          cn: '分散 => 分摊',
         },
         stacks: {
           en: 'Stacks => Spread',
           de: 'Sammeln => Verteilen',
+          fr: 'Package => Écarté',
+          cn: '分摊 => 分散',
         },
       },
     },
@@ -459,10 +509,14 @@ Options.Triggers.push({
         stacks: {
           en: 'Stacks',
           de: 'Sammeln',
+          fr: 'Package',
+          cn: '分摊',
         },
         roleStacks: {
           en: 'Role Stacks',
           de: 'Rollengruppe sammeln',
+          fr: 'Package par rôle',
+          cn: '职能分摊',
         },
       },
     },
@@ -502,14 +556,20 @@ Options.Triggers.push({
         roleStacks: {
           en: 'Role Stacks',
           de: 'Rollengruppe sammeln',
+          fr: 'Package par rôle',
+          cn: '职能分摊',
         },
         spreadThenRoleStacks: {
           en: 'Spread => Role Stacks',
           de: 'Verteilen => Rollengruppe sammeln',
+          fr: 'Écarté => Package par rôle',
+          cn: '分散 => 职能分摊',
         },
         roleStacksThenSpread: {
           en: 'Role Stacks => Spread',
           de: 'Rollengruppe sammeln => Verteilen',
+          fr: 'Package par rôle => Écarté',
+          cn: '职能分摊 => 分散',
         },
       },
     },
@@ -527,10 +587,14 @@ Options.Triggers.push({
         outInStacks: {
           en: 'Out => In + Stacks',
           de: 'Raus => Rein + sammeln',
+          fr: 'Extérieur => Intérieur + Package',
+          cn: '远离 => 靠近 + 分摊',
         },
         outInRoleStacks: {
           en: 'Out => In + Role Stacks',
           de: 'Raus => Rein + Rollengruppe sammeln',
+          fr: 'Extérieur => Intérieur + Package par rôle',
+          cn: '远离 => 靠近 + 职能分摊',
         },
       },
     },
@@ -548,10 +612,14 @@ Options.Triggers.push({
         inOutStacks: {
           en: 'In => Out + Stacks',
           de: 'Rein => Raus + sammeln',
+          fr: 'Intérieur => Extérieur + Package',
+          cn: '靠近 => 远离 + 分摊',
         },
         inOutRoleStacks: {
           en: 'In => Out + Role Stacks',
           de: 'Rein => Raus + Rollengruppe sammeln',
+          fr: 'Intérieur => Extérieur + Package par rôle',
+          cn: '靠近 => 远离 + 职能分摊',
         },
       },
     },
@@ -576,16 +644,22 @@ Options.Triggers.push({
         text: {
           en: '${inOut} + ${stack}',
           de: '${inOut} + ${stack}',
+          fr: '${inOut} + ${stack}',
+          cn: '${inOut} + ${stack}',
         },
         in: Outputs.in,
         out: Outputs.out,
         stack: {
           en: 'Stacks',
           de: 'Sammeln',
+          fr: 'Package',
+          cn: '分摊',
         },
         roleStacks: {
           en: 'Role Stacks',
           de: 'Rollengruppe sammeln',
+          fr: 'Package par rôle',
+          cn: '职能分摊',
         },
       },
     },
@@ -622,14 +696,20 @@ Options.Triggers.push({
         northSouthSafe: {
           en: 'North/South',
           de: 'Norden/Süden',
+          fr: 'Nord/Sud',
+          cn: '上(北)/下(南)',
         },
         eastWestSafe: {
           en: 'East/West',
           de: 'Osten/Westen',
+          fr: 'Est/Ouest',
+          cn: '左(西)/右(东)',
         },
         cornersSafe: {
           en: 'Corners',
           de: 'Ecken',
+          fr: 'Coins',
+          cn: '四角',
         },
       },
     },
@@ -648,14 +728,20 @@ Options.Triggers.push({
         knockbackSpread: {
           en: 'Knockback => Spread',
           de: 'Rückstoß => verteilen',
+          fr: 'Pousée => Écartez-vous',
+          cn: '击退 => 分散',
         },
         knockbackStacks: {
           en: 'Knockback => Stacks',
           de: 'Rückstoß => sammeln',
+          fr: 'Poussée => Package',
+          cn: '击退 => 分摊',
         },
         knockbackRoleStacks: {
           en: 'Knockback => Role Stacks',
           de: 'Rückstoß => Rollengruppe sammeln',
+          fr: 'Poussée => Package par rôle',
+          cn: '击退 => 职能分摊',
         },
       },
     },
@@ -677,10 +763,14 @@ Options.Triggers.push({
           tornadoOn: {
             en: 'Away from ${player}',
             de: 'Weg von ${player}',
+            fr: 'Loin de ${player}',
+            cn: '远离 ${player}',
           },
           tornadoOnYou: {
             en: 'Tornado on YOU',
             de: 'Tornado auf DIR',
+            fr: 'Tornade sur VOUS',
+            cn: '龙卷风点名',
           },
         };
         if (data.me === matches.target)
@@ -700,6 +790,8 @@ Options.Triggers.push({
         text: {
           en: 'Cleanse ${player}',
           de: 'Reinige ${player}',
+          fr: 'Guérissez ${player}',
+          cn: '康复 ${player}',
         },
       },
     },
@@ -724,6 +816,8 @@ Options.Triggers.push({
         text: {
           en: 'Get Behind + Out',
           de: 'Geh nach Hinten + Raus',
+          fr: 'Derrière + Extérieur',
+          cn: '去背后 + 远离',
         },
       },
     },
@@ -742,6 +836,8 @@ Options.Triggers.push({
         text: {
           en: 'Kill Islekeeper!',
           de: 'Wächter besiegen!',
+          fr: 'Tuez le gardien !',
+          cn: '击杀 Islekeeper', // FIXME: correct name
         },
       },
     },
@@ -883,18 +979,26 @@ Options.Triggers.push({
         front: {
           en: 'Face Towards Lala',
           de: 'Lala anschauen',
+          fr: 'Regardez Lala',
+          cn: '面向拉拉',
         },
         back: {
           en: 'Look Away from Lala',
           de: 'Von Lala weg schauen',
+          fr: 'Ne regardez pas Lala',
+          cn: '背对拉拉',
         },
         left: {
           en: 'Left Flank towards Lala',
           de: 'Linke Seite zu Lala zeigen',
+          fr: 'Flanc gauche vers Lala',
+          cn: '左侧朝向拉拉',
         },
         right: {
           en: 'Right Flank towards Lala',
           de: 'Rechte Seite zu Lala zeigen',
+          fr: 'Flanc droit vers Lala',
+          cn: '右侧朝向拉拉',
         },
       },
     },
@@ -923,31 +1027,45 @@ Options.Triggers.push({
           one: {
             en: 'One',
             de: 'Eins',
+            fr: 'Un',
+            cn: '1',
           },
           bigTwo: {
             en: 'Two (stack with three)',
             de: 'Zwei (sammeln mit Drei)',
+            fr: 'Deux (Pack avec Trois)',
+            cn: '2 (和3分摊)',
           },
           smallTwo: {
             en: 'Two (stack with one)',
             de: 'Zwei (sammeln mit Eins)',
+            fr: 'Deux (Pack avec Un',
+            cn: '2 (和1分摊)',
           },
           eitherTwo: {
             en: 'Either Two (w/${player})',
             de: 'Eine Zwei (mit ${player})',
+            fr: 'Un des deux (avec ${player})',
+            cn: '2 (和 ${player})',
           },
           three: {
             en: 'Three',
             de: 'Drei',
+            fr: 'Trois',
+            cn: '3',
           },
           // This is just a raidcall so you can direct your friends.
           smallTwoOn: {
             en: '(Two with one: ${players})',
             de: '(Zwei mit Eins: ${players})',
+            fr: '(Deux avec Un : ${players})',
+            cn: '(2和1: ${players})',
           },
           unknownNum: {
             en: '${num}',
             de: '${num}',
+            fr: '${num}',
+            cn: '${num}',
           },
           num1: Outputs.num1,
           num2: Outputs.num2,
@@ -1036,10 +1154,14 @@ Options.Triggers.push({
         left: {
           en: 'Leftward March',
           de: 'Linker March',
+          fr: 'Marche à gauche',
+          cn: '强制移动: 左',
         },
         right: {
           en: 'Rightward March',
           de: 'Rechter March',
+          fr: 'Marche à droite',
+          cn: '强制移动: 右',
         },
       },
     },
@@ -1060,18 +1182,26 @@ Options.Triggers.push({
         num1: {
           en: 'One (avoid all)',
           de: 'Eins (alles ausweichen)',
+          fr: 'Un (Évitez tout)',
+          cn: '1 (远离全部)',
         },
         num2: {
           en: 'Two (stay middle)',
           de: 'Zwei (steh in der Mitte)',
+          fr: 'Deux (Restez au centre)',
+          cn: '2 (待在中间)',
         },
         num3: {
           en: 'Three (adjacent to middle)',
           de: 'Drei (steh neben der Mitte)',
+          fr: 'Trois (adjacent au centre)',
+          cn: '3 (中间相邻)',
         },
         num4: {
           en: 'Four',
           de: 'Vier',
+          fr: 'Quatre',
+          cn: '4',
         },
       },
     },
@@ -1119,6 +1249,8 @@ Options.Triggers.push({
         numSafeLater: {
           en: '(${num} safe later)',
           de: '(${num} später sicher)',
+          fr: '(${num} sûr ensuite)',
+          cn: '(稍后 ${num} 安全)',
         },
         num1: Outputs.num1,
         num2: Outputs.num2,
@@ -1178,14 +1310,20 @@ Options.Triggers.push({
           dartOnYou: {
             en: 'Dart on YOU',
             de: 'Dart auf DIR',
+            fr: 'Dard sur VOUS',
+            cn: '飞镖点名',
           },
           noDartOnYou: {
             en: 'No Dart',
             de: 'Kein Dart',
+            fr: 'Pas de Dard',
+            cn: '无飞镖',
           },
           flexCall: {
             en: '(${player} unmarked)',
             de: '(${player} unmarkiert)',
+            fr: '(${player} non-marqué)',
+            cn: '(${player} 无标记)',
           },
         };
         if (data.staticeIsPinwheelingDartboard)
@@ -1227,6 +1365,8 @@ Options.Triggers.push({
         numSafeSoon: {
           en: '(${num} safe soon)',
           de: '(${num} gleich sicher)',
+          fr: '(${num} bientôt sûr',
+          cn: '(很快 ${num} 安全)',
         },
         num1: Outputs.num1,
         num2: Outputs.num2,
@@ -1254,6 +1394,8 @@ Options.Triggers.push({
         knockbackToNum: {
           en: 'Knockback => ${num}',
           de: 'Rückstoß => ${num}',
+          fr: 'Poussée => ${num}',
+          cn: '击退 => ${num}',
         },
         knockback: Outputs.knockback,
         num1: Outputs.num1,
@@ -1296,18 +1438,26 @@ Options.Triggers.push({
         forward: {
           en: 'Forward March => ${mech}',
           de: 'Vorwärtsmarsch => ${mech}',
+          fr: 'Marche en avant => ${mech}',
+          cn: '强制移动：前 => ${mech}',
         },
         backward: {
           en: 'Backward March => ${mech}',
           de: 'Rückwärtsmarsch => ${mech}',
+          fr: 'Marche en arrière => ${mech}',
+          cn: '强制移动：后 => ${mech}',
         },
         left: {
           en: 'Left March => ${mech}',
           de: 'Marsch Links => ${mech}',
+          fr: 'Marche à gauche => ${mech}',
+          cn: '强制移动：左 => ${mech}',
         },
         right: {
           en: 'Right March => ${mech}',
           de: 'Marsch Rechts => ${mech}',
+          fr: 'Marche à droite => ${mech}',
+          cn: '强制移动：右 => ${mech}',
         },
         spread: Outputs.spread,
         stack: Outputs.stackMarker,
@@ -1342,6 +1492,8 @@ Options.Triggers.push({
           missileOnYou: {
             en: 'Bait Tethers => Missile Spread',
             de: 'Verbindungen ködern => Verteilen mit Raketen',
+            fr: 'Attirez les liens => Écartez les missiles',
+            cn: '引导拉线 => 导弹分散',
           },
         };
         if (data.staticeMissileTether.length !== 2)
@@ -1374,6 +1526,8 @@ Options.Triggers.push({
         stack: {
           en: 'Juke Claw => Stack',
           de: 'Zieh Klaue => Sammeln',
+          fr: 'Griffe => Package',
+          cn: '爪子连线 => 分摊',
         },
       },
     },
@@ -1409,22 +1563,32 @@ Options.Triggers.push({
           dartOnYou: {
             en: 'Dart (w/${player})',
             de: 'Dart (mit ${player})',
+            fr: 'Dard (avec ${player})',
+            cn: '飞镖 (和 ${player})',
           },
           noDartOnYou: {
             en: 'No Dart',
             de: 'Kein Dart',
+            fr: 'Pas de dard',
+            cn: '无飞镖',
           },
           blue: {
             en: 'Avoid Blue',
             de: 'Vermeide Blau',
+            fr: 'Évitez le bleu',
+            cn: '躲避蓝色',
           },
           red: {
             en: 'Avoid Red',
             de: 'Vermeide Rot',
+            fr: 'Évitez le rouge',
+            cn: '躲避红色',
           },
           yellow: {
             en: 'Avoid Yellow',
             de: 'Vermeide Gelb',
+            fr: 'Évitez le jaune',
+            cn: '躲避黄色',
           },
         };
         let infoText;
@@ -1488,10 +1652,14 @@ Options.Triggers.push({
         tether: {
           en: 'Tether w/${player}',
           de: 'Verbindung mit ${player}',
+          fr: 'Lien avec ${player}',
+          cn: '连线 和 ${player}',
         },
         stack: {
           en: 'Stack w/${player}',
           de: 'Sammeln mit ${player}',
+          fr: 'Package avec ${player}',
+          cn: '分摊 和 ${player}',
         },
       },
     },
@@ -1602,7 +1770,6 @@ Options.Triggers.push({
     },
     {
       'locale': 'fr',
-      'missingTranslations': true,
       'replaceSync': {
         'Aloalo Golem': 'golem sylvestre d\'Aloalo',
         'Aloalo Islekeeper': 'gardien d\'Aloalo',
@@ -1629,6 +1796,8 @@ Options.Triggers.push({
         'The Midnight Trial': 'Épreuve de Nokosero',
       },
       'replaceText': {
+        '\\(buff\\)': '(Buff)',
+        '\\(cast\\)': '(Incantation)',
         'Aero II': 'Extra Vent',
         'Aero IV': 'Giga Vent',
         'Analysis': 'Analyse',
@@ -1695,7 +1864,6 @@ Options.Triggers.push({
     },
     {
       'locale': 'ja',
-      'missingTranslations': true,
       'replaceSync': {
         'Aloalo Golem': 'アロアロ・ウッドゴーレム',
         'Aloalo Islekeeper': 'アロアロ・キーパー',

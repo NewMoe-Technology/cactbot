@@ -257,6 +257,7 @@ Options.Triggers.push({
         text: {
           en: '${dir1} => ${dir2} => ${dir3} => ${dir4}',
           de: '${dir1} => ${dir2} => ${dir3} => ${dir4}',
+          fr: '${dir1} => ${dir2} => ${dir3} => ${dir4}',
           ja: '${dir1} => ${dir2} => ${dir3} => ${dir4}',
           cn: '${dir1} => ${dir2} => ${dir3} => ${dir4}',
           ko: '${dir1} => ${dir2} => ${dir3} => ${dir4}',
@@ -368,6 +369,7 @@ Options.Triggers.push({
         forward: {
           en: 'Forward March',
           de: 'Geistlenkung vorwärts',
+          fr: 'Marche avant',
           ja: '強制移動: 前',
           cn: '强制移动: 前',
           ko: '강제이동: 앞',
@@ -375,6 +377,7 @@ Options.Triggers.push({
         backward: {
           en: 'Backward March',
           de: 'Geistlenkung rückwärts',
+          fr: 'Marche arrière',
           ja: '強制移動: 後ろ',
           cn: '强制移动: 后',
           ko: '강제이동: 뒤',
@@ -382,6 +385,7 @@ Options.Triggers.push({
         left: {
           en: 'Left March',
           de: 'Geistlenkung links',
+          fr: 'Marche à gauche',
           ja: '強制移動: 左',
           cn: '强制移动: 左',
           ko: '강제이동: 왼쪽',
@@ -389,6 +393,7 @@ Options.Triggers.push({
         right: {
           en: 'Right March',
           de: 'Geistlenkung rechts',
+          fr: 'Marche à droite',
           ja: '強制移動: 右',
           cn: '强制移动: 右',
           ko: '강제이동: 오른쪽',
@@ -413,6 +418,7 @@ Options.Triggers.push({
         red: {
           en: 'Blue => Red',
           de: 'Blau => Rot',
+          fr: 'Bleu => Rouge',
           ja: '青 => 赤',
           cn: '蓝 => 红',
           ko: '파랑 => 빨강',
@@ -420,6 +426,7 @@ Options.Triggers.push({
         blue: {
           en: 'Red => Blue',
           de: 'Rot => Blau',
+          fr: 'Rouge => Bleu',
           ja: '赤 => 青',
           cn: '红 => 蓝',
           ko: '빨강 => 파랑',

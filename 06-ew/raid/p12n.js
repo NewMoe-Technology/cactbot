@@ -263,7 +263,6 @@ Options.Triggers.push({
     },
     {
       'locale': 'fr',
-      'missingTranslations': true,
       'replaceSync': {
         'Anthropos': 'anthropos',
         'Athena': 'Athéna',
@@ -291,7 +290,6 @@ Options.Triggers.push({
     },
     {
       'locale': 'ja',
-      'missingTranslations': true,
       'replaceSync': {
         'Anthropos': 'アンスロポス',
         'Athena': 'アテナ',

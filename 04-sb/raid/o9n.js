@@ -153,9 +153,9 @@ Options.Triggers.push({
   timelineReplace: [
     {
       'locale': 'de',
-      'missingTranslations': true,
       'replaceSync': {
         'Chaos': 'Chaos',
+        'The crystal...destroyed!?': 'Ihr habt den Kristall zerstört?!',
         'YOU DARE!': 'Wie könnt ihr es wagen?!',
       },
       'replaceText': {
@@ -178,9 +178,9 @@ Options.Triggers.push({
     },
     {
       'locale': 'fr',
-      'missingTranslations': true,
       'replaceSync': {
         'Chaos': 'Chaos',
+        'The crystal...destroyed!?': '... Mon cristal!?',
         'YOU DARE!': '... Mon cristal !? Impossible !',
       },
       'replaceText': {
@@ -203,9 +203,9 @@ Options.Triggers.push({
     },
     {
       'locale': 'ja',
-      'missingTranslations': true,
       'replaceSync': {
         'Chaos': 'カオス',
+        'The crystal...destroyed!?': 'まさか……黒水晶を……！？',
         'YOU DARE!': 'まさか……黒水晶を……！？',
       },
       'replaceText': {
@@ -228,9 +228,9 @@ Options.Triggers.push({
     },
     {
       'locale': 'cn',
-      'missingTranslations': true,
       'replaceSync': {
         'Chaos': '卡奥斯',
+        'The crystal...destroyed!?': '居然……把黑水晶给',
         'YOU DARE!': '居然……把黑水晶给……',
       },
       'replaceText': {
@@ -253,9 +253,9 @@ Options.Triggers.push({
     },
     {
       'locale': 'ko',
-      'missingTranslations': true,
       'replaceSync': {
         'Chaos': '카오스',
+        'The crystal...destroyed!?': '설마…… 흑수정을……!?',
         'YOU DARE!': '네 이노오오옴',
       },
       'replaceText': {

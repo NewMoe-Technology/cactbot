@@ -1134,6 +1134,7 @@ Options.Triggers.push({
         crush: {
           en: 'Crush',
           de: 'Zerquetschen',
+          fr: 'Écrasement',
           ja: 'クラッシュ',
           cn: '碎击',
           ko: '파괴',
@@ -2655,7 +2656,6 @@ Options.Triggers.push({
     },
     {
       'locale': 'fr',
-      'missingTranslations': true,
       'replaceSync': {
         '(?<!Illusory )Hephaistos': 'Héphaïstos',
         'Gorgon': 'Gorgone',
@@ -2663,6 +2663,8 @@ Options.Triggers.push({
         'Suneater': 'Serpent en flammes',
       },
       'replaceText': {
+        'line': 'Ligne',
+        '--auto--': '--Auto--',
         'Abyssal Fires': 'Tempête enflammée',
         'Aionagonia': 'Aion agonia',
         'Aioniopyr': 'Aion pur',

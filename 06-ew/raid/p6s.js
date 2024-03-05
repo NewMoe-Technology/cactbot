@@ -1106,7 +1106,6 @@ Options.Triggers.push({
     },
     {
       'locale': 'fr',
-      'missingTranslations': true,
       'replaceSync': {
         'Hegemone': 'Hégémone',
         'Parasitos': 'créature parasite',
@@ -1128,6 +1127,7 @@ Options.Triggers.push({
         'Pathogenic Cells': 'Souffle de cellules parasites',
         'Polyominoid Sigma': 'Polyomino éthéré Σ',
         'Polyominous Dark IV': 'Polyomino Giga Ténèbres',
+        '(?<!Dual )Predation': 'Attaque parasitaire',
         'Ptera Ixou': 'Ptera Ixou',
         'Reek Havoc': 'Exhalaison',
         'Synergy': 'Synergie',

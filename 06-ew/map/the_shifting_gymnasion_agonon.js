@@ -10,6 +10,7 @@ const agononOutputStrings = {
   spawn: {
     en: '${name} spawned!',
     de: '${name} erscheint!',
+    fr: '${name} apparait !',
     ja: '${name} 現れる！',
     cn: '已生成 ${name}!',
     ko: '${name} 등장!',
@@ -17,6 +18,7 @@ const agononOutputStrings = {
   adds: {
     en: 'Adds soon',
     de: 'Bald Adds',
+    fr: 'Adds bientôt',
     ja: 'まもなくザコ出ます',
     cn: '小怪即将出现',
     ko: '곧 쫄 나옴',
@@ -55,6 +57,7 @@ Options.Triggers.push({
         text: {
           en: 'Gymnasiou Mandragorai spawned, kill in order!',
           de: 'Gymnasiou-Mandragorai erscheinen, in Reihenfolge besiegen!',
+          fr: 'Les mandragores apparaissent, tuez-les dans l\'ordre',
           ja: 'マンドラゴラ！順番に倒して！',
           cn: '已生成 育体蔓德拉!',
           ko: '만드라즈 등장, 순서대로 잡기',
@@ -164,6 +167,7 @@ Options.Triggers.push({
         text: {
           en: 'Place Marker on Wall',
           de: 'Markierung an der Wand ablegen',
+          fr: 'Placez le marqueur sur le mur',
           ja: 'マーカーを壁に',
           cn: '在场边放置标记',
           ko: '벽에 징 놓기',
@@ -199,6 +203,7 @@ Options.Triggers.push({
         text: {
           en: 'Get Behind (Stay Behind)',
           de: 'Geh hinter den Boss (und bleib hinter ihm stehen)',
+          fr: 'Allez derrière (et restez-y)',
           ja: '後ろへ (そのまま後ろ)',
           cn: '去背后 (待在背后)',
           ko: '뒤로 이동 (뒤에 머물기)',
@@ -314,6 +319,7 @@ Options.Triggers.push({
         text: {
           en: 'Get Under Verdant Plume',
           de: 'Geh unter die blaue Feder',
+          fr: 'Allez sous la plume verdoyante',
           ja: '濃緑の羽根の下へ',
           cn: '去浓绿之羽下方',
           ko: '진녹색 날개 밑으로',
@@ -329,7 +335,7 @@ Options.Triggers.push({
         text: {
           en: 'Intercards',
           de: 'Interkardinal',
-          fr: 'Intercardinal',
+          fr: 'Intercardinaux',
           ja: '斜め',
           cn: '斜角',
           ko: '대각선 쪽으로',
@@ -498,6 +504,7 @@ Options.Triggers.push({
         forward: {
           en: 'March Forward into Safe Spot',
           de: 'marschiere Vorwärts in die sichere Stelle',
+          fr: 'Marche avant dans une zone sûre',
           ja: '強制移動: 前',
           cn: '向前强制移动到安全区',
           ko: '강제 이동 앞',
@@ -505,6 +512,7 @@ Options.Triggers.push({
         backward: {
           en: 'March Backward into Safe Spot',
           de: 'marschiere Rückwärts in die sichere Stelle',
+          fr: 'Marche arrière dans une zone sûre',
           ja: '強制移動: 後ろ',
           cn: '向后强制移动到安全区',
           ko: '강제 이동 뒤',
@@ -512,6 +520,7 @@ Options.Triggers.push({
         left: {
           en: 'March Left into Safe Spot',
           de: 'marschiere Links in die sichere Stelle',
+          fr: 'Marche à gauche dans une zone sûre',
           ja: '強制移動: 左',
           cn: '向左强制移动到安全区',
           ko: '강제 이동 왼쪽',
@@ -519,6 +528,7 @@ Options.Triggers.push({
         right: {
           en: 'March Right into Safe Spot',
           de: 'marschiere Rechts in die sichere Stelle',
+          fr: 'Marche à droite dans une zone sûre',
           ja: '強制移動: 右',
           cn: '向右强制移动到安全区',
           ko: '강제 이동 오른쪽',

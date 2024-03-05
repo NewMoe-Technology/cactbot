@@ -743,6 +743,7 @@ Options.Triggers.push({
         thunderOnOthers: {
           en: 'Thunder on ${player1}, ${player2}',
           de: 'Blitz auf ${player1}, ${player2}',
+          fr: 'Foudre sur ${player1}, ${player2}',
           cn: '雷点 ${player1}, ${player2}',
           ko: '번개 ${player1}, ${player2}',
         },
@@ -1366,6 +1367,7 @@ Options.Triggers.push({
         dive: {
           en: '${dir} Dive',
           de: '${dir} Sturzbombe',
+          fr: 'Plongée ${dir}',
           cn: '${dir} 俯冲',
           ko: '${dir} 다이브',
         },
@@ -1425,6 +1427,7 @@ Options.Triggers.push({
         naelPosition: {
           en: 'Nael is ${dir}',
           de: 'Nael ist im ${dir}',
+          fr: 'Nael est vers ${dir}',
           cn: '奈尔在 ${dir}',
           ko: '넬 ${dir}',
         },
@@ -1596,6 +1599,7 @@ Options.Triggers.push({
         naelPosition: {
           en: '${dir} Nael',
           de: '${dir} Nael',
+          fr: 'Nael ${dir}',
           cn: '${dir} 奈尔',
           ko: '넬 ${dir}',
         },
@@ -1746,6 +1750,7 @@ Options.Triggers.push({
         grandOctet: {
           en: 'Bait dash, go ${startDir}, rotate ${path}',
           de: 'Ansturm ködern, gehe nach ${startDir}, rotiere ${path}',
+          fr: 'Attirez le dash, allez ${startDir}, tournez ${path}',
           cn: '诱导俯冲, 去 ${startDir}, ${path} 转',
           ko: '돌진 유도, ${startDir}쪽으로, ${path}',
         },
@@ -1928,7 +1933,6 @@ Options.Triggers.push({
     },
     {
       'locale': 'fr',
-      'missingTranslations': true,
       'replaceSync': {
         'Bahamut Prime': 'Primo-Bahamut',
         'Blazing path, lead me to iron rule':
@@ -2035,7 +2039,6 @@ Options.Triggers.push({
     },
     {
       'locale': 'ja',
-      'missingTranslations': true,
       'replaceSync': {
         'Bahamut Prime': 'バハムート・プライム',
         'Fang of Light': 'ライトファング',

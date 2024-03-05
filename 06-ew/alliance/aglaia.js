@@ -760,7 +760,6 @@ Options.Triggers.push({
     },
     {
       'locale': 'fr',
-      'missingTranslations': true,
       'replaceSync': {
         '--hammer--': '--Marteau--',
         'Azeyma': 'Azeyma',
@@ -786,6 +785,10 @@ Options.Triggers.push({
         'The Twin Halls': 'Palais jumeau',
       },
       'replaceText': {
+        '--hammer--': '--Marteau--',
+        '\(fake\)': 'Faux',
+        '\(proximity\)': 'Proche',
+        '\(summon\)': 'Invocation',
         'Advent of the Eighth': 'Anneaux astraux',
         'As Above, So Below': 'Flamme de vie, flamme de mort',
         '(?<! )Balance': 'Jugement pananimique',

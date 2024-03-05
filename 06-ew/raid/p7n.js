@@ -242,7 +242,6 @@ Options.Triggers.push({
     },
     {
       'locale': 'ja',
-      'missingTranslations': true,
       'replaceSync': {
         'Agdistis': 'アグディスティス',
         'Immature Io': 'イマチュア・イーオー',

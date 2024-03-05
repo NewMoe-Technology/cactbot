@@ -348,6 +348,41 @@ Options.Triggers.push({
       },
     },
     {
+      id: 'Test Countdown',
+      type: 'Countdown',
+      netRegex: { result: '00' },
+      infoText: (_data, matches, output) =>
+        output.countdown({ player: matches.name, seconds: matches.countdownTime }),
+      outputStrings: {
+        countdown: {
+          en: '${player} started ${seconds}s countdown',
+        },
+      },
+    },
+    {
+      id: 'Test Countdown Failed',
+      type: 'Countdown',
+      netRegex: { result: '(?!00).{2}' },
+      infoText: (_data, matches, output) =>
+        output.countdownFail({ player: matches.name, code: matches.result }),
+      outputStrings: {
+        countdownFail: {
+          en: '${player} failed to start countdown (result code: ${code})',
+        },
+      },
+    },
+    {
+      id: 'Test Countdown Cancel',
+      type: 'CountdownCancel',
+      netRegex: {},
+      infoText: (_data, matches, output) => output.countdownCancel({ player: matches.name }),
+      outputStrings: {
+        countdownCancel: {
+          en: '${player} cancelled countdown',
+        },
+      },
+    },
+    {
       id: 'Test OutputStrings',
       type: 'GameLog',
       netRegex: {
@@ -416,13 +451,14 @@ Options.Triggers.push({
     },
     {
       locale: 'fr',
-      missingTranslations: true,
       replaceSync: {
         'cactbot lang': 'cactbot langue',
         'cactbot test response': 'cactbot test de réponse',
         'cactbot test watch': 'cactbot test d\'observation',
         'cactbot test config': 'test de configuration de cactbot',
         'cactbot test combatant cast': 'test d\'incantation d\'un combatant',
+        'cactbot test outputStrings': 'cactbot test outputStrings',
+        'testNetRegexTimeline': 'testNetRegexTimeline',
         'You bid farewell to the striking dummy':
           'Vous faites vos adieux au mannequin d\'entraînement',
         'You bow courteously to the striking dummy':

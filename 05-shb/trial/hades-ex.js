@@ -684,7 +684,6 @@ Options.Triggers.push({
   timelineReplace: [
     {
       'locale': 'de',
-      'missingTranslations': true,
       'replaceSync': {
         'Aetherial Gaol': 'Ätherkerker',
         'Arcane Font': 'Arkan(?:e|er|es|en) Körper',
@@ -695,6 +694,7 @@ Options.Triggers.push({
         'Lahabrea\'s Shade': 'Lahabreas Schatten',
         'Lahabrea\'s and Igeyorhm\'s Shades': 'Lahabrea und Igeyorhm',
         'Nabriales\'s Shade': 'Nabriales\' Schatten',
+        'Our plea transcends': 'Reißt nieder die Grenze',
         'Shadow of the Ancients': 'Schatten der Alten',
       },
       'replaceText': {
@@ -749,7 +749,6 @@ Options.Triggers.push({
     },
     {
       'locale': 'fr',
-      'missingTranslations': true,
       'replaceSync': {
         'Aetherial Gaol': 'Geôle Éthérée',
         'Arcane Font': 'Solide Arcanique',
@@ -760,6 +759,7 @@ Options.Triggers.push({
         'Lahabrea\'s Shade': 'Spectre de Lahabrea',
         'Lahabrea\'s and Igeyorhm\'s Shades': 'Duo d\'Asciens',
         'Nabriales\'s Shade': 'Spectre de Nabriales',
+        'Our plea transcends': 'Nos convictions sont si fortes',
         'Shadow of the Ancients': 'Spectre d\'Ascien',
       },
       'replaceText': {
@@ -944,7 +944,6 @@ Options.Triggers.push({
     },
     {
       'locale': 'ko',
-      'missingTranslations': true,
       'replaceSync': {
         'Aetherial Gaol': '에테르 감옥',
         'Arcane Font': '입체 마법진',
@@ -955,6 +954,7 @@ Options.Triggers.push({
         'Lahabrea\'s Shade': '라하브레아의 그림자',
         'Lahabrea\'s and Igeyorhm\'s Shades': '라하브레아와 이게요름',
         'Nabriales\'s Shade': '나브리알레스의 그림자',
+        'Our plea transcends': '그 강한 바람은 혼',
         'Shadow of the Ancients': '고대인의 그림자',
       },
       'replaceText': {
