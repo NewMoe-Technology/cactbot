@@ -1,6 +1,5 @@
 import Conditions from '../../../../../resources/conditions';
 import { Responses } from '../../../../../resources/responses';
-import Util from '../../../../../resources/util';
 import ZoneId from '../../../../../resources/zone_id';
 import { RaidbossData } from '../../../../../types/data';
 import { TriggerSet } from '../../../../../types/trigger';
@@ -121,14 +120,12 @@ const triggerSet: TriggerSet<Data> = {
       netRegex: { id: '4805', source: 'Hobbes', capture: false },
       response: Responses.aoe(),
     },
+    // https://xivapi.com/LogMessage/9533
+    // en: The wall-mounted right arm begins to move...
     {
       id: 'Copied Hobbes Right Arm',
-      type: 'GameLog',
-      netRegex: {
-        line: 'The wall-mounted right arm begins to move.*?',
-        code: Util.gameLogCodes.message,
-        capture: false,
-      },
+      type: 'SystemLogMessage',
+      netRegex: { id: '253D', capture: false },
       infoText: (_data, _matches, output) => output.text!(),
       run: (data) => data.alliance ??= 'A',
       outputStrings: {
@@ -142,15 +139,12 @@ const triggerSet: TriggerSet<Data> = {
         },
       },
     },
+    // https://xivapi.com/LogMessage/9531
+    // en: The wall-mounted flamethrowers activate.
     {
       id: 'Copied Hobbes Flamethrowers',
-      type: 'GameLog',
-
-      netRegex: {
-        line: 'The wall-mounted flamethrowers activate\..*?',
-        code: Util.gameLogCodes.message,
-        capture: false,
-      },
+      type: 'SystemLogMessage',
+      netRegex: { id: '253B', capture: false },
       alertText: (_data, _matches, output) => output.text!(),
       run: (data) => data.alliance ??= 'B',
       outputStrings: {
@@ -164,26 +158,20 @@ const triggerSet: TriggerSet<Data> = {
         },
       },
     },
+    // https://xivapi.com/LogMessage/9532
+    // en: The wall-mounted left arm begins to move...
     {
       id: 'Copied Hobbes Left Arm 1',
-      type: 'GameLog',
-      netRegex: {
-        line: 'The wall-mounted left arm begins to move.*?',
-        code: Util.gameLogCodes.message,
-        capture: false,
-      },
+      type: 'SystemLogMessage',
+      netRegex: { id: '253C', capture: false },
       durationSeconds: 6,
       response: Responses.getOut('info'),
       run: (data) => data.alliance ??= 'C',
     },
     {
       id: 'Copied Hobbes Left Arm 2',
-      type: 'GameLog',
-      netRegex: {
-        line: 'The wall-mounted left arm begins to move.*?',
-        code: Util.gameLogCodes.message,
-        capture: false,
-      },
+      type: 'SystemLogMessage',
+      netRegex: { id: '253C', capture: false },
       delaySeconds: 8,
       alertText: (_data, _matches, output) => output.text!(),
       outputStrings: {
@@ -199,12 +187,8 @@ const triggerSet: TriggerSet<Data> = {
     },
     {
       id: 'Copied Hobbes Left Arm 3',
-      type: 'GameLog',
-      netRegex: {
-        line: 'The wall-mounted left arm begins to move.*?',
-        code: Util.gameLogCodes.message,
-        capture: false,
-      },
+      type: 'SystemLogMessage',
+      netRegex: { id: '253C', capture: false },
       delaySeconds: 10,
       alertText: (_data, _matches, output) => output.text!(),
       outputStrings: {
@@ -231,14 +215,12 @@ const triggerSet: TriggerSet<Data> = {
       netRegex: { id: '4807', source: 'Hobbes', capture: false },
       response: Responses.stackMarker(),
     },
+    // https://xivapi.com/LogMessage/9528
+    // en: You hear frenzied movement from machines beneath...
     {
       id: 'Copied Hobbes Electric Floor',
-      type: 'GameLog',
-      netRegex: {
-        line: 'You hear frenzied movement from machines beneath.*?',
-        code: Util.gameLogCodes.message,
-        capture: false,
-      },
+      type: 'SystemLogMessage',
+      netRegex: { id: '2538', capture: false },
       durationSeconds: 10,
       suppressSeconds: 15,
       infoText: (_data, _matches, output) => output.text!(),
@@ -253,14 +235,12 @@ const triggerSet: TriggerSet<Data> = {
         },
       },
     },
+    // https://xivapi.com/LogMessage/9529
+    // en: The conveyer belts whirr to life!
     {
       id: 'Copied Hobbes Conveyer Belts',
-      type: 'GameLog',
-      netRegex: {
-        line: 'The conveyer belts whirr to life!.*?',
-        code: Util.gameLogCodes.message,
-        capture: false,
-      },
+      type: 'SystemLogMessage',
+      netRegex: { id: '2539', capture: false },
       infoText: (_data, _matches, output) => output.text!(),
       outputStrings: {
         text: {
@@ -273,14 +253,12 @@ const triggerSet: TriggerSet<Data> = {
         },
       },
     },
+    // https://xivapi.com/LogMessage/9530
+    // en: Flammable oil is leaking from the floor...
     {
       id: 'Copied Hobbes Oil 1',
-      type: 'GameLog',
-      netRegex: {
-        line: 'Flammable oil is leaking from the floor.*?',
-        code: Util.gameLogCodes.message,
-        capture: false,
-      },
+      type: 'SystemLogMessage',
+      netRegex: { id: '253A', capture: false },
       durationSeconds: 3,
       suppressSeconds: 15,
       alertText: (_data, _matches, output) => output.text!(),
@@ -297,12 +275,8 @@ const triggerSet: TriggerSet<Data> = {
     },
     {
       id: 'Copied Hobbes Oil 2',
-      type: 'GameLog',
-      netRegex: {
-        line: 'Flammable oil is leaking from the floor.*?',
-        code: Util.gameLogCodes.message,
-        capture: false,
-      },
+      type: 'SystemLogMessage',
+      netRegex: { id: '253A', capture: false },
       delaySeconds: 6,
       durationSeconds: 3,
       suppressSeconds: 15,
@@ -691,14 +665,6 @@ const triggerSet: TriggerSet<Data> = {
         'Warehouse A': 'Warenlager A',
         'Warehouse B': 'Warenlager B',
         'Warehouse C': 'Warenlager C',
-        'The wall-mounted right arm begins to move': 'Der wandmontierte rechte Arm ist aktiv!',
-        'The wall-mounted flamethrowers activate\.': 'Die wandmontierten Flammenwerfer sind aktiv!',
-        'The wall-mounted left arm begins to move': 'Der wandmontierte linke Arm ist aktiv!',
-        'You hear frenzied movement from machines beneath':
-          'Die Maschinenwesen zu deinen Füßen bewegen sich!',
-        'The conveyer belts whirr to life!': 'Die Fließbänder sind aktiv!',
-        'Flammable oil is leaking from the floor':
-          'Zu deinen Füßen wird brennbare Flüssigkeit eingelassen!',
       },
       'replaceText': {
         '360-Degree Bombing Maneuver': 'Offensive: Raketenring',
@@ -769,7 +735,6 @@ const triggerSet: TriggerSet<Data> = {
         '9S-operated Flight Unit': '9S : module de vol équipé',
         '9S-Operated Walking Fortress': '9S : avec multipède esclave',
         'Engels': 'Engels',
-        'Flammable oil is leaking from the floor': 'Le sol s\'imbibe de liquide inflammable!',
         '(?<! )Flight Unit': 'Module de vol',
         'Goliath Tank': 'Char Goliath',
         'Hobbes': 'Hobbes',
@@ -782,17 +747,11 @@ const triggerSet: TriggerSet<Data> = {
         'Serial-jointed Service Model': 'Modèle multiarticulé : soldat',
         'Small Biped': 'Petit bipède',
         'Small Flyer': 'Petite unité volante',
-        'The conveyer belts whirr to life!': 'Le tapis roulant s\'est mis en branle!',
         'The forward deck': 'la plate-forme avant',
         'The rear deck': 'la plate-forme arrière',
-        'The wall-mounted right arm begins to move': 'Le bras mural droit s\'active!',
-        'The wall-mounted flamethrowers activate\.': 'Les lance-flammes muraux s\'activent!',
-        'The wall-mounted left arm begins to move': 'Le bras mural gauche s\'active!',
         'Warehouse A': 'l\'entrepôt A',
         'Warehouse B': 'l\'entrepôt B',
         'Warehouse C': 'l\'entrepôt C',
-        'You hear frenzied movement from machines beneath':
-          'Les formes de vie mécaniques sous vos pieds s\'activent!',
       },
       'replaceText': {
         '\\?': ' ?',
@@ -886,12 +845,6 @@ const triggerSet: TriggerSet<Data> = {
         'Warehouse A': '倉庫A',
         'Warehouse B': '倉庫B',
         'Warehouse C': '倉庫C',
-        'The wall-mounted right arm begins to move': '壁面のライトアームが稼働を始めた……！',
-        'The wall-mounted flamethrowers activate\.': '壁面の火炎放射器が稼働を始めた……！',
-        'The wall-mounted left arm begins to move': '壁面のレフトアームが稼働を始めた……！',
-        'You hear frenzied movement from machines beneath': '床下の機械生命体が怪しく動き始めた……！',
-        'The conveyer belts whirr to life!': '床面のローラーコンベアが稼働を始めた……！',
-        'Flammable oil is leaking from the floor': '床下に可燃性の液体が満ち始めた……！',
       },
       'replaceText': {
         'Front(?!al)': '前',
@@ -982,12 +935,6 @@ const triggerSet: TriggerSet<Data> = {
         'Warehouse A': '仓库A',
         'Warehouse B': '仓库B',
         'Warehouse C': '仓库C',
-        'The wall-mounted right arm begins to move': '墙面的右臂开始运作……',
-        'The wall-mounted flamethrowers activate\.': '墙面的火炎放射器开始运作……',
-        'The wall-mounted left arm begins to move': '墙面的左臂开始运作……',
-        'You hear frenzied movement from machines beneath': '地板下的机械生物动作很可疑……',
-        'The conveyer belts whirr to life!': '地面上的滚轴开始运作……',
-        'Flammable oil is leaking from the floor': '地板下开始充满可燃性液体……',
       },
       'replaceText': {
         '360-Degree Bombing Maneuver': '攻击：周边导弹轰炸',
@@ -1082,12 +1029,6 @@ const triggerSet: TriggerSet<Data> = {
         'Warehouse A': '창고 A',
         'Warehouse B': '창고 B',
         'Warehouse C': '창고 C',
-        'The wall-mounted right arm begins to move': '벽면의 오른팔이 움직이기 시작합니다……!',
-        'The wall-mounted flamethrowers activate\.': '벽면의 화염 방사기가 가동되었습니다……!',
-        'The wall-mounted left arm begins to move': '벽면의 왼팔이 움직이기 시작합니다……!',
-        'You hear frenzied movement from machines beneath': '바닥 아래의 기계생명체가 수상한 움직임을 보입니다……!',
-        'The conveyer belts whirr to life!': '바닥의 컨베이어가 움직이기 시작합니다……!',
-        'Flammable oil is leaking from the floor': '바닥 밑에 가연성 액체가 차오릅니다……!',
       },
       'replaceText': {
         'Front(?!al)': '앞',
