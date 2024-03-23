@@ -144,6 +144,9 @@ Options.Triggers.push({
     },
   ],
   triggers: [
+    // https://xivapi.com/LogMessage/916
+    // en: 7 minutes have elapsed since your last activity. [...]
+    // There is no network packet for these log lines; so have to use GameLog.
     {
       id: 'Bozja South Falling Asleep',
       type: 'GameLog',
@@ -619,6 +622,9 @@ Options.Triggers.push({
         },
       },
     },
+    // https://xivapi.com/LogMessage/9644
+    // No 0x29 log line for this, so we have to use GameLog.
+    // TODO: Check whether this could be ActorControlSelfExtra (category: 0x020F) when available.
     {
       id: 'Bozja South Castrum Lyon Passage',
       type: 'GameLog',

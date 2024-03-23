@@ -81,6 +81,9 @@ Options.Triggers.push({
   timelineFile: 'zadnor.txt',
   resetWhenOutOfCombat: false,
   triggers: [
+    // https://xivapi.com/LogMessage/916
+    // en: 7 minutes have elapsed since your last activity. [...]
+    // There is no network packet for these log lines; so have to use GameLog.
     {
       id: 'Zadnor Falling Asleep',
       type: 'GameLog',

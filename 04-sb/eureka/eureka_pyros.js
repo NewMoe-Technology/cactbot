@@ -15,6 +15,9 @@ Options.Triggers.push({
       netRegex: { id: '36DB', source: 'Skoll', capture: false },
       response: Responses.awayFromFront(),
     },
+    // https://xivapi.com/LogMessage/916
+    // en: 7 minutes have elapsed since your last activity. [...]
+    // There is no network packet for these log lines; so have to use GameLog.
     {
       id: 'Eureka Pyros Falling Asleep',
       type: 'GameLog',
