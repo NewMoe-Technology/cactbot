@@ -357,6 +357,7 @@ Options.Triggers.push({
         countdown: {
           en: '${player} started ${seconds}s countdown',
           fr: '${player} a démarré un compte à rebours de ${seconds}s',
+          ko: '${player} ${seconds}초 초읽기를 시작했습니다',
         },
       },
     },
@@ -370,6 +371,7 @@ Options.Triggers.push({
         countdownFail: {
           en: '${player} failed to start countdown (result code: ${code})',
           fr: '${player} a échoué à démarrer un compte à rebours (result code: ${code})',
+          ko: '${player} 초읽기를 시작하지 못했습니다 (반환 코드: ${code})',
         },
       },
     },
@@ -382,6 +384,7 @@ Options.Triggers.push({
         countdownCancel: {
           en: '${player} cancelled countdown',
           fr: '${player} a annulé le compte à rebours',
+          ko: '${player} 초읽기를 취소했습니다',
         },
       },
     },

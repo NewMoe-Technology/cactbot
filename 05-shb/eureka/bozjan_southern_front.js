@@ -623,15 +623,11 @@ Options.Triggers.push({
       },
     },
     // https://xivapi.com/LogMessage/9644
-    // No 0x29 log line for this, so we have to use GameLog.
-    // TODO: Check whether this could be ActorControlSelfExtra (category: 0x020F) when available.
+    // en: Lyon the Beast King would do battle at Majesty's Place...
     {
       id: 'Bozja South Castrum Lyon Passage',
-      type: 'GameLog',
-      netRegex: {
-        line: 'Lyon the Beast King would do battle at Majesty\'s Place.*?',
-        capture: false,
-      },
+      type: 'ActorControlSelfExtra',
+      netRegex: { category: Util.actorControlType.logMsg, param1: '25AC', capture: false },
       alertText: (_data, _matches, output) => output.text(),
       outputStrings: {
         text: {
