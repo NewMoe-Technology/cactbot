@@ -192,7 +192,7 @@ export interface EventMap {
 
   'ChangePrimaryPlayer': (ev: {
     type: 'ChangePrimaryPlayer';
-    charID: string;
+    charID: number;
     charName: string;
   }) => void;
 
@@ -412,6 +412,9 @@ export interface PluginCombatantState {
   IsCasting2?: number;
   CastBuffID?: number;
   CastTargetID?: number;
+  CastGroundTargetX?: number;
+  CastGroundTargetY?: number;
+  CastGroundTargetZ?: number;
   CastDurationCurrent?: number;
   CastDurationMax?: number;
   TransformationId?: number;

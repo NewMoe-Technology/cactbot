@@ -669,6 +669,15 @@ export default class Regexes {
   }
 
   /**
+   * matches: https://github.com/OverlayPlugin/cactbot/blob/main/docs/LogGuide.md#line-274-0x112-actorcontrolselfextra
+   */
+  static actorControlSelfExtra(
+    params?: NetParams['ActorControlSelfExtra'],
+  ): CactbotBaseRegExp<'ActorControlSelfExtra'> {
+    return buildRegex('ActorControlSelfExtra', params);
+  }
+
+  /**
    * Helper function for building named capture group
    */
   static maybeCapture(
