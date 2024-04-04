@@ -561,7 +561,7 @@ describe('netregex tests', () => {
     const lines = [
       '273|2023-12-05T10:57:43.4770000-08:00|4000A145|003E|1|0|0|0|06e7eff4a949812c',
       '273|2023-12-05T10:58:00.3460000-08:00|4000A144|003E|1|1|0|0|a4af9f90928636a3',
-      '273|2024-03-03T01:54:27.1980000-08:00|40016E0C|003E|1|1|0|0|f37647efed063aa1',
+      '273|2024-03-18T20:33:22.7130000-04:00|400058CA|0834|0|848|FA0|0|c862c35712ed4122',
     ] as const;
     regexCaptureTest((params?: RegexUtilParams) => NetRegexes.actorControlExtra(params), lines);
 
@@ -573,5 +573,24 @@ describe('netregex tests', () => {
     assert.equal(matches?.param2, '0');
     assert.equal(matches?.param3, '0');
     assert.equal(matches?.param4, '0');
+  });
+  it('actorControlSelfExtra', () => {
+    const lines = [
+      '274|2024-01-10T19:28:37.5000000-05:00|10001234|020F|04D0|0|93E0|0|0|0|d274429622d0c27e',
+      '274|2024-02-15T19:35:41.9950000-05:00|10001234|020F|236D|0|669|0|0|0|d274429622d0c27e',
+      '274|2024-03-21T20:45:41.3680000-04:00|10001234|0210|129D|10001234|F|0|0|0|d274429622d0c27e',
+    ] as const;
+    regexCaptureTest((params?: RegexUtilParams) => NetRegexes.actorControlSelfExtra(params), lines);
+
+    const matches = lines[0].match(NetRegexes.actorControlSelfExtra())?.groups;
+    assert.equal(matches?.type, '274');
+    assert.equal(matches?.id, '10001234');
+    assert.equal(matches?.category, '020F');
+    assert.equal(matches?.param1, '04D0');
+    assert.equal(matches?.param2, '0');
+    assert.equal(matches?.param3, '93E0');
+    assert.equal(matches?.param4, '0');
+    assert.equal(matches?.param5, '0');
+    assert.equal(matches?.param6, '0');
   });
 });

@@ -41,6 +41,14 @@ export const gameLogCodes = {
   message: '0839',
 } as const;
 
+// See docs/LogGuide.md for more info about these categories
+export const actorControlType = {
+  setAnimState: '003E',
+  publicContentText: '0834',
+  logMsg: '020F',
+  logMsgParams: '0210',
+} as const;
+
 const defaultParams = <
   T extends LogDefinitionTypes,
   V extends LogDefinitionVersions,
@@ -707,6 +715,15 @@ export default class NetRegexes {
     params?: NetParams['ActorControlExtra'],
   ): CactbotBaseRegExp<'ActorControlExtra'> {
     return buildRegex('ActorControlExtra', params);
+  }
+
+  /**
+   * matches: https://github.com/OverlayPlugin/cactbot/blob/main/docs/LogGuide.md#line-274-0x112-actorcontrolselfextra
+   */
+  static actorControlSelfExtra(
+    params?: NetParams['ActorControlSelfExtra'],
+  ): CactbotBaseRegExp<'ActorControlSelfExtra'> {
+    return buildRegex('ActorControlSelfExtra', params);
   }
 }
 

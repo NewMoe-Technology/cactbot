@@ -568,7 +568,7 @@ describe('regex tests', () => {
     const lines = [
       '[10:57:43.477] 273 111:4000A145:003E:1:0:0:0',
       '[10:58:00.346] 273 111:4000A144:003E:1:1:0:0',
-      '[01:54:27.198] 273 111:40016E0C:003E:1:1:0:0',
+      '[20:33:22.713] 273 111:400058CA:0834:0:848:FA0:0',
     ] as const;
     regexCaptureTest((params?: RegexUtilParams) => Regexes.actorControlExtra(params), lines);
 
@@ -579,5 +579,23 @@ describe('regex tests', () => {
     assert.equal(matches?.param2, '0');
     assert.equal(matches?.param3, '0');
     assert.equal(matches?.param4, '0');
+  });
+  it('actorControlSelfExtra', () => {
+    const lines = [
+      '[19:28:37.500] 274 112:10001234:020F:04D0:0:93E0:0:0:0',
+      '[19:35:41.995] 274 112:10001234:020F:236D:0:669:0:0:0',
+      '[20:45:41.368] 274 112:10001234:0210:129D:10001234:F:0:0:0',
+    ] as const;
+    regexCaptureTest((params?: RegexUtilParams) => Regexes.actorControlSelfExtra(params), lines);
+
+    const matches = lines[0].match(Regexes.actorControlSelfExtra())?.groups;
+    assert.equal(matches?.id, '10001234');
+    assert.equal(matches?.category, '020F');
+    assert.equal(matches?.param1, '04D0');
+    assert.equal(matches?.param2, '0');
+    assert.equal(matches?.param3, '93E0');
+    assert.equal(matches?.param4, '0');
+    assert.equal(matches?.param5, '0');
+    assert.equal(matches?.param6, '0');
   });
 });

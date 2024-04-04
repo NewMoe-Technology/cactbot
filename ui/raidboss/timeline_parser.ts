@@ -133,7 +133,7 @@ export type ParsedText = ParsedPopupText | ParsedTriggerText;
 
 export type Text = ParsedText & { time: number };
 
-const regexes = {
+export const regexes = {
   comment: /^\s*#/,
   commentLine: /#.*$/,
   durationCommand: /(?:[^#]*?\s)?(?<text>duration\s+(?<seconds>[0-9]+(?:\.[0-9]+)?))(\s.*)?$/,
@@ -240,6 +240,7 @@ export class TimelineParser {
     for (let line of lines) {
       ++lineNumber;
       line = line.trim();
+
       // Drop comments and empty lines.
       if (!line || regexes.comment.test(line))
         continue;

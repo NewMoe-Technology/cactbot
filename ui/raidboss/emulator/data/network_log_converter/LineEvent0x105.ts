@@ -137,6 +137,12 @@ export class LineEvent0x105 extends LineEvent {
       this.state.IsCasting2 = parseFloat(stringStateMap.IsCasting2);
     if (stringStateMap.CastBuffID !== undefined)
       this.state.CastBuffID = parseFloat(stringStateMap.CastBuffID);
+    if (stringStateMap.CastGroundTargetX !== undefined)
+      this.state.CastGroundTargetX = parseFloat(stringStateMap.CastGroundTargetX);
+    if (stringStateMap.CastGroundTargetY !== undefined)
+      this.state.CastGroundTargetY = parseFloat(stringStateMap.CastGroundTargetY);
+    if (stringStateMap.CastGroundTargetZ !== undefined)
+      this.state.CastGroundTargetZ = parseFloat(stringStateMap.CastGroundTargetZ);
     if (stringStateMap.CastDurationCurrent !== undefined)
       this.state.CastDurationCurrent = parseFloat(stringStateMap.CastDurationCurrent);
     if (stringStateMap.CastDurationMax !== undefined)
