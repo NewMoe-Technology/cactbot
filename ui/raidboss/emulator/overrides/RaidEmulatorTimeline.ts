@@ -44,6 +44,21 @@ export default class RaidEmulatorTimeline extends Timeline {
     this._OnUpdateTimer(currentLogTime);
   }
 
+  public override _OnUpdateTimer(currentTime: number): void {
+    // The base `Timeline` class's `_RemoveExpiredTimers` has a hardcoded `Date.now()` reference
+    // for keepalive timers.
+    // There's not really a good way to handle this logic otherwise due to not having any other
+    // time base to reference against.
+    // So we treat any `currentTime` value greater than the last log line of the current encounter
+    // as if it was the current timestamp
+    const lastLogTimestamp = this.emulator?.currentEncounter?.encounter
+      .logLines.slice(-1)[0]?.timestamp;
+    if (lastLogTimestamp && currentTime > lastLogTimestamp)
+      currentTime = this.emulator?.currentLogTime ?? currentTime;
+
+    super._OnUpdateTimer(currentTime);
+  }
+
   override _ScheduleUpdate(_fightNow: number): void {
     // Override
   }
