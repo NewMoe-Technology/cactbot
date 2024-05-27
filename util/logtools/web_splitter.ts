@@ -30,17 +30,18 @@ const pageText = {
     cn: '对日志进行匿名化处理',
   },
   analysisFilterInput: {
-    en: 'Filter Log for Analysis',
-    de: 'Filter Log für Analysen',
-    fr: 'Filtrer le log pour analyse',
-    cn: '过滤日志进行分析',
+    en: 'Apply Analysis Filter (Dev Only)',
+    fr: 'Appliquer le filtre d\'analyse (Dev seulement)',
+    cn: '应用分析过滤器（开发中选项）',
   },
   exportSelectedInput: {
     en: 'Export Selected',
+    fr: 'Exporter la sélection',
     cn: '导出已选择日志',
   },
   exportAllInput: {
     en: 'Export Entire Log',
+    fr: 'Exporter tout le log',
     cn: '导出全部日志',
   },
 } as const;

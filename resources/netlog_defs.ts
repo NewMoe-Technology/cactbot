@@ -42,7 +42,9 @@ export type LogDefinition<K extends LogDefinitionName> = {
     primaryKey: string;
     possibleKeys: readonly string[];
   };
-  // See `AnalysisOptions` type below. Omitting this prop is the same as `{ include: 'none' }`.
+  // See `AnalysisOptions` type. Omitting this property means no log lines will be included;
+  // however, if raidboss triggers are found using this line type, an automated workflow will
+  // create this property and set `include: 'all'`. To suppress this, use `include: 'never``.
   analysisOptions?: AnalysisOptions<K>;
 };
 
@@ -74,14 +76,15 @@ type LogDefSubFields<K extends LogDefinitionName> = {
 // `include:` specifies the level of inclusion:
 //   - 'all' will include all lines with no filtering.
 //   - 'filter' will include only those lines that match at least one of the specified `filters`.
-//   - 'none' and 'never' are similar, but 'never' is an override; unlike 'none', the automated
-//      workflow will not replace it with 'all' upon finding active triggers using this line type.
+//   - 'never' is an override; just like if the property were omitted, no log lines will be included
+//      in the filter; however, if 'never' is used, the automated workflow will not attempt to
+//      change it to 'all' upon finding active triggers using this line type.
 // `filters:` contains Netregex-style filter criteria. Lines satisfying at least one filter will be
 //   included. If `include:` = 'filter', `filters` must be present; otherwise, it must be omitted.
 // `combatantIdFields:` are field indices containing combatantIds. If specified, these fields
 //   will be checked for ignored combatants (e.g. pets) during log filtering.
 export type AnalysisOptions<K extends LogDefinitionName> = {
-  include: 'none' | 'never';
+  include: 'never';
   filters?: undefined;
   combatantIdFields?: undefined;
 } | {
@@ -287,6 +290,11 @@ const latestLogDefinitions = {
     },
     canAnonymize: true,
     firstOptionalField: undefined,
+    analysisOptions: {
+      include: 'filter',
+      filters: { id: '4.{7}' }, // NPC combatants only
+      combatantIdFields: 2,
+    },
   },
   PartyList: {
     type: '11',
@@ -544,6 +552,11 @@ const latestLogDefinitions = {
     },
     canAnonymize: true,
     firstOptionalField: undefined,
+    analysisOptions: {
+      include: 'filter',
+      filters: { sourceId: '4.{7}' }, // NPC combatants only
+      combatantIdFields: 2,
+    },
   },
   NetworkDoT: {
     type: '24',
@@ -589,6 +602,15 @@ const latestLogDefinitions = {
     },
     canAnonymize: true,
     firstOptionalField: undefined,
+    analysisOptions: {
+      include: 'filter',
+      filters: { // DoT on player with valid effectId
+        id: '1.{7}',
+        which: 'DoT',
+        effectId: '0*?[1-9A-F][0-9A-F]*', // non-zero, non-empty, possibly-padded value
+      },
+      combatantIdFields: [2, 17],
+    },
   },
   WasDefeated: {
     type: '25',
@@ -609,6 +631,11 @@ const latestLogDefinitions = {
     },
     canAnonymize: true,
     firstOptionalField: undefined,
+    analysisOptions: {
+      include: 'filter',
+      filters: { targetId: '4.{7}' }, // NPC combatants only
+      combatantIdFields: 2, // don't apply to sourceId; an ignored combatant is a valid source
+    },
   },
   GainsEffect: {
     type: '26',
@@ -804,6 +831,9 @@ const latestLogDefinitions = {
     },
     canAnonymize: true,
     firstOptionalField: undefined,
+    analysisOptions: {
+      include: 'never',
+    },
   },
   NameToggle: {
     type: '34',
@@ -825,6 +855,9 @@ const latestLogDefinitions = {
     },
     canAnonymize: true,
     firstOptionalField: undefined,
+    analysisOptions: {
+      include: 'never',
+    },
   },
   Tether: {
     type: '35',
@@ -894,6 +927,9 @@ const latestLogDefinitions = {
     firstUnknownField: 22,
     canAnonymize: true,
     firstOptionalField: undefined,
+    analysisOptions: {
+      include: 'never',
+    },
   },
   StatusEffect: {
     type: '38',
@@ -1305,6 +1341,11 @@ const latestLogDefinitions = {
     },
     canAnonymize: true,
     firstOptionalField: 7,
+    analysisOptions: {
+      include: 'filter',
+      filters: { sourceId: '4.{7}' }, // NPC casts only
+      combatantIdFields: 2,
+    },
   },
   AbilityExtra: {
     type: '264',

@@ -193,6 +193,7 @@ export class TimelineParser {
     styles?: TimelineStyle[],
     options?: RaidbossOptions,
     zoneId?: number,
+    waitForParse?: boolean,
   ) {
     this.options = options ?? defaultOptions;
     this.perTriggerAutoConfig = this.options.PerTriggerAutoConfig;
@@ -217,10 +218,13 @@ export class TimelineParser {
       });
     }
 
-    this.parse(text, triggers, styles ?? [], uniqueId);
+    // TODO: This is a workaround for now, but whenever this class is refactored,
+    // responsibility for callilng parse() should be moved up to the instantiating code.
+    if (!waitForParse)
+      this.parse(text, triggers, styles ?? [], uniqueId);
   }
 
-  private parse(
+  protected parse(
     text: string,
     triggers: LooseTimelineTrigger[],
     styles: TimelineStyle[],
@@ -498,6 +502,8 @@ export class TimelineParser {
       return line;
     }
 
+    this.parseType(netRegexType, lineNumber);
+
     line = line.replace(syncCommand.netRegex, '').trim();
 
     let params: unknown;
@@ -651,6 +657,12 @@ export class TimelineParser {
       e.duration = parseFloat(durationCommand.seconds);
     }
     return line;
+  }
+
+  // This no-op is intended to be overridden by subclasses, like the one in update_logdefs.ts.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  public parseType(type: LogDefinitionName, lineNumber: number): void {
+    /* no-op */
   }
 
   private GetReplacedText(text: string): string {
