@@ -50,6 +50,7 @@ namespace Cactbot {
     internal IntPtr player_ptr_addr_ = IntPtr.Zero;
     internal IntPtr job_data_outer_addr_ = IntPtr.Zero;
     internal IntPtr in_combat_addr_ = IntPtr.Zero;
+    internal IntPtr bait_addr_ = IntPtr.Zero;
 
     // Values found in the EntityStruct's type field.
     public enum EntityType : byte {
@@ -146,6 +147,7 @@ namespace Cactbot {
       public short level = 0;
       public string debug_job;
       public int shield_value = 0;
+      public uint bait = 0;
 
       public override bool Equals(object obj) {
         return obj is EntityData o &&
@@ -167,7 +169,8 @@ namespace Cactbot {
           job == o.job &&
           level == o.level &&
           debug_job == o.debug_job &&
-          shield_value == o.shield_value;
+          shield_value == o.shield_value &&
+          bait == o.bait;
       }
 
       public override int GetHashCode() {
@@ -192,6 +195,7 @@ namespace Cactbot {
         hash = hash * 31 + level.GetHashCode();
         hash = hash * 31 + shield_value.GetHashCode();
         hash = hash * 31 + debug_job.GetHashCode();
+        hash = hash * 31 + bait.GetHashCode();
         return hash;
       }
     };
@@ -253,6 +257,12 @@ namespace Cactbot {
       int active_process_id;
       NativeMethods.GetWindowThreadProcessId(active_hwnd, out active_process_id);
       return active_process_id == process_.Id;
+    }
+
+    internal uint GetBait()
+    {
+        uint[] jorts = Read32U(bait_addr_, 1);
+        return jorts[0];
     }
 
     public unsafe abstract EntityData GetEntityDataFromByteArray(byte[] source);

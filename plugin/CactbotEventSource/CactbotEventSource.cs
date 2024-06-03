@@ -660,6 +660,7 @@ namespace Cactbot {
       RegisterPreset("Raidboss", 320, 220, "时间轴", "raidboss_timeline_only");
       RegisterPreset("Jobs", 600, 300, "Buff/倒计时/职业监控", null);
       RegisterPreset("Eureka", 400, 400, "优雷卡工具", null);
+      RegisterPreset("Fisher", 500, 500, "捕鱼达人");
       RegisterPreset("OopsyRaidsy", 400, 400, "失误死亡报告", null);
       RegisterPreset("PullCounter", 200, 200, "团灭计数器", null);
       RegisterPreset("Radar", 300, 400, "目标雷达", null);
