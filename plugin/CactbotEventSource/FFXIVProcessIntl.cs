@@ -8,7 +8,7 @@ using RainbowMage.OverlayPlugin;
 
 namespace Cactbot {
   public class FFXIVProcessIntl : FFXIVProcess {
-    // Last updated for FFXIV 6.5
+    // Last updated for FFXIV 7.0
 
     [StructLayout(LayoutKind.Explicit)]
     public unsafe struct EntityMemory {
@@ -100,16 +100,16 @@ namespace Cactbot {
     // In combat boolean.
     // This address is written to by "mov [rax+rcx],bl" and has three readers.
     // This reader is "cmp byte ptr [ffxiv_dx11.exe+????????],00 { (0),0 }"
-    private static String kInCombatSignature = "803D????????000F95C04883C428";
-    private static int kInCombatSignatureOffset = -12;
+    private static String kInCombatSignature = "803D??????????74??488B03488BCBFF50";
+    private static int kInCombatSignatureOffset = -15;
     private static bool kInCombatSignatureRIP = true;
     // Because this line is a cmp byte line, the signature is not at the end of the line.
     private static int kInCombatRipOffset = 1;
 
     // A piece of code that reads the job data.
     // The pointer of interest is the first ???????? in the signature.
-    private static String kJobDataSignature = "488B0D????????4885C90F84????????488B05????????3C03";
-    private static int kJobDataSignatureOffset = -22;
+    private static String kJobDataSignature = "488B3D????????33ED";
+    private static int kJobDataSignatureOffset = -6;
     // The signature finds a pointer in the executable code which uses RIP addressing.
     private static bool kJobDataSignatureRIP = true;
 
@@ -277,6 +277,8 @@ namespace Cactbot {
                 return JObject.FromObject(*(SageJobMemory*)&p[0]);
             case EntityJob.RPR:
                 return JObject.FromObject(*(ReaperJobMemory*)&p[0]);
+            case EntityJob.PCT:
+                return JObject.FromObject(*(PictomancerJobMemory*)&p[0]);
           }
           return null;
         }
@@ -357,7 +359,11 @@ namespace Cactbot {
       }
 
       [FieldOffset(0x00)]
-      public ushort songMilliseconds;
+      public ushort songMilliseconds; // 00~01
+
+      // 02~03 is related to song and songProcs, but not sure what it is.
+      // 02 changes upon songProcs/soulGauge/Coda changes.
+      // 03 set on 0b when song active, changes upon songProcs/soulGauge cost, but reset to 0b at next songProcs/soulGauge gain.
 
       [FieldOffset(0x04)]
       public byte songProcs;
@@ -365,8 +371,11 @@ namespace Cactbot {
       [FieldOffset(0x05)]
       public byte soulGauge;
 
-      [NonSerialized]
       [FieldOffset(0x06)]
+      public byte LastCodaCost;
+
+      [NonSerialized]
+      [FieldOffset(0x07)]
       private SongFlags songFlags;
 
       public String songName {
@@ -486,13 +495,10 @@ namespace Cactbot {
     [StructLayout(LayoutKind.Explicit)]
     public struct NinjaJobMemory {
       [FieldOffset(0x00)]
-      public ushort hutonMilliseconds;
-
-      [FieldOffset(0x02)]
       public byte ninkiAmount;
 
-      [FieldOffset(0x03)]
-      private byte hutonCount; // Why though?
+      [FieldOffset(0x02)]
+      public byte kazematoi;
     };
 
     [StructLayout(LayoutKind.Explicit)]
@@ -839,6 +845,74 @@ namespace Cactbot {
 
       [FieldOffset(0x05)]
       public byte voidShroud;
+    }
+
+    [StructLayout(LayoutKind.Explicit)]
+    public struct PictomancerJobMemory {
+      [Flags]
+      private enum CanvasFlags : byte {
+          Pom = 1,
+          Wing = 1 << 1,
+          Claw = 1 << 2,
+          Maw = 1 << 3,
+          Weapon = 1 << 4,
+          Landscape = 1 << 5,
+      }
+
+      [Flags]
+      private enum CreatureFlags : byte {
+          Pom = 1,
+          Wing = 1 << 1,
+          Claw = 1 << 2,
+          // Maw = 1 << 3, // Once you paint the Maw motif, it becomes a Madeen portrait.
+          MooglePortrait = 1 << 4,
+          MadeenPortrait = 1 << 5,
+      }
+
+      [FieldOffset(0x00)]
+      public byte palleteGauge;
+      [FieldOffset(0x02)]
+      public byte paint;
+
+      [NonSerialized]
+      [FieldOffset(0x03)]
+      private CanvasFlags canvasFlags;
+
+      public string creatureMotif {
+        get {
+          if (canvasFlags.HasFlag(CanvasFlags.Pom))
+            return "Pom";
+          if (canvasFlags.HasFlag(CanvasFlags.Wing))
+            return "Wing";
+          if (canvasFlags.HasFlag(CanvasFlags.Claw))
+            return "Claw";
+          if (canvasFlags.HasFlag(CanvasFlags.Maw))
+            return "Maw";
+          return "None";
+        }
+      }
+      public bool weaponMotif => canvasFlags.HasFlag(CanvasFlags.Weapon);
+      public bool landscapeMotif => canvasFlags.HasFlag(CanvasFlags.Landscape);
+
+      [NonSerialized]
+      [FieldOffset(0x04)]
+      private CreatureFlags creatureFlags;
+
+      public string[] depictions {
+        get {
+          var motifs = new List<string>();
+          if (creatureFlags.HasFlag(CreatureFlags.Pom))
+            motifs.Add("Pom");
+          if (creatureFlags.HasFlag(CreatureFlags.Wing))
+            motifs.Add("Wing");
+          if (creatureFlags.HasFlag(CreatureFlags.Claw))
+            motifs.Add("Claw");
+          return motifs.ToArray();
+        }
+      }
+
+      public bool mooglePortrait => creatureFlags.HasFlag(CreatureFlags.MooglePortrait);
+      public bool madeenPortrait => creatureFlags.HasFlag(CreatureFlags.MadeenPortrait);
     }
   }
 }

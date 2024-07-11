@@ -69,7 +69,7 @@ addOverlayListener('onPlayerChangedEvent', (e) => {
         detail.jobDetail.steps.join(', ')
       }] | ${detail.jobDetail.currentStep}`;
     } else if (detail.job === 'NIN' && detail.jobDetail) {
-      jobInfo.innerText = `${detail.jobDetail.hutonMilliseconds} | ${detail.jobDetail.ninkiAmount}`;
+      jobInfo.innerText = `${detail.jobDetail.ninkiAmount} | ${detail.jobDetail.kazematoi}`;
     } else if (detail.job === 'DRG' && detail.jobDetail) {
       jobInfo.innerText =
         `${detail.jobDetail.bloodMilliseconds} | ${detail.jobDetail.lifeMilliseconds} | ${detail.jobDetail.eyesAmount} | ${detail.jobDetail.firstmindsFocus}`;
@@ -114,6 +114,19 @@ addOverlayListener('onPlayerChangedEvent', (e) => {
     } else if (detail.job === 'RPR' && detail.jobDetail) {
       jobInfo.innerText =
         `${detail.jobDetail.soul} | ${detail.jobDetail.shroud} | ${detail.jobDetail.enshroudMilliseconds} | ${detail.jobDetail.lemureShroud} | ${detail.jobDetail.voidShroud}`;
+    } else if (detail.job === 'PCT' && detail.jobDetail) {
+      jobInfo.innerText =
+        `${detail.jobDetail.palleteGauge} | ${detail.jobDetail.paint} | (${detail.jobDetail.creatureMotif} | ${
+          detail.jobDetail.weaponMotif ? 'Weapon' : 'None'
+        } | ${detail.jobDetail.landscapeMotif ? 'Landscape' : 'None'}) | (${
+          detail.jobDetail.depictions.join('+') || 'None'
+        }) | ${
+          detail.jobDetail.mooglePortrait
+            ? 'Moogle'
+            : detail.jobDetail.madeenPortrait
+            ? 'Madeen'
+            : 'None'
+        }`;
     } else {
       jobInfo.innerText = '';
     }

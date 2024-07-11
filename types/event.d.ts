@@ -65,8 +65,10 @@ export interface JobDetail {
     firstmindsFocus: number;
   };
   'NIN': {
+    /** TODO: should be removed when CN/KR server reach 7.0 */
     hutonMilliseconds: number;
     ninkiAmount: number;
+    kazematoi: number;
   };
   'SAM': {
     kenki: number;
@@ -89,6 +91,7 @@ export interface JobDetail {
     songProcs: number;
     soulGauge: number;
     coda: (BardSongType)[];
+    LastCodaCost: number;
   };
   'MCH': {
     overheatMilliseconds: number;
@@ -134,6 +137,16 @@ export interface JobDetail {
     whiteMana: number;
     blackMana: number;
     manaStacks: number;
+  };
+  'PCT': {
+    palleteGauge: number;
+    paint: 0 | 1 | 2 | 3 | 4 | 5;
+    creatureMotif: 'Pom' | 'Wing' | 'Claw' | 'Maw' | 'None';
+    weaponMotif: boolean;
+    landscapeMotif: boolean;
+    depictions: ('Pom' | 'Wing' | 'Claw')[];
+    mooglePortrait: boolean;
+    madeenPortrait: boolean;
   };
 }
 
