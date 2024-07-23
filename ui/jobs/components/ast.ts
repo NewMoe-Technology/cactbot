@@ -55,7 +55,6 @@ export class ASTComponent extends BaseComponent {
     [this.card1, this.card2, this.card3, this.card4].forEach((e) => cardContainer.appendChild(e));
 
     this.reset();
-    this.onStatChange({ gcdSpell: this.player.gcdSpell });
   }
 
   override onJobDetailUpdate(jobDetail: JobDetail['AST']): void {
@@ -94,7 +93,7 @@ export class ASTComponent extends BaseComponent {
         break;
       case kAbility.AstralDraw:
       case kAbility.UmbralDraw:
-        this.drawBox.duration = 60;
+        this.drawBox.duration = 55;
         break;
       case kAbility.LucidDreaming:
         this.lucidBox.duration = 60;
@@ -173,7 +172,6 @@ export class AST6xComponent extends BaseComponent {
     }
 
     this.reset();
-    this.onStatChange({ gcdSpell: this.player.gcdSpell });
   }
 
   override onJobDetailUpdate(jobDetail: JobDetail['AST']): void {

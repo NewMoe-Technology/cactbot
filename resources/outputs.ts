@@ -96,6 +96,9 @@ export default {
   },
   avoidTetherBusters: {
     en: 'Avoid Tank Tethers',
+    fr: 'Évitez les liens des Tanks',
+    ja: 'タンクの線を避けて',
+    cn: '远离坦克连线',
   },
   tankCleave: {
     en: 'Tank cleave',
@@ -234,6 +237,14 @@ export default {
     ja: '中央で頭割り',
     cn: '中间集合',
     ko: '중앙에서 모이기',
+  },
+  // For general more-than-one-stack-at-a-time situations
+  stacks: {
+    en: 'Stacks',
+    de: 'Sammeln',
+    fr: 'Package',
+    cn: '分摊',
+    ko: '쉐어',
   },
   doritoStack: {
     en: 'Dorito Stack',

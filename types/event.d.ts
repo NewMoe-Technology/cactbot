@@ -94,6 +94,24 @@ export interface JobDetail {
     lemureShroud: number;
     voidShroud: number;
   };
+  'VPR': {
+    rattlingCoilStacks: number;
+    anguineTribute: number;
+    serpentOffering: number;
+    advancedCombo:
+      | 'Dreadwinder'
+      | 'HuntersCoil'
+      | 'SwiftskinsCoil'
+      | 'PitOfDread'
+      | 'HuntersDen'
+      | 'SwiftskinsDen'
+      | 'Reawaken'
+      | 'FirstGeneration'
+      | 'SecondGeneration'
+      | 'ThirdGeneration'
+      | 'FourthGeneration';
+    reawakenedTimer: number;
+  };
   'BRD': {
     songName: BardSongType;
     lastPlayed: BardSongType;
@@ -130,6 +148,7 @@ export interface JobDetail {
     umbralHearts: number;
     polyglot: number;
     nextPolyglotMilliseconds: number;
+    astralSoulStacks: number;
   };
   'ACN': {
     aetherflowStacks: number;
@@ -141,7 +160,8 @@ export interface JobDetail {
     attunement: number;
     usableArcanum: ('Ruby' | 'Topaz' | 'Emerald')[];
     activePrimal: 'Ifrit' | 'Titan' | 'Garuda' | null;
-    nextSummoned: 'Bahamut' | 'Phoenix';
+    nextSummoned: 'Bahamut' | 'Phoenix' | 'SolarBahamut';
+    summonStatus: boolean;
   };
   'RDM': {
     whiteMana: number;

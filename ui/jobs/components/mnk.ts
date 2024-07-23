@@ -84,13 +84,13 @@ export class MNKComponent extends BaseComponent {
       this.opoopoStacks.push(opoopoStack);
     }
 
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < 1; i++) {
       const raptorStack = document.createElement('div');
       raptorStacksContainer.appendChild(raptorStack);
       this.raptorStacks.push(raptorStack);
     }
 
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 2; i++) {
       const coeurlStack = document.createElement('div');
       coeurlStacksContainer.appendChild(coeurlStack);
       this.coeurlStacks.push(coeurlStack);
@@ -133,7 +133,6 @@ export class MNKComponent extends BaseComponent {
     this.solarStacks.push(solarStack);
 
     this.reset();
-    this.onStatChange({ gcdSkill: this.player.gcdSkill });
   }
 
   override onJobDetailUpdate(jobDetail: JobDetail['MNK']): void {
@@ -152,7 +151,7 @@ export class MNKComponent extends BaseComponent {
     this.lunarStacks[0]?.classList.toggle('active', jobDetail.lunarNadi);
     this.solarStacks[0]?.classList.toggle('active', jobDetail.solarNadi);
 
-    for (let i = 0; i < 3; ++i) {
+    for (let i = 0; i < 2; ++i) {
       this.opoopoStacks[i]?.classList.toggle('active', jobDetail.opoopoFury > i);
       this.raptorStacks[i]?.classList.toggle('active', jobDetail.raptorFury > i);
       this.coeurlStacks[i]?.classList.toggle('active', jobDetail.coeurlFury > i);

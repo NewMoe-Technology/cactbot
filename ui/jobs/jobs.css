@@ -257,6 +257,7 @@ div.justbuffs div#procs-container {
 .nin #right-side-icons,
 .sam #right-side-icons,
 .rpr #right-side-icons,
+.vpr #right-side-icons,
 .brd #right-side-icons,
 .mch #right-side-icons,
 .dnc #right-side-icons,
@@ -442,6 +443,21 @@ div.justbuffs div#procs-container {
   background-color: rgb(255 0 255);
 }
 
+#vpr-stacks-vipersight[data-stacks="1"] {
+  --bg-color: rgb(255 0 0);
+}
+
+#vpr-stacks-vipersight[data-stacks="2"] {
+  --bg-color: rgb(20 200 255);
+}
+
+#vpr-stacks-vipersight.active[data-side="both"] > div.left,
+#vpr-stacks-vipersight.active[data-side="both"] > div.right,
+#vpr-stacks-vipersight.active[data-side="left"] > div.left,
+#vpr-stacks-vipersight.active[data-side="right"] > div.right {
+  background-color: var(--bg-color);
+}
+
 #brd-stacks-magescoda.active {
   background-color: rgb(143 90 143);
 }
@@ -472,6 +488,14 @@ div.justbuffs div#procs-container {
 
 #blm-stacks-xeno > div.active {
   background-color: rgb(200 50 200);
+}
+
+#blm-stacks-astral-souls {
+  margin-top: 2px;
+}
+
+#blm-stacks-astral-souls > div.active {
+  background-color: rgb(255 40 0);
 }
 
 #smn-stacks-ruin4 > div.active {
@@ -557,6 +581,10 @@ div.justbuffs div#procs-container {
 
 #procs-container.compact {
   top: 80px;
+}
+
+.blm #procs-container.compact {
+  top: 100px;
 }
 
 #procs-container > div {
@@ -794,8 +822,8 @@ div.justbuffs div#procs-container {
   background-color: rgb(255 96 207);
 }
 
-.sch-color-aetherflow.too-much-stacks {
-  background-color: rgb(240 30 30);
+.sch-color-aetherflow.pulse {
+  animation: 1s pulse-white infinite;
 }
 
 .sch-color-fairygauge {
@@ -1107,6 +1135,47 @@ div.justbuffs div#procs-container {
   background-color: rgb(0 170 170);
 }
 
+/* VPR */
+.vpr-color-noxious-gnash {
+  background-color: rgb(100 20 30);
+}
+
+.vpr-color-hunters-instinct {
+  background-color: rgb(255 60 140);
+}
+
+.vpr-color-swiftscaled {
+  background-color: rgb(255 200 60);
+}
+
+.vpr-color-dreadcombo {
+  background-color: rgb(99 123 77);
+}
+
+.vpr-color-rattling-coil {
+  background-color: rgb(255 60 50);
+}
+
+.vpr-color-rattling-coil.pulse {
+  animation: 1s pulse-white infinite;
+}
+
+.vpr-color-serpentofferings {
+  background-color: rgb(255 30 20 / 30%);
+}
+
+.vpr-color-serpentofferings.high {
+  background-color: rgb(90 150 220);
+}
+
+.vpr-color-serpentofferings.high.pulse {
+  animation: 1s pulse-red infinite;
+}
+
+.vpr-color-serpentofferings.active {
+  background-color: rgb(130 255 255);
+}
+
 /* BRD */
 .brd-color-causticbite {
   background-color: rgb(182 68 235);
@@ -1232,6 +1301,10 @@ div.justbuffs div#procs-container {
 }
 
 .blm-color-dot {
+  background-color: rgb(200 110 245);
+}
+
+.blm-color-manafont {
   background-color: rgb(110 186 245);
 }
 
@@ -1307,7 +1380,8 @@ div.justbuffs div#procs-container {
   background-color: rgb(60 80 200);
 }
 
-.smn-color-demisummon {
+.smn-color-demisummon,
+.smn-color-demisummon.solarbahamutready {
   background-color: rgb(180 200 220);
 }
 
