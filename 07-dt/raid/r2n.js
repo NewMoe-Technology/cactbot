@@ -77,6 +77,7 @@ Options.Triggers.push({
       id: 'R2N Heartsick',
       type: 'StartsUsing',
       netRegex: { id: '9B8D', source: 'Honey B. Lovely', capture: false },
+      suppressSeconds: 1,
       infoText: (_data, _matches, output) => output.stacks(),
       outputStrings: {
         stacks: {
@@ -118,7 +119,6 @@ Options.Triggers.push({
     },
     {
       'locale': 'fr',
-      'missingTranslations': true,
       'replaceSync': {
         'Honey B. Lovely': 'Honey B. Lovely',
       },

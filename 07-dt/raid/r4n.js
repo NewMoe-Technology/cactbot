@@ -14,12 +14,16 @@ const directionOutputStrings = {
   separator: {
     en: ' => ',
     de: ' => ',
+    fr: ' => ',
     ja: ' => ',
+    cn: ' => ',
   },
   combo: {
     en: '${dirs}',
     de: '${dirs}',
+    fr: '${dirs}',
     ja: '${dirs}',
+    cn: '${dirs}',
   },
 };
 const b9aValueToNorthSouth = (searchValue) => {
@@ -295,7 +299,9 @@ Options.Triggers.push({
         text: {
           en: 'East offset safe',
           de: 'Ost-Offset sicher',
+          fr: 'Offset Est sûr',
           ja: '最東端の床へ',
+          cn: '右(东)侧 安全',
         },
       },
     },
@@ -310,7 +316,9 @@ Options.Triggers.push({
         text: {
           en: 'South offset safe',
           de: 'Süd-Offset sicher',
+          fr: 'Offset Sud sûr',
           ja: '最南端の床へ',
+          cn: '下(南)侧 安全',
         },
       },
     },
@@ -325,7 +333,9 @@ Options.Triggers.push({
         text: {
           en: 'West offset safe',
           de: 'West-Offset sicher',
+          fr: 'Offset Ouest sûr',
           ja: '最西端の床へ',
+          cn: '左(西)侧 安全',
         },
       },
     },
@@ -340,7 +350,9 @@ Options.Triggers.push({
         text: {
           en: 'North offset safe',
           de: 'Nord-Offset sicher',
+          fr: 'Offset Nord sûr',
           ja: '最北端の床へ',
+          cn: '上(北)侧 安全',
         },
       },
     },
@@ -411,9 +423,13 @@ Options.Triggers.push({
       outputStrings: {
         outToIn: {
           en: '${dir}, Out => In',
+          fr: '${dir}, Extérieur => Intérieur',
+          cn: '${dir}, 远离 => 靠近',
         },
         inToOut: {
           en: '${dir}, In => Out',
+          fr: '${dir}, Intérieur => Extérieur',
+          cn: '${dir}, 靠近 => 远离',
         },
         unknown: Outputs.unknown,
         ...Directions.outputStrings8Dir,
@@ -456,12 +472,18 @@ Options.Triggers.push({
     },
     {
       'locale': 'fr',
-      'missingTranslations': true,
       'replaceSync': {
-        'Wicked Replica': 'copie de Wicked Thunder',
+        'Wicked Replica': 'Copie de Wicked Thunder',
         'Wicked Thunder': 'Wicked Thunder',
       },
       'replaceText': {
+        'Left Roll': 'Rouleau gauche',
+        'Right Roll': 'Rouleau droite',
+        'west--': 'Est--',
+        '--east': '--Ouest',
+        '\\(cast\\)': '(Incantation)',
+        '\\(clone\\)': '(Clone)',
+        '\\(damage\\)': '(Dommage)',
         'Bewitching Flight': 'Vol enchanteur',
         'Burst': 'Explosion',
         'Fivefold Blast': 'Penta-canon',

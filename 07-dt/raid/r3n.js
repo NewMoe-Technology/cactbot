@@ -62,6 +62,7 @@ Options.Triggers.push({
         text: {
           en: 'Knockback Towers',
           de: 'Rückstoß Türme',
+          fr: 'Poussée depuis les tours',
           ja: 'ノックバック 塔',
           cn: '击退塔',
         },
@@ -94,6 +95,7 @@ Options.Triggers.push({
         text: {
           en: 'Long => Short',
           de: 'Lange => Kurz',
+          fr: 'Long => Court',
           ja: '導火線の長い方 => 短い方',
           cn: '长引线 => 短引线',
         },
@@ -109,8 +111,9 @@ Options.Triggers.push({
         text: {
           en: 'East, then West',
           de: 'Osten, dann Westen',
+          fr: 'Est, puis Ouest',
           ja: '東、そして西',
-          cn: '东 => 西',
+          cn: '右(东) => 左(西)',
         },
       },
     },
@@ -124,8 +127,9 @@ Options.Triggers.push({
         text: {
           en: 'East, stay East',
           de: 'Osten, bleib Osten',
+          fr: 'Est, restez à l\'Est',
           ja: '東にそのまま',
-          cn: '东 => 呆在原地',
+          cn: '右(东) => 呆在同侧',
         },
       },
     },
@@ -139,8 +143,9 @@ Options.Triggers.push({
         text: {
           en: 'West, then East',
           de: 'Westen, dann Osten',
+          fr: 'Ouest, puis Est',
           ja: '西、そして東',
-          cn: '西 => 东',
+          cn: '左(西) => 右(东)',
         },
       },
     },
@@ -154,8 +159,9 @@ Options.Triggers.push({
         text: {
           en: 'West, stay West',
           de: 'Westen, bleib Westen',
+          fr: 'Ouest, restez à l\'Ouest',
           ja: '西にそのまま',
-          cn: '西 => 呆在原地',
+          cn: '左(西) => 呆在同侧',
         },
       },
     },
@@ -209,12 +215,16 @@ Options.Triggers.push({
     },
     {
       'locale': 'fr',
-      'missingTranslations': true,
       'replaceSync': {
         'Brute Bomber': 'Brute Bomber',
         'Lit Fuse': 'bombo à mèche',
       },
       'replaceText': {
+        '\\(cast\\)': '(Incantation)',
+        '\\(cones\\)': '(Cônes)',
+        '\\(damage\\)': '(Dommages)',
+        '\\(long\\)': '(Long)',
+        '\\(short\\)': '(Court)',
         'Barbarous Barrage': 'Bombardement brutal',
         'Brutal Burn': 'Brûlure brutale',
         'Brutal Impact': 'Impact brutal',
