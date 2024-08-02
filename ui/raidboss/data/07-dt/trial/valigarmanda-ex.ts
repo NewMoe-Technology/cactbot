@@ -522,6 +522,7 @@ const triggerSet: TriggerSet<Data> = {
           de: 'Spheren ausweichen - schwebende Fläche',
           fr: 'Évitez les sphères - tuile surélevée',
           ja: '玉を避ける - 高台',
+          cn: '躲开球 - 浮空格',
           ko: '장판 피하기 - 공중부양 칸',
         },
         combo: {

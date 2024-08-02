@@ -99,6 +99,7 @@ export default {
     fr: 'Évitez les liens des Tanks',
     ja: 'タンクの線を避けて',
     cn: '远离坦克连线',
+    ko: '탱커 선 피하기',
   },
   tankCleave: {
     en: 'Tank cleave',
@@ -243,6 +244,7 @@ export default {
     en: 'Stacks',
     de: 'Sammeln',
     fr: 'Package',
+    ja: '頭割り',
     cn: '分摊',
     ko: '쉐어',
   },
