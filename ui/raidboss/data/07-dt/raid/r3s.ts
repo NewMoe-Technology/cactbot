@@ -9,6 +9,9 @@ export interface Data extends RaidbossData {
   phaseTracker: number;
 }
 
+// TODO: Lariat Combo during second KB towers?
+// TODO: <foo>boom Special delayed in/out triggers?
+
 const triggerSet: TriggerSet<Data> = {
   id: 'AacLightHeavyweightM3Savage',
   zoneId: ZoneId.AacLightHeavyweightM3Savage,
@@ -44,7 +47,8 @@ const triggerSet: TriggerSet<Data> = {
         text: {
           en: 'Out + Spread',
           de: 'Raus + Verteilen',
-          cn: '外 + 分散',
+          ja: '外側 + 散開',
+          cn: '钢铁 + 八方分散',
         },
       },
     },
@@ -57,7 +61,8 @@ const triggerSet: TriggerSet<Data> = {
         text: {
           en: 'In + Spread',
           de: 'Rein + Verteilen',
-          cn: '内 + 分散',
+          ja: '内側 + 散開',
+          cn: '月环 + 八方分散',
         },
       },
     },
@@ -70,6 +75,7 @@ const triggerSet: TriggerSet<Data> = {
         text: {
           en: 'Away + Spread',
           de: 'Weg + Verteilen',
+          ja: '離れて + 散開',
           cn: '远离 + 分散',
         },
       },
@@ -83,6 +89,7 @@ const triggerSet: TriggerSet<Data> = {
         text: {
           en: 'Knockback + Spread',
           de: 'Rückstoß + Verteilen',
+          ja: 'ノックバック + 散開',
           cn: '击退 + 分散',
         },
       },
@@ -101,6 +108,7 @@ const triggerSet: TriggerSet<Data> = {
         getHit: {
           en: 'Get hit by mist',
           de: 'Werde vom Nebel getroffen',
+          ja: 'ミストに当たって',
           cn: '吃连线分身半场刀',
         },
       },
@@ -114,6 +122,7 @@ const triggerSet: TriggerSet<Data> = {
         text: {
           en: 'Away + Partners',
           de: 'Weg + Partner',
+          ja: '離れて + ペア',
           cn: '远离 + 分摊',
         },
       },
@@ -127,6 +136,7 @@ const triggerSet: TriggerSet<Data> = {
         text: {
           en: 'Knockback + Partners',
           de: 'Rückstoß + Partner',
+          ja: 'ノックバック + ペア',
           cn: '击退 + 分摊',
         },
       },
@@ -140,7 +150,8 @@ const triggerSet: TriggerSet<Data> = {
         text: {
           en: 'Out + Partners',
           de: 'Raus + Partner',
-          cn: '外 + 分摊',
+          ja: '外側 + ペア',
+          cn: '钢铁 + 分摊',
         },
       },
     },
@@ -153,7 +164,8 @@ const triggerSet: TriggerSet<Data> = {
         text: {
           en: 'In + Partners',
           de: 'Rein + Partner',
-          cn: '内 + 分摊',
+          ja: '内側 + ペア',
+          cn: '月环 + 分摊',
         },
       },
     },
@@ -167,7 +179,8 @@ const triggerSet: TriggerSet<Data> = {
         text: {
           en: 'Short Fuse',
           de: 'Kurze Lunte',
-          cn: '短引线',
+          ja: '短い導火線',
+          cn: '短引线点名',
         },
       },
     },
@@ -181,7 +194,8 @@ const triggerSet: TriggerSet<Data> = {
         text: {
           en: 'Long Fuse',
           de: 'Lange Lunte',
-          cn: '长引线',
+          ja: '長い導火線',
+          cn: '长引线点名',
         },
       },
     },
@@ -199,12 +213,40 @@ const triggerSet: TriggerSet<Data> = {
         short: {
           en: 'Short Fuse',
           de: 'Kurze Lunte',
-          cn: '短引线',
+          ja: '短い導火線',
+          cn: '短引线点名',
         },
         long: {
           en: 'Long Fuse',
           de: 'Lange Lunte',
-          cn: '长引线',
+          ja: '長い導火線',
+          cn: '长引线点名',
+        },
+      },
+    },
+    {
+      id: 'R3S Octoboom Bombarian Special',
+      type: 'StartsUsing',
+      netRegex: { id: '9752', source: 'Brute Bomber', capture: false },
+      infoText: (_data, _matches, output) => output.text!(),
+      outputStrings: {
+        text: {
+          en: 'Out => In => Knockback => Spread',
+          de: 'Raus => Rein => Rückstoß => Verteilen',
+          ja: '外側 => 内側 => ノックバック => 散開',
+        },
+      },
+    },
+    {
+      id: 'R3S Quadroboom Bombarian Special',
+      type: 'StartsUsing',
+      netRegex: { id: '940A', source: 'Brute Bomber', capture: false },
+      infoText: (_data, _matches, output) => output.text!(),
+      outputStrings: {
+        text: {
+          en: 'Out => In => Knockback => Partners',
+          de: 'Raus => Rein => Rückstoß => Partner',
+          ja: '外側 => 内側 => ノックバック => ペア',
         },
       },
     },
