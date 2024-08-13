@@ -1,4 +1,5 @@
 import Conditions from '../../../../../resources/conditions';
+import Outputs from '../../../../../resources/outputs';
 import { Responses } from '../../../../../resources/responses';
 import ZoneId from '../../../../../resources/zone_id';
 import { RaidbossData } from '../../../../../types/data';
@@ -43,9 +44,16 @@ const triggerSet: TriggerSet<Data> = {
       id: 'Alexandria AntivirusX Interferon Collect',
       type: 'AddedCombatant',
       netRegex: { name: ['Interferon C', 'Interferon R'] },
-      run: (data, matches) => {
-        const call = matches.name === 'Interferon C' ? 'Avoid' : 'In';
+      run: (data, matches, output) => {
+        const call = matches.name === 'Interferon C' ? output.avoid!() : output.in!();
         data.interferonCalls.push(call);
+      },
+      outputStrings: {
+        avoid: {
+          en: 'Avoid',
+          ko: '피하기',
+        },
+        in: Outputs.in,
       },
     },
     {
@@ -67,9 +75,11 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         combo: {
           en: '${calls}',
+          ko: '${calls}',
         },
         separator: {
           en: ' => ',
+          ko: ' => ',
         },
       },
     },
@@ -83,6 +93,7 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         spreadDontStack: {
           en: 'Cleave -- Don\'t stack!',
+          ko: '광역 탱버 -- 쉐어 맞지 말기',
         },
       },
     },
@@ -121,6 +132,7 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         avoidLightning: {
           en: 'Out of lightning triangle',
+          ko: '삼각형 밖으로',
         },
       },
     },
@@ -133,6 +145,7 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         avoidLasers: {
           en: 'Avoid Wall Lasers',
+          ko: '벽 레이저 피하기',
         },
       },
     },
@@ -202,6 +215,7 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         avoidHand: {
           en: 'Avoid hand laser',
+          ko: '손이 쏘는 레이저 피하기',
         },
       },
     },
@@ -214,6 +228,7 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         underElimbit: {
           en: 'Get under Elimbit',
+          ko: '비트 밑으로',
         },
       },
     },
@@ -268,6 +283,7 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         dodgeLasers: {
           en: 'Dodge Multiple Lasers',
+          ko: '다중 레이저 피하기',
         },
       },
     },

@@ -74,14 +74,20 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         beatOne: {
           en: 'Soak towers - need 2-3 hearts',
+          de: 'Nimm Türme - benötigt 2-3 Herzen',
+          ja: '塔を踏む - 2-3個のハートに調整',
           cn: '踩塔 - 踩到2-3颗心',
         },
         beatTwoZeroHearts: {
           en: 'Puddles & Stacks',
+          de: 'Flächen + sammeln',
+          ja: '集合捨てと頭割り',
           cn: '集合分摊放圈',
         },
         beatTwoOneHearts: {
           en: 'Spreads & Towers',
+          de: 'Verteilen + Türme',
+          ja: '散開 / 塔踏み',
           cn: '分散 / 踩塔',
         },
       },
@@ -106,9 +112,23 @@ const triggerSet: TriggerSet<Data> = {
       response: Responses.spread(),
     },
     {
+      id: 'R2S Headmarker Alarm Pheromones Puddle',
+      type: 'HeadMarker',
+      netRegex: { id: headMarkerData.spreadMarker1, capture: true },
+      condition: Conditions.targetIsYou(),
+      alertText: (_data, _matches, output) => output.text!(),
+      outputStrings: {
+        text: {
+          en: 'Drop Puddle Outside',
+          de: 'Lege Fläche außen ab',
+        },
+      },
+    },
+    {
       id: 'R2S Headmarker Party Stacks',
       type: 'HeadMarker',
       netRegex: { id: headMarkerData.heartStackMarker, capture: false },
+      suppressSeconds: 1,
       infoText: (_data, _matches, output) => output.stacks!(),
       outputStrings: {
         stacks: Outputs.stacks,
