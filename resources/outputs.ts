@@ -190,6 +190,14 @@ export default {
     cn: '分散',
     ko: '산개',
   },
+  defamationOnYou: {
+    en: 'Defamation on YOU',
+    de: 'Ehrenstrafe aud DIR',
+    fr: 'Diffamation sur VOUS',
+    ja: '自分に巨大な爆発',
+    cn: '大圈点名',
+    ko: '광역징 대상자',
+  },
   protean: {
     en: 'Protean',
     de: 'Himmelsrichtungen',
@@ -246,7 +254,7 @@ export default {
     fr: 'Packez-vous avec votre partenaire',
     ja: 'ペア',
     cn: '与搭档分摊',
-    ko: '파트너랑 모이기',
+    ko: '파트너와 쉐어',
   },
   stackMiddle: {
     en: 'Stack in middle',
@@ -254,7 +262,7 @@ export default {
     fr: 'Packez-vous au milieu',
     ja: '中央で頭割り',
     cn: '中间集合',
-    ko: '중앙에서 모이기',
+    ko: '중앙에서 쉐어',
   },
   baitPuddles: {
     en: 'Bait puddles',
@@ -758,7 +766,7 @@ export default {
     de: 'Kardinal',
     fr: 'Cardinaux',
     ja: '十字回避',
-    cn: '十字',
+    cn: '去正点',
     ko: '십자방향으로',
   },
   intercards: {
@@ -766,7 +774,7 @@ export default {
     de: 'Interkardinal',
     fr: 'Intercardinal',
     ja: '斜めへ',
-    cn: '四角',
+    cn: '去斜角',
     ko: '대각선 쪽으로',
   },
   north: {
@@ -984,6 +992,15 @@ export default {
     ja: 'DPS',
     cn: 'DPS',
     ko: '딜러',
+  },
+  // for sequenced mechanics
+  next: {
+    en: ' => ',
+    de: ' => ',
+    fr: ' => ',
+    ja: ' => ',
+    cn: ' => ',
+    ko: ' => ',
   },
   // Literal numbers.
   num0: numberToOutputString(0),
