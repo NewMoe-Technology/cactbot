@@ -78,6 +78,7 @@ export class MCHComponent extends BaseComponent {
 
     this.reset();
   }
+
   override onCombo(skill: string, combo: ComboTracker): void {
     this.comboTimer.duration = 0;
     if (combo.isFinalSkill)
@@ -92,10 +93,7 @@ export class MCHComponent extends BaseComponent {
     // These two seconds are shown by half adjust, not like others' ceil.
     if (jobDetail.overheatActive === true) {
       this.heatGauge.parentNode.classList.add('overheat');
-      if (this.ffxivVersion >= 630)
-        this.heatGauge.innerText = this.overheatstack.toString();
-      else
-        this.heatGauge.innerText = Math.round(jobDetail.overheatMilliseconds / 1000).toString();
+      this.heatGauge.innerText = this.overheatstack.toString();
     } else {
       this.heatGauge.parentNode.classList.remove('overheat');
       this.heatGauge.innerText = jobDetail.heat.toString();
@@ -125,11 +123,11 @@ export class MCHComponent extends BaseComponent {
   }
 
   override onYouGainEffect(id: string, matches: PartialFieldMatches<'GainsEffect'>): void {
-    if (id === EffectId.Overheated && this.ffxivVersion >= 630)
+    if (id === EffectId.Overheated_A80)
       this.overheatstack = parseInt(matches.count ?? '0');
   }
   override onMobGainsEffectFromYou(id: string, matches: PartialFieldMatches<'GainsEffect'>): void {
-    if (id === EffectId.Wildfire) {
+    if (id === EffectId.Wildfire_35D) {
       this.wildFireActive = true;
       this.wildFireCounts = parseInt(matches.count ?? '0');
       this.refreshWildFireGauge();
@@ -138,17 +136,20 @@ export class MCHComponent extends BaseComponent {
   }
 
   override onMobLosesEffectFromYou(id: string): void {
-    if (id === EffectId.Wildfire) {
+    if (id === EffectId.Wildfire_35D) {
       this.wildFireActive = false;
       this.refreshWildFireGauge();
     }
   }
 
-  override onUseAbility(id: string): void {
+  override onUseAbility(id: string, matches: PartialFieldMatches<'Ability'>): void {
     switch (id) {
       case kAbility.Drill:
       case kAbility.Bioblaster:
-        this.drillBox.duration = this.player.getActionCooldown(20000, 'skill');
+        if (matches.targetIndex === '0') {
+          this.drillBox.duration = this.player.getActionCooldown(20000, 'skill') +
+            this.drillBox.value;
+        }
         break;
       case kAbility.AirAnchor:
       case kAbility.HotShot:
@@ -179,13 +180,9 @@ export class MCHComponent extends BaseComponent {
   }
 
   override onStatChange({ gcdSkill }: { gcdSkill: number }): void {
-    this.drillBox.valuescale = gcdSkill;
     this.drillBox.threshold = gcdSkill * 3 + 1;
-    this.airAnchorBox.valuescale = gcdSkill;
     this.airAnchorBox.threshold = gcdSkill * 3 + 1;
-    this.chainSawBox.valuescale = gcdSkill;
     this.chainSawBox.threshold = gcdSkill * 3 + 1;
-    this.wildFireBox.valuescale = gcdSkill;
     this.wildFireBox.threshold = gcdSkill + 1;
   }
 

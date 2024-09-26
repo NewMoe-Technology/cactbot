@@ -17,6 +17,7 @@ import {
   kMPUI3Rate,
 } from './constants';
 import { JobsEventEmitter } from './event_emitter';
+import { FfxivVersion } from './jobs';
 import './jobs_config';
 import { JobsOptions } from './jobs_options';
 import { Player } from './player';
@@ -259,11 +260,10 @@ export class Bars {
     return textDiv as ResourceBox;
   }
 
-  addProcBox({ id, fgColor, threshold, scale, notifyWhenExpired }: {
+  addProcBox({ id, fgColor, threshold, notifyWhenExpired }: {
     id?: string;
     fgColor?: string;
     threshold?: number;
-    scale?: number;
     notifyWhenExpired?: boolean;
   }): TimerBox {
     let container = id !== undefined ? document.getElementById(id) : undefined;
@@ -280,7 +280,6 @@ export class Bars {
       threshold: threshold ? threshold : 0,
       hideafter: null,
       roundupthreshold: false,
-      valuescale: scale ? scale : 1,
     });
     container.innerHTML = ''; // remove any existing timer boxes, if there are.
     container.appendChild(timerBox);
@@ -589,6 +588,7 @@ export class Bars {
     prevMp?: number;
     umbralStacks?: number;
     inCombat: boolean;
+    ffxivVersion: FfxivVersion;
   }): void {
     if (!this.o.mpTicker)
       return;
@@ -608,7 +608,9 @@ export class Bars {
     if (data.umbralStacks === -3)
       umbralTick = kMPUI3Rate;
 
-    const mpTick = Math.floor(data.maxMp * baseTick) + Math.floor(data.maxMp * umbralTick);
+    const mpTick = data.ffxivVersion < 700
+      ? Math.floor(data.maxMp * baseTick) + Math.floor(data.maxMp * umbralTick)
+      : data.maxMp * baseTick;
     if (delta === mpTick && data.umbralStacks <= 0) // MP ticks disabled in AF
       this.o.mpTicker.duration = kMPTickInterval;
 

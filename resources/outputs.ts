@@ -86,6 +86,22 @@ export default {
     cn: '坦克死刑',
     ko: '탱버',
   },
+  tetherBusters: {
+    en: 'Tank Tethers',
+    de: 'Tank-Verbindungen',
+    fr: 'Liens Tank',
+    ja: 'タンク線取り',
+    cn: '坦克截线',
+    ko: '탱커가 선 가로채기',
+  },
+  avoidTetherBusters: {
+    en: 'Avoid Tank Tethers',
+    de: 'Vermeide Tank Verbindungen',
+    fr: 'Évitez les liens des Tanks',
+    ja: 'タンクの線を避けて',
+    cn: '远离坦克连线',
+    ko: '탱커 선 피하기',
+  },
   tankCleave: {
     en: 'Tank cleave',
     de: 'Tank Cleave',
@@ -174,6 +190,22 @@ export default {
     cn: '分散',
     ko: '산개',
   },
+  defamationOnYou: {
+    en: 'Defamation on YOU',
+    de: 'Ehrenstrafe aud DIR',
+    fr: 'Diffamation sur VOUS',
+    ja: '自分に巨大な爆発',
+    cn: '大圈点名',
+    ko: '광역징 대상자',
+  },
+  protean: {
+    en: 'Protean',
+    de: 'Himmelsrichtungen',
+    fr: 'Positions',
+    ja: '基本散会',
+    cn: '八方分散',
+    ko: '8방향 산개',
+  },
   stackMarker: {
     // for stack marker situations
     en: 'Stack',
@@ -213,8 +245,16 @@ export default {
     de: 'Auf ${player} sammeln',
     fr: 'Packez-vous sur ${player}',
     ja: '${player}に頭割り',
-    cn: '靠近 ${player}集合',
+    cn: '靠近 ${player}分摊',
     ko: '"${player}" 쉐어징',
+  },
+  stackPartner: {
+    en: 'Stack With Partner',
+    de: 'Mit Partner stacken',
+    fr: 'Packez-vous avec votre partenaire',
+    ja: 'ペア',
+    cn: '与搭档分摊',
+    ko: '파트너와 쉐어',
   },
   stackMiddle: {
     en: 'Stack in middle',
@@ -222,7 +262,24 @@ export default {
     fr: 'Packez-vous au milieu',
     ja: '中央で頭割り',
     cn: '中间集合',
-    ko: '중앙에서 모이기',
+    ko: '중앙에서 쉐어',
+  },
+  baitPuddles: {
+    en: 'Bait puddles',
+    de: 'Flächen Ködern',
+    fr: 'Attirez les flaques',
+    ja: 'AOE誘導',
+    cn: '诱导圈圈',
+    ko: '장판 유도',
+  },
+  // For general more-than-one-stack-at-a-time situations
+  stacks: {
+    en: 'Stacks',
+    de: 'Sammeln',
+    fr: 'Package',
+    ja: '頭割り',
+    cn: '分摊',
+    ko: '쉐어',
   },
   doritoStack: {
     en: 'Dorito Stack',
@@ -450,7 +507,7 @@ export default {
     fr: '<= Allez à Gauche/Ouest',
     ja: '<= 左/西へ',
     cn: '<= 去左/西边',
-    ko: '<= 왼쪽으로',
+    ko: '<= 왼쪽/서쪽',
   },
   getRightAndEast: {
     en: 'Get Right/East =>',
@@ -458,7 +515,7 @@ export default {
     fr: 'Allez à Droite/Est =>',
     ja: '右/東へ =>',
     cn: '去右/东边 =>',
-    ko: '오른쪽으로 =>',
+    ko: '오른쪽/동쪽 =>',
   },
   leftThenRight: {
     en: 'Left => Right',
@@ -645,7 +702,7 @@ export default {
     de: 'Kette zerbrechen',
     fr: 'Brisez les chaines',
     ja: '線を切る',
-    cn: '切断连线',
+    cn: '拉断连线',
     ko: '선 끊기',
   },
   moveChainsTogether: {
@@ -703,6 +760,22 @@ export default {
     ja: '???',
     cn: '???',
     ko: '???',
+  },
+  cardinals: {
+    en: 'Cardinals',
+    de: 'Kardinal',
+    fr: 'Cardinaux',
+    ja: '十字回避',
+    cn: '去正点',
+    ko: '십자방향으로',
+  },
+  intercards: {
+    en: 'Intercards',
+    de: 'Interkardinal',
+    fr: 'Intercardinal',
+    ja: '斜めへ',
+    cn: '去斜角',
+    ko: '대각선 쪽으로',
   },
   north: {
     en: 'North',
@@ -919,6 +992,15 @@ export default {
     ja: 'DPS',
     cn: 'DPS',
     ko: '딜러',
+  },
+  // for sequenced mechanics
+  next: {
+    en: ' => ',
+    de: ' => ',
+    fr: ' => ',
+    ja: ' => ',
+    cn: ' => ',
+    ko: ' => ',
   },
   // Literal numbers.
   num0: numberToOutputString(0),

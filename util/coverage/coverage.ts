@@ -68,6 +68,13 @@ const exVersionToName = {
     cn: '晓月之终途 (6.x)',
     ko: '효월의 종언 (6.x)',
   },
+  '5': {
+    en: 'Dawntrail (DT 7.x)',
+    de: 'Dawntrail (DT 7.x)',
+    fr: 'Dawntrail (DT 7.x)',
+    ja: '黄金のレガシー (7.x)',
+    cn: '金曦之遗辉 (7.x)',
+  },
 } as const;
 
 const exVersionToShortName: { [exVersion: string]: LocaleText } = {
@@ -110,6 +117,13 @@ const exVersionToShortName: { [exVersion: string]: LocaleText } = {
     ja: '暁月',
     cn: '6.X',
     ko: '효월',
+  },
+  '5': {
+    en: 'DT',
+    de: 'DT',
+    fr: 'DT',
+    ja: '黄金',
+    cn: '7.X',
   },
 };
 

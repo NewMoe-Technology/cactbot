@@ -54,6 +54,8 @@ const nameToJobEnum: Record<Job, number> = {
   DNC: 38,
   RPR: 39,
   SGE: 40,
+  VPR: 41,
+  PCT: 42,
 };
 
 const allJobs = Object.keys(nameToJobEnum) as Job[];
@@ -61,9 +63,9 @@ const allRoles = ['tank', 'healer', 'dps', 'crafter', 'gatherer', 'none'] as Rol
 
 const tankJobs: Job[] = ['GLA', 'PLD', 'MRD', 'WAR', 'DRK', 'GNB'];
 const healerJobs: Job[] = ['CNJ', 'WHM', 'SCH', 'AST', 'SGE'];
-const meleeDpsJobs: Job[] = ['PGL', 'MNK', 'LNC', 'DRG', 'ROG', 'NIN', 'SAM', 'RPR'];
+const meleeDpsJobs: Job[] = ['PGL', 'MNK', 'LNC', 'DRG', 'ROG', 'NIN', 'SAM', 'RPR', 'VPR'];
 const rangedDpsJobs: Job[] = ['ARC', 'BRD', 'DNC', 'MCH'];
-const casterDpsJobs: Job[] = ['BLU', 'RDM', 'BLM', 'SMN', 'ACN', 'THM'];
+const casterDpsJobs: Job[] = ['BLU', 'RDM', 'BLM', 'SMN', 'ACN', 'THM', 'PCT'];
 const dpsJobs: Job[] = [...meleeDpsJobs, ...rangedDpsJobs, ...casterDpsJobs];
 const craftingJobs: Job[] = ['CRP', 'BSM', 'ARM', 'GSM', 'LTW', 'WVR', 'ALC', 'CUL'];
 const gatheringJobs: Job[] = ['MIN', 'BTN', 'FSH'];
@@ -334,6 +336,13 @@ const xyTo4DirNum = (x: number, y: number, centerX: number, centerY: number): nu
   return Math.round(2 - 2 * Math.atan2(x, y) / Math.PI) % 4;
 };
 
+const xyTo4DirIntercardNum = (x: number, y: number, centerX: number, centerY: number): number => {
+  // NE = 0, SE = 1, SW = 2, NW = 3
+  x = x - centerX;
+  y = y - centerY;
+  return Math.round(2 - 2 * ((Math.PI / 4) + Math.atan2(x, y)) / Math.PI) % 4;
+};
+
 const hdgTo8DirNum = (heading: number): number => {
   // N = 0, NE = 1, ..., NW = 7
   return (Math.round(4 - 4 * heading / Math.PI) % 8 + 8) % 8;
@@ -352,6 +361,10 @@ const outputFromCardinalNum = (dirNum: number): DirectionOutputCardinal => {
   return outputCardinalDir[dirNum] ?? 'unknown';
 };
 
+const outputFromIntercardNum = (dirNum: number): DirectionOutputIntercard => {
+  return outputIntercardDir[dirNum] ?? 'unknown';
+};
+
 export const Directions = {
   output8Dir: output8Dir,
   output16Dir: output16Dir,
@@ -367,6 +380,7 @@ export const Directions = {
   hdgTo8DirNum: hdgTo8DirNum,
   hdgTo4DirNum: hdgTo4DirNum,
   outputFrom8DirNum: outputFrom8DirNum,
+  outputFromCardinalNum: outputFromCardinalNum,
   combatantStatePosTo8Dir: (
     combatant: PluginCombatantState,
     centerX: number,
@@ -429,6 +443,15 @@ export const Directions = {
   ): DirectionOutputCardinal => {
     const dirNum = xyTo4DirNum(x, y, centerX, centerY);
     return outputFromCardinalNum(dirNum);
+  },
+  xyToIntercardDirOutput: (
+    x: number,
+    y: number,
+    centerX: number,
+    centerY: number,
+  ): DirectionOutputIntercard => {
+    const dirNum = xyTo4DirIntercardNum(x, y, centerX, centerY);
+    return outputFromIntercardNum(dirNum);
   },
 };
 
