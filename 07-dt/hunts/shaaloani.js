@@ -46,6 +46,7 @@ Options.Triggers.push({
         text: {
           en: 'Follow dash (in after)',
           de: 'Folge dem Ansturm (danach Rein)',
+          fr: 'Suivez la ruée (intérieur ensuite)',
           cn: '跟随冲锋',
           ko: '돌진 따라가기 (그리고 안으로)',
         },
@@ -68,24 +69,28 @@ Options.Triggers.push({
         forward: {
           en: 'Forced March: Forward (later)',
           de: 'Geistlenkung: vorwärts (später)',
+          fr: 'Marche forcée : Avant (après)',
           cn: '(稍后 强制移动: 前)',
           ko: '강제이동: 앞 (나중에)',
         },
         backward: {
           en: 'Forced March: Backward (later)',
           de: 'Geistlenkung: rückwärts (später)',
+          fr: 'Marche forcée : Arrière (après)',
           cn: '(稍后 强制移动: 后)',
           ko: '강제이동: 뒤 (나중에)',
         },
         left: {
           en: 'Forced March: Left (later)',
           de: 'Geistlenkung: links (später)',
+          fr: 'Marche forcée : Gauche (après)',
           cn: '(稍后 强制移动: 左)',
           ko: '강제이동: 왼쪽 (나중에)',
         },
         right: {
           en: 'Forced March: Right (later)',
           de: 'Geistlenkung: rechts (später)',
+          fr: 'Marche forcée : Droite (après)',
           cn: '(稍后 强制移动: 右)',
           ko: '강제이동: 오른쪽 (나중에)',
         },
@@ -106,24 +111,28 @@ Options.Triggers.push({
         forward: {
           en: 'Forced March: Forward',
           de: 'Geistlenkung: vorwärts',
+          fr: 'Marche forcée : Avant',
           cn: '强制移动: 前',
           ko: '강제이동: 앞',
         },
         backward: {
           en: 'Forced March: Backward',
           de: 'Geistlenkung: rückwärts',
+          fr: 'Marche forcée : Arrière',
           cn: '强制移动: 后',
           ko: '강제이동: 뒤',
         },
         left: {
           en: 'Forced March: Left',
           de: 'Geistlenkung: links',
+          fr: 'Marche forcée : Gauche',
           cn: '强制移动: 左',
           ko: '강제이동: 왼쪽',
         },
         right: {
           en: 'Forced March: Right',
           de: 'Geistlenkung: rechts',
+          fr: 'Marche forcée : Droite',
           cn: '强制移动: 右',
           ko: '강제이동: 오른쪽',
         },
@@ -284,6 +293,10 @@ Options.Triggers.push({
       outputStrings: {
         avoid: {
           en: 'Avoid Tethered Cleave',
+          de: 'Vermeide Verbundene-Kegelangriff',
+          fr: 'Évitez le cleave du lien',
+          cn: '躲避连线冲锋',
+          ko: '직선 장판 피하기',
         },
       },
     },
@@ -332,6 +345,10 @@ Options.Triggers.push({
       outputStrings: {
         haloLeft: {
           en: 'Right => Left + In',
+          de: 'Rechts => Links + Rein',
+          fr: 'Droite => Gauche + Intérieur',
+          cn: '右 => 左 + 内',
+          ko: '오른쪽 => 왼쪽 + 안',
         },
       },
     },
@@ -344,6 +361,10 @@ Options.Triggers.push({
       outputStrings: {
         haloRight: {
           en: 'Left => Right + In',
+          de: 'Links => Rechts + Rein',
+          fr: 'Gauche => Droite + Intérieur',
+          cn: '左 => 右 + 内',
+          ko: '왼쪽 => 오른쪽 + 안',
         },
       },
     },
@@ -356,6 +377,10 @@ Options.Triggers.push({
       outputStrings: {
         veilLeft: {
           en: 'Right => Left + Out',
+          de: 'Rechts => Links + Raus',
+          fr: 'Droite => Gauche + Extérieur',
+          cn: '右 => 左 + 外',
+          ko: '오른쪽 => 왼쪽 + 바깥',
         },
       },
     },
@@ -368,6 +393,10 @@ Options.Triggers.push({
       outputStrings: {
         veilRight: {
           en: 'Left => Right + Out',
+          de: 'Links => Rechts + Raus',
+          fr: 'Gauche => Droite + Extérieur',
+          cn: '左 => 右 + 外',
+          ko: '왼쪽 => 오른쪽 + 바깥',
         },
       },
     },
@@ -395,6 +424,14 @@ Options.Triggers.push({
         'Keheniheyamewi': 'ケヘニヘヤメウィ',
         'Yehehetoaua\'pyo': 'エヘヘトーワポ',
         'Sansheya': 'サンシェヤ',
+      },
+    },
+    {
+      'locale': 'cn',
+      'replaceSync': {
+        'Keheniheyamewi': '凯海尼海亚麦尤伊',
+        'Yehehetoaua\'pyo': '艾海海陶瓦泡',
+        'Sansheya': '山谢亚',
       },
     },
   ],

@@ -50,6 +50,7 @@ Options.Triggers.push({
         text: {
           en: 'Face away from landing marker',
           de: 'Schau weg von der Ziel-Markierung',
+          fr: 'Orientez-vous ailleurs du marqueur d\'arrivée',
           cn: '背对落地点',
           ko: '바닥징 뒤돌기',
         },
@@ -66,13 +67,14 @@ Options.Triggers.push({
         text: {
           en: 'Face toward landing marker',
           de: 'Schau zur Ziel-Markierung',
+          fr: 'Orientez-vous vers le marqueur d\'arrivée',
           cn: '面向落地点',
           ko: '바닥징 쳐다보기',
         },
       },
     },
     {
-      id: 'Hunt Cat\'s Eye Bloodshot Gaze',
+      id: 'Hunt Cat\'s Eye Bloodshot Gaze + Look Away',
       type: 'StartsUsing',
       netRegex: { id: '9673', source: 'Cat\'s Eye', capture: false },
       alertText: (_data, _matches, output) => output.text(),
@@ -80,8 +82,21 @@ Options.Triggers.push({
         text: {
           en: 'Stack (face away from target)',
           de: 'Sammeln (Schau weg vom Ziel)',
+          fr: 'Pack (ne regardez pas la cible)',
           cn: '分摊 (背对目标)',
           ko: '쉐어 (대상에게서 뒤돌기)',
+        },
+      },
+    },
+    {
+      id: 'Hunt Cat\'s Eye Bloodshot Gaze + Look Toward',
+      type: 'StartsUsing',
+      netRegex: { id: '9AF4', source: 'Cat\'s Eye', capture: false },
+      alertText: (_data, _matches, output) => output.text(),
+      outputStrings: {
+        text: {
+          en: 'Stack (face toward target)',
+          cn: '分摊 (面向目标)',
         },
       },
     },
@@ -231,6 +246,14 @@ Options.Triggers.push({
         'Cat\'s Eye': 'キャッツアイ',
         'Sally the Sweeper': 'サリー・ザ・スイーパー',
         'The Forecaster': 'ウェザーリポーター',
+      },
+    },
+    {
+      'locale': 'cn',
+      'replaceSync': {
+        'Cat\'s Eye': '猫眼',
+        'Sally the Sweeper': '清除者萨利',
+        'The Forecaster': '天气预报机器人',
       },
     },
   ],
