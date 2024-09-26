@@ -5,8 +5,6 @@ import ZoneId from '../../../../../resources/zone_id';
 import { RaidbossData } from '../../../../../types/data';
 import { TriggerSet } from '../../../../../types/trigger';
 
-// TODO: Add triggers for Kirlirger the Abhorrent (S-Rank)
-
 type ForcedMarch = 'forward' | 'backward' | 'left' | 'right';
 const effectIdToForcedMarchDir: { [id: string]: ForcedMarch } = {
   871: 'forward', // Forward March
@@ -59,24 +57,28 @@ const triggerSet: TriggerSet<Data> = {
         dodge: {
           en: 'Dodge cleaves x4',
           de: 'Weiche Cleaves aus x4',
+          fr: 'Esquivez les cleaves x4',
           cn: '躲避顺劈 x4',
           ko: '장판 피하기 x4',
         },
         behind: {
           en: 'Behind + Left (for 3) => Go Front',
           de: 'Hinten + Links (für 3) => Geh nach Vorne',
+          fr: 'Derrière + Gauche (pour 3) => Allez devant',
           cn: '后 + 左(3次) => 前',
           ko: '뒤 + 왼쪽 (3번) => 앞으로',
         },
         right: {
           en: 'Right (for 2) => Left => Front',
           de: 'Rechts (für 2) => Links => Vorne',
+          fr: 'Droite (pour 2) => Gauche => Devant',
           cn: '右(2次) => 左 => 前',
           ko: '오른쪽 (2번) => 왼쪽 => 앞으로',
         },
         front: {
           en: 'Front + Left (stay)',
           de: 'Vorne + Links (bleib stehen)',
+          fr: 'Devant + Gauche (restez)',
           cn: '前 + 左 (不动)',
           ko: '앞으로 + 왼쪽 (그대로)',
         },
@@ -104,6 +106,7 @@ const triggerSet: TriggerSet<Data> = {
         leftFront: {
           en: 'Left => Front',
           de: 'Links => Vorne',
+          fr: 'Gauche => Devant',
           cn: '左 => 前',
           ko: '왼쪽 => 앞',
         },
@@ -134,6 +137,7 @@ const triggerSet: TriggerSet<Data> = {
         text: {
           en: 'Out + Stay Out',
           de: 'Raus + Bleib drausen',
+          fr: 'Extérieur + Restez',
           cn: '远离 + 保持远离',
           ko: '밖으로 + 계속 밖에 있기',
         },
@@ -149,6 +153,7 @@ const triggerSet: TriggerSet<Data> = {
         text: {
           en: 'In + Stay In',
           de: 'Rein + Bleib drinnen',
+          fr: 'Intérieur + Restez',
           cn: '靠近 + 保持靠近',
           ko: '안으로 + 계속 안에 있기',
         },
@@ -175,24 +180,28 @@ const triggerSet: TriggerSet<Data> = {
         forward: {
           en: 'Forced March: Forward',
           de: 'Geistlenkung: vorwärts',
+          fr: 'Marche forcée : Avant',
           cn: '强制移动: 前',
           ko: '강제이동: 앞',
         },
         backward: {
           en: 'Forced March: Backward',
           de: 'Geistlenkung: rückwärts',
+          fr: 'Marche forcée : Arrière',
           cn: '强制移动: 后',
           ko: '강제이동: 뒤',
         },
         left: {
           en: 'Forced March: Left',
           de: 'Geistlenkung: links',
+          fr: 'Marche forcée : Gauche',
           cn: '强制移动: 左',
           ko: '강제이동: 왼쪽',
         },
         right: {
           en: 'Forced March: Right',
           de: 'Geistlenkung: rechts',
+          fr: 'Marche forcée : Droite',
           cn: '强制移动: 右',
           ko: '강제이동: 오른쪽',
         },
@@ -210,7 +219,102 @@ const triggerSet: TriggerSet<Data> = {
       netRegex: { id: '9A41', source: 'Queen Hawk' },
       response: Responses.tankBuster(),
     },
+
     // ****** S-RANK: Kirlirger the Abhorrent ****** //
+    {
+      id: 'Hunt Kirlirger Fullmoon Fury',
+      type: 'StartsUsing',
+      netRegex: { id: '9A28', source: 'Kirlirger the Abhorrent', capture: false },
+      response: Responses.getOut(),
+    },
+    {
+      id: 'Hunt Kirlirger Discordant Moon',
+      type: 'StartsUsing',
+      netRegex: { id: '9A29', source: 'Kirlirger the Abhorrent', capture: false },
+      response: Responses.getUnder('alert'),
+    },
+    {
+      id: 'Hunt Kirlirger Fighter\'s Flourish',
+      type: 'StartsUsing',
+      netRegex: { id: '9A2A', source: 'Kirlirger the Abhorrent', capture: false },
+      response: Responses.getBehind(),
+    },
+    {
+      id: 'Hunt Kirlirger Discordant Flourish',
+      type: 'StartsUsing',
+      netRegex: { id: '9A2B', source: 'Kirlirger the Abhorrent', capture: false },
+      response: Responses.goFront('alert'),
+    },
+    {
+      id: 'Hunt Kirlirger Enervating Gloom',
+      type: 'StartsUsing',
+      netRegex: { id: '9A38', source: 'Kirlirger the Abhorrent' },
+      response: Responses.stackMarkerOn('info'),
+    },
+    {
+      id: 'Hunt Kirlirger Flying Fist',
+      type: 'StartsUsing',
+      netRegex: { id: '9A64', source: 'Kirlirger the Abhorrent', capture: false },
+      response: Responses.awayFromFront(),
+    },
+    {
+      id: 'Hunt Kirlirger Odious Uproar',
+      type: 'StartsUsing',
+      netRegex: { id: '9A39', source: 'Kirlirger the Abhorrent', capture: false },
+      response: Responses.aoe(),
+    },
+    // After the opening trio, Kirlirger will do 3 casts of Honor's Accord or Dishonor's Accord.
+    // They each apply the same Honor's Accord buff, but the original cast order determines
+    // whether his next three casts will do the correct attack or the opposite attack (Kefka style).
+    // We don't need to track the casts or buffs -- we can just use cast ids.
+    {
+      id: 'Hunt Kirlirger Fullmoon Fury Honor',
+      type: 'StartsUsing',
+      netRegex: { id: '9A23', source: 'Kirlirger the Abhorrent', capture: false },
+      response: Responses.getOut(),
+    },
+    {
+      id: 'Hunt Kirlirger Fullmoon Fury Dishonor',
+      type: 'StartsUsing',
+      netRegex: { id: '9A27', source: 'Kirlirger the Abhorrent', capture: false },
+      response: Responses.getUnder('alert'),
+    },
+    {
+      id: 'Hunt Kirlirger Discordant Moon Honor',
+      type: 'StartsUsing',
+      netRegex: { id: '9BC3', source: 'Kirlirger the Abhorrent', capture: false },
+      response: Responses.getUnder('alert'),
+    },
+    {
+      id: 'Hunt Kirlirger Discordant Moon Dishonor',
+      type: 'StartsUsing',
+      netRegex: { id: '9A3C', source: 'Kirlirger the Abhorrent', capture: false },
+      response: Responses.getOut(),
+    },
+    {
+      id: 'Hunt Kirlirger Fighter\'s Flourish Honor',
+      type: 'StartsUsing',
+      netRegex: { id: '9A31', source: 'Kirlirger the Abhorrent', capture: false },
+      response: Responses.getBehind(),
+    },
+    {
+      id: 'Hunt Kirlirger Fighter\'s Flourish Dishonor',
+      type: 'StartsUsing',
+      netRegex: { id: '9A35', source: 'Kirlirger the Abhorrent', capture: false },
+      response: Responses.goFront('alert'),
+    },
+    {
+      id: 'Hunt Kirlirger Discordant Flourish Honor',
+      type: 'StartsUsing',
+      netRegex: { id: '9BC5', source: 'Kirlirger the Abhorrent', capture: false },
+      response: Responses.goFront('alert'),
+    },
+    {
+      id: 'Hunt Kirlirger Discordant Flourish Dishonor',
+      type: 'StartsUsing',
+      netRegex: { id: '9A72', source: 'Kirlirger the Abhorrent', capture: false },
+      response: Responses.getBehind(),
+    },
   ],
   timelineReplace: [
     {
@@ -225,7 +329,7 @@ const triggerSet: TriggerSet<Data> = {
       'locale': 'fr',
       'replaceSync': {
         'Nechuciho': 'Nechukiho',
-        'Queen Hawk': 'reine des guêpes',
+        'Queen Hawk': 'Reine des guêpes',
         'Kirlirger the Abhorrent': 'Kirlirger l\'abominable',
       },
     },
@@ -235,6 +339,14 @@ const triggerSet: TriggerSet<Data> = {
         'Nechuciho': 'ネチュキホ',
         'Queen Hawk': 'クイーンホーク',
         'Kirlirger the Abhorrent': '厭忌のキーリーゲー',
+      },
+    },
+    {
+      'locale': 'cn',
+      'replaceSync': {
+        'Nechuciho': '内丘奇霍',
+        'Queen Hawk': '鹰蜂女王',
+        'Kirlirger the Abhorrent': '厌忌之人 奇里格',
       },
     },
   ],
