@@ -54,13 +54,14 @@ Options.Triggers.push({
       },
     },
     {
-      id: 'R1N Mouser',
+      id: 'R1N Mouser Collect',
       type: 'StartsUsing',
-      netRegex: { id: '996B', capture: true },
-      condition: (data, matches) => {
+      netRegex: { id: '996B' },
+      delaySeconds: 0.2,
+      run: (data, matches) => {
         const actorSetPosLine = data.actorSetPosTracker[matches.sourceId];
         if (actorSetPosLine === undefined)
-          return false;
+          return;
         const x = parseFloat(actorSetPosLine.x);
         const y = parseFloat(actorSetPosLine.y);
         /*
@@ -80,19 +81,26 @@ Options.Triggers.push({
             Math.abs(tile.centerY - y) < 1
           );
         if (loc === undefined)
-          return false;
+          return;
         const tile = loc.location;
         if (tile !== '09' && tile !== '0A')
-          return false;
+          return;
         data.mouserMatchedTile = tile;
-        return true;
       },
+    },
+    {
+      id: 'R1N Mouser',
+      type: 'StartsUsing',
+      netRegex: { id: '996B', capture: false },
+      delaySeconds: 0.2,
       // We don't need a suppressSeconds since only one of the SW/SE tiles will get hit twice
       durationSeconds: 11,
       infoText: (data, _matches, output) => {
+        // Undef check for data.mouserMatchedTile needs to happen here as opposed to a `condition`,
+        // as the delay needs to happen first.
         const dangerTile = data.mouserMatchedTile;
         if (dangerTile === undefined)
-          return false;
+          return;
         // Danger tile is SW, so safe movement is SW => SE (Stay)
         if (dangerTile === '09') {
           return output.swSeStay({
@@ -111,6 +119,7 @@ Options.Triggers.push({
           en: '${dir1} ${sep} ${dir2} (Stay)',
           de: '${dir1} ${sep} ${dir2} (bleib Stehen)',
           fr: '${dir1} ${sep} ${dir2} (Restez)',
+          cn: '${dir1} ${sep} ${dir2} (不动)',
           ko: '${dir1} ${sep} ${dir2} (그대로)',
         },
         separator: {
@@ -374,6 +383,35 @@ Options.Triggers.push({
         'Overshadow': 'オーバーシャドウ',
         'Predaceous Pounce': 'キャッツレイド',
         'Shockwave': '衝撃波',
+      },
+    },
+    {
+      'locale': 'cn',
+      'replaceSync': {
+        'Black Cat': '黑猫',
+        'Copy Cat': '模仿猫',
+      },
+      'replaceText': {
+        '(?<! )Black Cat Crossing': '交叉尖甲',
+        '(?<! )One-two Paw': '二连尖甲',
+        'Biscuit Maker': '踩奶',
+        'Bloody Scratch': '血腥抓挠',
+        'Clawful': '重爪爆发',
+        'Copycat': '模仿之猫',
+        'Elevate and Eviscerate': '腾身开膛',
+        'Grimalkin Gale': '猫怪突风',
+        'Impact': '冲击',
+        'Leaping Black Cat Crossing': '猫跳交叉尖甲',
+        'Leaping One-two Paw': '猫跳二连尖甲',
+        'Mouser': '捕鼠',
+        'Overshadow': '超暗影',
+        'Predaceous Pounce': '迅猫急袭',
+        'Shockwave': '冲击波',
+        '\\(cast\\)': '(咏唱)',
+        '\\(damage\\)': '(伤害)',
+        '\\(hits\\)': '(命中)',
+        '\\(jump\\)': '(跳)',
+        '\\(telegraphs\\)': '(预兆)',
       },
     },
   ],
