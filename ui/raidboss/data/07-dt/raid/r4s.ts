@@ -166,20 +166,20 @@ const witchHuntAlertOutputStrings = {
 
 const tailThrustOutputStrings = {
   iceLeft: {
-    en: 'Double Knockback (<== Start on Left)',
-    de: 'Doppel-Rückstoß (<== Starte Links)',
-    fr: 'Double poussée (<== Démarrez à gauche)',
-    ja: '2連続ノックバック (<== 左から開始)',
-    cn: '两次击退 (<== 左边开始)',
-    ko: '넉백 2번 (<== 왼쪽에서 시작)',
+    en: '<== (Start on Left) Double Knockback',
+    de: '<== (Starte Links) Doppel-Rückstoß',
+    fr: '<== (Démarrez à gauche) Double poussée',
+    ja: '<== (左から開始) 2連続ノックバック',
+    cn: '<== (左边开始) 两次击退',
+    ko: '<== (왼쪽에서 시작) 넉백 2번',
   },
   iceRight: {
-    en: 'Double Knockback (Start on Right ==>)',
-    de: 'Doppel-Rückstoß (Starte Rechts ==>)',
-    fr: 'Double poussée (Démarrez à droite ==>)',
-    ja: '2連続ノックバック (右から開始 ==>)',
-    cn: '两次击退 (右边开始 ==>)',
-    ko: '넉백 2번 (오른쪽에서 시작 ==>)',
+    en: '(Start on Right) Double Knockback ==>',
+    de: '(Starte Rechts) Doppel-Rückstoß ==>',
+    fr: '(Démarrez à droite) Double poussée ==>',
+    ja: '(右から開始) 2連続ノックバック ==>',
+    cn: '(右边开始) 两次击退 ==>',
+    ko: '(오른쪽에서 시작) 넉백 2번 ==>',
   },
   fireLeft: {
     en: 'Fire - Start Front + Right ==>',
@@ -252,7 +252,8 @@ export interface Data extends RaidbossData {
   mustardBombTargets: string[];
   kindlingCauldronTargets: string[];
   aetherialEffect?: AetherialEffect;
-  twilightSafe: DirectionOutputIntercard[];
+  twilightSafeFirst: DirectionOutputIntercard[];
+  twilightSafeSecond: DirectionOutputIntercard[];
   replicaCleaveCount: number;
   secondTwilightCleaveSafe?: DirectionOutputIntercard;
   midnightCardFirst?: boolean;
@@ -297,7 +298,8 @@ const triggerSet: TriggerSet<Data> = {
       replicas: {},
       mustardBombTargets: [],
       kindlingCauldronTargets: [],
-      twilightSafe: Directions.outputIntercardDir,
+      twilightSafeFirst: Directions.outputIntercardDir,
+      twilightSafeSecond: Directions.outputIntercardDir,
       replicaCleaveCount: 0,
       sunriseCannons: [],
       seenFirstSunrise: false,
@@ -952,13 +954,13 @@ const triggerSet: TriggerSet<Data> = {
       id: 'R4S Left Roll',
       type: 'Ability',
       netRegex: { id: '95D3', source: 'Wicked Thunder', capture: false },
-      response: Responses.goLeft(),
+      response: Responses.goWest(),
     },
     {
       id: 'R4S Right Roll',
       type: 'Ability',
       netRegex: { id: '95D2', source: 'Wicked Thunder', capture: false },
-      response: Responses.goRight(),
+      response: Responses.goEast(),
     },
     {
       id: 'R4S Electron Stream Debuff',
@@ -1287,10 +1289,17 @@ const triggerSet: TriggerSet<Data> = {
       delaySeconds: 0.2,
       suppressSeconds: 1,
       infoText: (data, _matches, output) => {
-        if (data.mustardBombTargets.includes(data.me))
-          return output.passDebuff!();
-        else if (!data.kindlingCauldronTargets.includes(data.me))
+        if (data.mustardBombTargets.includes(data.me)) {
+          const safePlayers = data.party.partyNames.filter((m) =>
+            !data.kindlingCauldronTargets.includes(m) &&
+            !data.mustardBombTargets.includes(m)
+          );
+          const toStr = safePlayers.map((m) => data.party.member(m).nick).join(', ');
+
+          return output.passDebuff!({ to: toStr });
+        } else if (!data.kindlingCauldronTargets.includes(data.me)) {
           return output.getDebuff!();
+        }
       },
       run: (data) => {
         data.mustardBombTargets = [];
@@ -1298,12 +1307,12 @@ const triggerSet: TriggerSet<Data> = {
       },
       outputStrings: {
         passDebuff: {
-          en: 'Pass Debuff',
-          de: 'Debuff übergeben',
-          fr: 'Donner le debuff',
-          ja: 'デバフを渡して',
-          cn: '传火',
-          ko: '디버프 전달',
+          en: 'Pass Debuff (${to})',
+          de: 'Debuff übergeben (${to})',
+          fr: 'Donner le debuff (${to})',
+          ja: 'デバフを渡して (${to})',
+          cn: '传火 (${to})',
+          ko: '디버프 전달 (${to})',
         },
         getDebuff: {
           en: 'Get Debuff',
@@ -1403,51 +1412,79 @@ const triggerSet: TriggerSet<Data> = {
 
     // Twilight Sabbath
     {
-      id: 'R4S Wicked Fire',
-      type: 'StartsUsing',
-      netRegex: { id: '9630', source: 'Wicked Thunder', capture: false },
-      infoText: (_data, _matches, output) => output.bait!(),
-      outputStrings: {
-        bait: Outputs.baitPuddles,
-      },
-    },
-    {
       id: 'R4S Twilight Sabbath Sidewise Spark',
-      type: 'GainsEffect',
-      // count: 319 - add cleaves to its right, 31A - add cleaves to its left
-      netRegex: { effectId: '808', count: ['319', '31A'] },
+      type: 'ActorControlExtra',
+      // category: 0197 - PlayActionTimeline
+      // param1: 11D6 - first,  right cleave
+      // param1: 11D7 - second, right cleave
+      // param1: 11D8 - first,  left cleave
+      // param1: 11D9 - second, left cleave
+      netRegex: { category: '0197', param1: ['11D6', '11D7', '11D8', '11D9'] },
       condition: (data) => data.phase === 'twilight',
+      // delay 0.1s to prevent out-of-order line issues
+      delaySeconds: 0.1,
+      durationSeconds: 9,
       alertText: (data, matches, output) => {
         data.replicaCleaveCount++;
-        const dir = data.replicas[matches.targetId]?.location;
+        const dir = data.replicas[matches.id]?.location;
         if (dir === undefined || !isCardinalDir(dir))
           return;
 
-        const cleaveDir = matches.count === '319' ? 'right' : 'left';
+        const cleaveDir = ['11D6', '11D7'].includes(matches.param1) ? 'right' : 'left';
         const unsafeDirs = replicaCleaveUnsafeMap[dir][cleaveDir];
-        data.twilightSafe = data.twilightSafe.filter((d) => !unsafeDirs.includes(d));
 
-        if (data.replicaCleaveCount !== 2)
-          return;
-        const [safe0] = data.twilightSafe;
-        if (safe0 === undefined)
-          return;
+        const firstSet = ['11D6', '11D8'].includes(matches.param1);
 
-        // on the first combo, set the second safe spot to unknown, and return the first safe spot
-        // for second combo, just store the safe spot for a combined call with Wicked Special
-        if (!data.secondTwilightCleaveSafe) {
-          data.secondTwilightCleaveSafe = 'unknown';
-          return output[safe0]!();
+        if (firstSet) {
+          data.twilightSafeFirst = data.twilightSafeFirst.filter((d) => !unsafeDirs.includes(d));
+        } else {
+          data.twilightSafeSecond = data.twilightSafeSecond.filter((d) => !unsafeDirs.includes(d));
         }
-        data.secondTwilightCleaveSafe = safe0;
+
+        // Once we have all four accounted for, set our second spot for use in Wicked Special combo,
+        // and then return our first safe spot
+        if (data.replicaCleaveCount !== 4)
+          return;
+
+        const [safeSecond] = data.twilightSafeSecond;
+
+        data.secondTwilightCleaveSafe = safeSecond;
+
+        if (data.secondTwilightCleaveSafe === undefined) {
+          data.secondTwilightCleaveSafe = 'unknown';
+        }
+
+        const [safeFirst] = data.twilightSafeFirst;
+
+        // If we couldn't find the first safe spot, at least remind players to bait puddles
+        if (safeFirst === undefined)
+          return output.bait!();
+
+        return output.combo!({
+          bait: output.bait!(),
+          dir1: output[safeFirst]!(),
+          dir2: output[data.secondTwilightCleaveSafe]!(),
+        });
       },
       run: (data) => {
-        if (data.replicaCleaveCount !== 2)
+        if (data.replicaCleaveCount !== 4)
           return;
         data.replicaCleaveCount = 0;
-        data.twilightSafe = Directions.outputIntercardDir;
+        data.twilightSafeFirst = Directions.outputIntercardDir;
+        data.twilightSafeSecond = Directions.outputIntercardDir;
       },
-      outputStrings: Directions.outputStringsIntercardDir,
+      outputStrings: {
+        ...Directions.outputStringsIntercardDir,
+        bait: Outputs.baitPuddles,
+        combo: {
+          en: '${bait} => ${dir1} => ${dir2}',
+          de: '${bait} => ${dir1} => ${dir2}',
+          fr: '${bait} => ${dir1} => ${dir2}',
+          ja: '${bait} => ${dir1} => ${dir2}',
+          cn: '${bait} => ${dir1} => ${dir2}',
+          ko: '${bait} => ${dir1} => ${dir2}',
+        },
+      },
     },
     {
       id: 'R4S Twilight Sabbath + Wicked Special',

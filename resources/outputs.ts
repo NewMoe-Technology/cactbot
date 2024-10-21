@@ -429,6 +429,13 @@ export default {
     cn: '离开近战距离',
     ko: '근접범위 밖으로',
   },
+  // be just outside the boss's target circle
+  outOfHitbox: {
+    en: 'Out of hitbox',
+    fr: 'Extérieur de la hitbox',
+    cn: '离开目标圈',
+    ko: '히트박스 밖으로',
+  },
   inThenOut: {
     en: 'In => out',
     de: 'Rein, dann raus',
@@ -1001,6 +1008,20 @@ export default {
     ja: ' => ',
     cn: ' => ',
     ko: ' => ',
+  },
+  // for combo mechanics/names
+  and: {
+    en: ' + ',
+    fr: ' + ',
+    cn: ' + ',
+    ko: ' + ',
+  },
+  // for either/or directions or mechanics
+  or: {
+    en: ' / ',
+    fr: ' / ',
+    cn: ' / ',
+    ko: ' / ',
   },
   // Literal numbers.
   num0: numberToOutputString(0),
