@@ -7,10 +7,14 @@ const effectB9AMap = {
   blueCircleBack: '2D4',
 };
 const directionOutputStrings = {
-  ...Directions.outputStringsCardinalDir,
+  ...Directions.outputStrings8Dir,
   unknown: Outputs.unknown,
   goLeft: Outputs.left,
   goRight: Outputs.right,
+  stay: {
+    en: 'Stay',
+  },
+  num2: Outputs.num2,
   separator: {
     en: ' => ',
     de: ' => ',
@@ -18,6 +22,17 @@ const directionOutputStrings = {
     ja: ' => ',
     cn: ' => ',
     ko: ' => ',
+  },
+  intercardStay: {
+    en: '${dir} => Stay',
+  },
+  numHits: {
+    en: '${dir} x${num}',
+    de: '${dir} x${num}',
+    fr: '${dir} x${num}',
+    ja: '${dir} x${num}',
+    cn: '${dir} x${num}',
+    ko: '${dir} x${num}',
   },
   combo: {
     en: '${dirs}',
@@ -40,6 +55,32 @@ const isEffectB9AValue = (value) => {
   if (value === undefined)
     return false;
   return Object.values(effectB9AMap).includes(value);
+};
+const getCleaveDirs = (actors, storedCleaves) => {
+  const dirs = storedCleaves.map((entry) => {
+    const actor = actors.find((actor) => actor.ID === entry.id);
+    if (actor === undefined)
+      return 'unknown';
+    const actorFacing = Directions.hdgTo4DirNum(actor.Heading);
+    const offset = entry.dir === 'left' ? 1 : -1;
+    return Directions.outputFromCardinalNum((actorFacing + 4 + offset) % 4);
+  });
+  if (dirs.length === 1)
+    return dirs;
+  // Check if all directions lead to the same intercard. If so, there's no
+  // reason to call a sequence. We don't need to check the cardinals,
+  // because it will only be true either when there is exactly one element,
+  // or in the extremely unlikely event that every clone pointed in the same
+  // direction.
+  if (dirs.every((dir) => ['dirN', 'dirE'].includes(dir)))
+    return ['dirNE'];
+  if (dirs.every((dir) => ['dirS', 'dirE'].includes(dir)))
+    return ['dirSE'];
+  if (dirs.every((dir) => ['dirS', 'dirW'].includes(dir)))
+    return ['dirSW'];
+  if (dirs.every((dir) => ['dirN', 'dirW'].includes(dir)))
+    return ['dirNW'];
+  return dirs;
 };
 const npcYellData = {
   // Offsets: 456920,494045,510794
@@ -111,24 +152,18 @@ Options.Triggers.push({
     },
     {
       id: 'R4N Clone Cleave Collector',
-      type: 'CombatantMemory',
-      // Filter to only enemy actors for performance
-      // TODO: Change this to an ActorControlExtra line if OverlayPlugin adds SetModelState as a valid category
-      netRegex: {
-        id: '4[0-9A-Fa-f]{7}',
-        pair: [{ key: 'WeaponId', value: ['33', '121'] }],
-        capture: true,
-      },
+      type: 'ActorControlExtra',
+      // category: 0197 - PlayActionTimeline
+      // param1: 11D6 - right cleave
+      // param1: 11D8 - left cleave
+      netRegex: { category: '0197', param1: ['11D6', '11D8'] },
       condition: (data, matches) => {
         const actorID = parseInt(matches.id, 16);
         const initActorData = data.actors.find((actor) => actor.ID === actorID);
         if (!initActorData)
           return false;
-        const weaponId = matches.pairWeaponId;
-        if (weaponId === undefined)
-          return false;
-        const cleaveDir = weaponId === '121' ? 'left' : 'right';
-        // Sometimes we get extra lines with weaponId changed. Update an existing actor if it's already in the array.
+        const cleaveDir = matches.param1 === '11D8' ? 'left' : 'right';
+        // Check for an existing entry in case we get extra lines
         const existingCleave = data.storedCleaves.find((cleave) => cleave.id === actorID);
         if (existingCleave !== undefined) {
           existingCleave.dir = cleaveDir;
@@ -146,15 +181,12 @@ Options.Triggers.push({
       durationSeconds: 7.3,
       suppressSeconds: 1,
       infoText: (data, _matches, output) => {
-        const dirs = data.storedCleaves.map((entry) => {
-          const actor = data.actors.find((actor) => actor.ID === entry.id);
-          if (actor === undefined)
-            return output.unknown();
-          const actorFacing = Directions.hdgTo4DirNum(actor.Heading);
-          const offset = entry.dir === 'left' ? 1 : -1;
-          return Directions.outputFromCardinalNum((actorFacing + 4 + offset) % 4);
-        }).map((dir) => output[dir]());
-        return output.combo({ dirs: dirs.join(output.separator()) });
+        const dirs = getCleaveDirs(data.actors, data.storedCleaves);
+        const mappedDirs = dirs.map((dir) => output[dir]());
+        /* if we collapsed the callout to intercard, include x2 */
+        if (mappedDirs.length === 1 && data.storedCleaves.length === 2)
+          return output.numHits({ dir: mappedDirs[0], num: output.num2() });
+        return output.combo({ dirs: mappedDirs.join(output.separator()) });
       },
       run: (data) => {
         if (data.expectedCleaves === 1)
@@ -212,18 +244,26 @@ Options.Triggers.push({
       netRegex: { id: ['92BC', '92BE', '92BD', '92BF'], source: 'Wicked Thunder', capture: true },
       durationSeconds: 7.3,
       infoText: (data, matches, output) => {
+        const cleaveDir = ['92BC', '92BE'].includes(matches.id) ? 'right' : 'left';
+        const actorID = parseInt(matches.sourceId, 16);
         // If this is the first cleave, it's boss relative because boss isn't fixed north
-        if (data.sidewiseSparkCounter === 0)
-          return ['92BC', '92BE'].includes(matches.id) ? output.goLeft() : output.goRight();
-        const dirs = data.storedCleaves.map((entry) => {
-          const actor = data.actors.find((actor) => actor.ID === entry.id);
-          if (actor === undefined)
-            return output.unknown();
-          const actorFacing = Directions.hdgTo4DirNum(actor.Heading);
-          const offset = entry.dir === 'left' ? 1 : -1;
-          return Directions.outputFromCardinalNum((actorFacing + 4 + offset) % 4);
+        if (data.storedCleaves.length === 0)
+          return cleaveDir === 'right' ? output.goLeft() : output.goRight();
+        data.storedCleaves.push({
+          dir: cleaveDir,
+          id: actorID,
         });
-        dirs.push(['92BC', '92BE'].includes(matches.id) ? 'dirW' : 'dirE');
+        // If we got 5 hits, the first 2 were already called out while
+        // collecting the clone hits. Don't repeat them.
+        const remainingHits = data.storedCleaves.length === 5
+          ? data.storedCleaves.slice(-3)
+          : data.storedCleaves;
+        const dirs = getCleaveDirs(data.actors, remainingHits);
+        if (dirs.length === 1) {
+          const dir = dirs[0];
+          const mappedDir = output[dir]();
+          return output.intercardStay({ dir: mappedDir });
+        }
         const mappedDirs = dirs.map((dir) => output[dir]());
         return output.combo({ dirs: mappedDirs.join(output.separator()) });
       },
@@ -339,7 +379,7 @@ Options.Triggers.push({
           de: 'Ost-Offset sicher',
           fr: 'Offset Est sûr',
           ja: '最東端の床へ',
-          cn: '右(东)侧 安全',
+          cn: '偏右侧安全',
           ko: '동쪽 끝 안전',
         },
       },
@@ -357,7 +397,7 @@ Options.Triggers.push({
           de: 'Süd-Offset sicher',
           fr: 'Offset Sud sûr',
           ja: '最南端の床へ',
-          cn: '下(南)侧 安全',
+          cn: '偏下侧安全',
           ko: '남쪽 끝 안전',
         },
       },
@@ -375,7 +415,7 @@ Options.Triggers.push({
           de: 'West-Offset sicher',
           fr: 'Offset Ouest sûr',
           ja: '最西端の床へ',
-          cn: '左(西)侧 安全',
+          cn: '偏左侧安全',
           ko: '서쪽 끝 안전',
         },
       },
@@ -393,7 +433,7 @@ Options.Triggers.push({
           de: 'Nord-Offset sicher',
           fr: 'Offset Nord sûr',
           ja: '最北端の床へ',
-          cn: '上(北)侧 安全',
+          cn: '偏上侧安全',
           ko: '북쪽 끝 안전',
         },
       },
