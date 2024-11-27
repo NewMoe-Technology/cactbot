@@ -236,6 +236,7 @@ const data = {
   'ForlornGlory': 1051,
   'Foundation': 418,
   'FourPlayerMahjongQuickMatchKuitanDisabled': 831,
+  'FuturesRewrittenUltimate': 1238,
   'Garlemald': 958,
   'GenerationalBonding': 1115,
   'Halatali': 1245,
