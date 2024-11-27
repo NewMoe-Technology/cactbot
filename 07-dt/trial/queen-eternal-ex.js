@@ -191,11 +191,15 @@ Options.Triggers.push({
         rightLeft: Outputs.rightThenLeft,
         left: {
           en: 'Knockback Left',
+          fr: 'Poussée Gauche',
           cn: '向左击退',
+          ko: '왼쪽 넉백',
         },
         right: {
           en: 'Knockback Right',
+          fr: 'Pousée Droite',
           cn: '向右击退',
+          ko: '오른쪽 넉백',
         },
         break: Outputs.breakChains,
         unknown: Outputs.unknown,
@@ -234,7 +238,9 @@ Options.Triggers.push({
       outputStrings: {
         up: {
           en: 'Up',
+          fr: 'En haut',
           cn: '上浮',
+          ko: '공중으로',
         },
       },
     },
@@ -247,7 +253,9 @@ Options.Triggers.push({
       outputStrings: {
         downSoak: {
           en: 'Down, soak tower',
+          fr: 'En bas, prenez une tour',
           cn: '下降 => 踩塔',
+          ko: '하강, 기둥 밟기',
         },
       },
     },
@@ -269,7 +277,9 @@ Options.Triggers.push({
       outputStrings: {
         cone: {
           en: 'Cone on YOU',
+          fr: 'Cône sur VOUS',
           cn: '扇形点名',
+          ko: '산개징 대상자',
         },
       },
     },
@@ -286,7 +296,9 @@ Options.Triggers.push({
       outputStrings: {
         downSoak: {
           en: 'Down, soak tower',
+          fr: 'En bas, prenez une tour',
           cn: '下降 => 踩塔',
+          ko: '하강, 기둥 밟기',
         },
       },
     },
@@ -305,7 +317,9 @@ Options.Triggers.push({
       outputStrings: {
         text: {
           en: 'Hide behind rocks',
+          fr: 'Cachez-vous derrière les rochers',
           cn: '躲在石头后',
+          ko: '돌 뒤로 숨기',
         },
       },
     },
@@ -387,7 +401,9 @@ Options.Triggers.push({
         ...Directions.outputStringsCardinalDir,
         text: {
           en: '${laserDir} laser, ${sideDir} side, w/ ${partner}',
+          fr: 'Laser ${laserDir} , côté ${sideDir}, avec ${partner}',
           cn: '${laserDir} 激光, ${sideDir} 侧, 和 ${partner}',
+          ko: '${laserDir} 레이저, ${sideDir}쪽, 파트너: ${partner}',
         },
         unknown: Outputs.unknown,
       },
@@ -423,7 +439,9 @@ Options.Triggers.push({
       outputStrings: {
         spread: {
           en: 'Flare Marker Spread',
+          fr: 'Dispersion marqueur Brasier',
           cn: '核爆点名分散',
+          ko: '플레어 징 산개',
         },
         stack: Outputs.stackMarker,
         dorito: Outputs.doritoStack,
@@ -484,15 +502,21 @@ Options.Triggers.push({
       outputStrings: {
         unknown: {
           en: 'Spread ???, stretch tethers',
+          fr: 'Dispersion ???, étirez les liens',
           cn: '???分散, 拉线至变色',
+          ko: '??? 산개, 선 늘이기',
         },
         west: {
           en: 'Spread West, stretch tethers',
+          fr: 'Dispersion Est, étirez les liens',
           cn: '左分散, 拉线至变色',
+          ko: '서쪽 산개, 선 늘이기',
         },
         east: {
           en: 'Spread East, stretch tethers',
+          fr: 'Dispersion Ouest, étirez les liens',
           cn: '右分散, 拉线至变色',
+          ko: '동쪽 산개, 선 늘이기',
         },
       },
     },
@@ -549,15 +573,21 @@ Options.Triggers.push({
         unknown: Outputs.unknown,
         wind: {
           en: 'Wind/Green',
+          fr: 'Vent/Vert',
           cn: '风/绿地板',
+          ko: '바람/초록',
         },
         earth: {
           en: 'Earth/Yellow',
+          fr: 'Terre/Jaune',
           cn: '土/黄地板',
+          ko: '땅/노랑',
         },
         ice: {
           en: 'Ice/Blue',
+          fr: 'Glace/Bleu',
           cn: '冰/蓝地板',
+          ko: '얼음/파랑',
         },
         combo: {
           en: '${elem} => ${spread}',
@@ -595,7 +625,9 @@ Options.Triggers.push({
       outputStrings: {
         back: {
           en: 'Back, Tank Towers => AoE',
+          fr: 'Arrière, Tours Tank => AoE',
           cn: '去后半场, 坦克踩塔 => AoE',
+          ko: '뒤로, 탱커 기둥 => 전체 공격',
         },
       },
     },

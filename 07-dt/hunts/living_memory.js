@@ -92,7 +92,9 @@ const cardOutputStrings = {
   unknown: Outputs.unknown,
   start: {
     en: 'Start ${dir}',
+    fr: 'Début ${dir}',
     cn: '${dir} 开始',
+    ko: '${dir} 시작',
   },
 };
 Options.Triggers.push({
@@ -327,7 +329,9 @@ Options.Triggers.push({
       outputStrings: {
         avoid: {
           en: 'Dodge puddles',
+          fr: 'Évitez les flaques',
           cn: '躲避圈圈',
+          ko: '장판 피하기',
         },
       },
     },
