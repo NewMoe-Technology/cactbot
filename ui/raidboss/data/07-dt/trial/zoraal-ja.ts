@@ -167,7 +167,7 @@ const forgedTrackCleaveMap: {
 
 export interface Data extends RaidbossData {
   bitterReapingTargets: string[];
-  seenFirstSync: boolean; // all future Chasm of Vollok swords are on mirror platforms
+  seenFirstSync: boolean; // all future Chasm Of Vollok swords are on mirror platforms
   unsafeTiles: MappedTile[];
   halfCircuitSafeSide?: 'left' | 'right';
 }
@@ -222,13 +222,14 @@ const triggerSet: TriggerSet<Data> = {
     {
       id: 'ZoraalJa Shadow Burst',
       type: 'StartsUsing',
-      netRegex: { id: '934D', source: 'Shadow of Tural', capture: false },
+      netRegex: { id: '934D', source: 'Shadow Of Tural', capture: false },
       delaySeconds: 3,
       suppressSeconds: 1,
       infoText: (_data, _matches, output) => output.away!(),
       outputStrings: {
         away: {
           en: 'Away from adds',
+          de: 'Weg von den Adds',
           fr: 'Éloignez-vous des adds',
           cn: '远离小怪',
           ko: '쫄들과 멀어지기',
@@ -244,6 +245,7 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         dodgeCombo: {
           en: 'Dodge contracting swords (front/back combo after)',
+          de: 'Weiche den Schwertern aus (vorne/hinten Kombo danach)',
           fr: 'Esquivez les épées combattantes (combo avant/arrière ensuite)',
           cn: '躲避向内步进 AOE (然后前后刀)',
           ko: '모여드는 칼 피하기 (이후 앞/뒤 콤보)',
@@ -260,6 +262,7 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         dodge: {
           en: 'Dodge expanding swords',
+          de: 'Weiche den ausbreitenden Schwertern aus',
           fr: 'Évitez les épées en expansion',
           cn: '躲避向外步进 AOE',
           ko: '퍼져 나가는 칼 피하기',
@@ -275,7 +278,7 @@ const triggerSet: TriggerSet<Data> = {
       response: Responses.bigAoe('alert'),
     },
     {
-      id: 'ZoraalJa Dawn of an Age',
+      id: 'ZoraalJa Dawn Of An Age',
       type: 'StartsUsing',
       netRegex: { id: '9354', source: 'Zoraal Ja', capture: false },
       response: Responses.aoe(),
@@ -332,7 +335,7 @@ const triggerSet: TriggerSet<Data> = {
       run: (data) => data.seenFirstSync = true,
     },
     {
-      id: 'ZoraalJa Chasm of Vollok Sword Collect',
+      id: 'ZoraalJa Chasm Of Vollok Sword Collect',
       type: 'StartsUsing',
       netRegex: { id: '9358', source: 'Fang' },
       run: (data, matches) => {
@@ -345,7 +348,7 @@ const triggerSet: TriggerSet<Data> = {
       },
     },
     {
-      id: 'ZoraalJa Chasm of Vollok',
+      id: 'ZoraalJa Chasm Of Vollok',
       type: 'StartsUsing',
       netRegex: { id: '9358', source: 'Fang', capture: false },
       delaySeconds: 0.2,
@@ -367,6 +370,7 @@ const triggerSet: TriggerSet<Data> = {
         westCorner: Outputs.west,
         unknown: {
           en: 'Avoid swords',
+          de: 'Weiche den Schwertern aus',
           fr: 'Évitez les épées',
           cn: '躲避剑',
           ko: '칼 피하기',
@@ -422,30 +426,35 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         insideNorth: {
           en: 'Inner North Diamond',
+          de: 'Innerer Nord-Diamant',
           fr: 'Diamand nord intérieur',
           cn: '上内侧方格',
           ko: '안 북쪽 칸',
         },
         insideEast: {
           en: 'Inner East Diamond',
+          de: 'Innerer Ost-Diamant',
           fr: 'Diamand est intérieur',
           cn: '右内侧方格',
           ko: '안 동쪽 칸',
         },
         insideSouth: {
           en: 'Inner South Diamond',
+          de: 'Innerer Süd-Diamant',
           fr: 'Diamand sud intérieur',
           cn: '下内侧方格',
           ko: '안 남쪽 칸',
         },
         insideWest: {
           en: 'Inner West Diamond',
+          de: 'Innerer West-Diamant',
           fr: 'Diamand est intérieur',
           cn: '左内侧方格',
           ko: '안 서쪽 칸',
         },
         unknown: {
           en: 'Avoid Line Cleaves',
+          de: 'Weiche den Linien-Cleaves aus',
           fr: 'Évitez les cleaves en ligne',
           cn: '躲避直线剑击',
           ko: '직선 장판 피하기',
@@ -531,82 +540,122 @@ const triggerSet: TriggerSet<Data> = {
   timelineReplace: [
     {
       'locale': 'de',
-      'missingTranslations': true,
       'replaceSync': {
         'Fang': 'Reißzahn',
+        'Shadow Of Tural': 'Schatten Turals',
         'Zoraal Ja': 'Zoraal Ja',
       },
       'replaceText': {
         'Actualize': 'Verwirklichung',
+        'Bitter Reaping': 'Bittere Ernte',
         'Blade Warp': 'Klingensprung',
-        'Chasm of Vollok': 'Klippe von Vollok',
-        'Dawn of an Age': 'Dämmerung eines Zeitalters',
+        'Burst': 'Explosion',
+        'Calamity\'s Edge': 'Klinge des Unheils',
+        'Chasm Of Vollok': 'Spalt von Vollok',
+        'Dawn Of An Age': 'Dämmerung eines Zeitalters',
+        'Double-edged Swords': 'Zweischneidige Schwerter',
         'Duty\'s Edge': 'Pflichtes Schneide',
+        'Fire III': 'Feuga',
         'Forged Track': 'Unbestimmter Pfad',
+        'Gateway': 'Tor der Welten',
         'Half Circuit': 'Halbe Runde',
         'Half Full': 'Halbes Ganzes',
+        'Patricidal Pique': 'Pein des Patrizids',
+        'Smiting Circuit': 'Rundumschlitzer',
+        'Soul Overflow': 'Seelenüberfluss',
         'Sync(?![-h])': 'Synchro',
         '(?<! )Vollok': 'Vollok',
+        'Vorpal Trail': 'Tödlicher Pfad',
       },
     },
     {
       'locale': 'fr',
-      'missingTranslations': true,
       'replaceSync': {
         'Fang': 'crochet',
+        'Shadow Of Tural': 'ombre sacrifiée',
         'Zoraal Ja': 'Zoraal Ja',
       },
       'replaceText': {
         'Actualize': 'Actualisation',
+        'Bitter Reaping': 'Récolte amère',
         'Blade Warp': 'Invocation incisive',
-        'Chasm of Vollok': 'Trappe de Vollok',
-        'Dawn of an Age': 'Âge de l\'aurore',
+        'Burst': 'Explosion',
+        'Calamity\'s Edge': 'Lames calamiteuses',
+        'Chasm Of Vollok': 'Trappe de Vollok',
+        'Dawn Of An Age': 'Âge de l\'aurore',
+        'Double-edged Swords': 'Doubles tranchants',
         'Duty\'s Edge': 'Devoir d\'acier',
+        'Fire III': 'Méga Feu',
         'Forged Track': 'Traque incisive',
+        'Gateway': 'Passerelle',
         'Half Circuit': 'Demi-circuit',
         'Half Full': 'Demi-plénitude',
+        'Patricidal Pique': 'Parricide',
+        'Smiting Circuit': 'Circuit frappeur',
+        'Soul Overflow': 'Débordement spirituel',
         'Sync(?![-h])': 'Synchronisation',
         '(?<! )Vollok': 'Vollok',
+        'Vorpal Trail': 'Traînée vorpale',
       },
     },
     {
       'locale': 'ja',
-      'missingTranslations': true,
       'replaceSync': {
         'Fang': '双牙剣',
+        'Shadow Of Tural': '民の幻影',
         'Zoraal Ja': 'ゾラージャ',
       },
       'replaceText': {
         'Actualize': 'アクチュアライズ',
+        'Bitter Reaping': 'ビターリープ',
         'Blade Warp': 'サモンエッジ',
-        'Chasm of Vollok': 'ピット・オブ・ヴォロク',
-        'Dawn of an Age': 'ドーン・エイジ',
+        'Burst': '爆発',
+        'Calamity\'s Edge': 'カラミティエッジ',
+        'Chasm Of Vollok': 'ピット・オブ・ヴォロク',
+        'Dawn Of An Age': 'ドーン・エイジ',
+        'Double-edged Swords': 'ツインエッジ',
         'Duty\'s Edge': 'デューティエッジ',
+        'Fire III': 'ファイガ',
         'Forged Track': 'エッジトラック',
+        'Gateway': 'ゲートウェイ',
         'Half Circuit': 'ルーズハーフ・サーキット',
         'Half Full': 'ルーズハーフ',
+        'Patricidal Pique': 'パトリサイド',
+        'Smiting Circuit': 'スマイティング・サーキット',
+        'Soul Overflow': 'ソウル・オーバーフロー',
         'Sync(?![-h])': 'シンクロナス',
         '(?<! )Vollok': 'エッジ・ザ・ヴォロク',
+        'Vorpal Trail': 'エッジトレイル',
       },
     },
     {
       'locale': 'cn',
-      'missingTranslations': true,
       'replaceSync': {
         'Fang': '双牙剑',
+        'Shadow Of Tural': '民众的幻影',
         'Zoraal Ja': '佐拉加',
       },
       'replaceText': {
         'Actualize': '自我实现',
+        'Bitter Reaping': '愤恨收割',
         'Blade Warp': '利刃召唤',
-        'Chasm of Vollok': '无敌裂斩',
-        'Dawn of an Age': '新曦世纪',
+        'Burst': '爆炸',
+        'Calamity\'s Edge': '灾祸斩',
+        'Chasm Of Vollok': '无敌裂斩',
+        'Dawn Of An Age': '新曦世纪',
+        'Double-edged Swords': '双锋合刃',
         'Duty\'s Edge': '责任之刃',
+        'Fire III': '爆炎',
         'Forged Track': '利刃冲',
+        'Gateway': '通路',
         'Half Circuit': '回旋半身残',
         'Half Full': '半身残',
+        'Patricidal Pique': '弑父之愤火',
+        'Smiting Circuit': '回旋惩击',
+        'Soul Overflow': '灵魂超载',
         'Sync(?![-h])': '同步',
         '(?<! )Vollok': '无敌刃',
+        'Vorpal Trail': '利刃寻迹',
       },
     },
   ],

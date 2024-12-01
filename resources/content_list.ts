@@ -445,6 +445,7 @@ const contentList: (ZoneIdType)[] = [
   ZoneId.TheEpicOfAlexanderUltimate,
   ZoneId.DragonsongsRepriseUltimate,
   ZoneId.TheOmegaProtocolUltimate,
+  ZoneId.FuturesRewrittenUltimate,
 ];
 
 export default contentList;

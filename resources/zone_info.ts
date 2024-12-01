@@ -10232,6 +10232,20 @@ const data: ZoneInfoType = {
     'sizeFactor': 100,
     'weatherRate': 0,
   },
+  1238: {
+    'contentType': 28,
+    'exVersion': 5,
+    'name': {
+      'de': 'Eine zweite Zukunft (fatal)',
+      'en': 'Futures Rewritten (Ultimate)',
+      'fr': 'Avenirs réécrits (fatal)',
+      'ja': '絶もうひとつの未来',
+    },
+    'offsetX': -100,
+    'offsetY': -100,
+    'sizeFactor': 400,
+    'weatherRate': 0,
+  },
   1239: {
     'contentType': 4,
     'exVersion': 5,
