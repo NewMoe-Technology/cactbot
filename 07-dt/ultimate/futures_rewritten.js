@@ -1,3 +1,20 @@
+const centerX = 100;
+const centerY = 100;
+const isCardinalDir = (dir) => {
+  return Directions.outputCardinalDir.includes(dir);
+};
+// Ordering here matters - the "G1" directions are first, followed by "G2" directions.
+// Maybe add a config for this? But for now, assume that N->CCW is G1 and NE->CW is G2.
+const p2KnockbackDirs = [
+  'dirN',
+  'dirNW',
+  'dirW',
+  'dirSW',
+  'dirS',
+  'dirSE',
+  'dirE',
+  'dirNE',
+];
 Options.Triggers.push({
   id: 'FuturesRewrittenUltimate',
   zoneId: ZoneId.FuturesRewrittenUltimate,
@@ -7,6 +24,10 @@ Options.Triggers.push({
       actorSetPosTracker: {},
       p1ConcealSafeDirs: [...Directions.output8Dir],
       p1FallOfFaithTethers: [],
+      p2QuadrupleFirstTarget: '',
+      p2QuadrupleDebuffApplied: false,
+      p2IcicleImpactStart: 'unknown',
+      p2FrigidStoneTargets: [],
     };
   },
   timelineTriggers: [],
@@ -37,6 +58,7 @@ Options.Triggers.push({
           de: 'Himmelsrichtungen => Paare',
           ja: '八方向 => ペア',
           cn: '八方 => 两人分摊',
+          ko: '8방향 => 쉐어',
         },
       },
     },
@@ -56,6 +78,7 @@ Options.Triggers.push({
           de: 'Himmelsrichtungen => Verteilen',
           ja: '八方向 => 散開',
           cn: '八方 => 分散',
+          ko: '8방향 => 산개',
         },
       },
     },
@@ -110,6 +133,7 @@ Options.Triggers.push({
           de: '${dir1} / ${dir2} => ${mech}',
           ja: '${dir1} / ${dir2} => ${mech}',
           cn: '${dir1} / ${dir2} => ${mech}',
+          ko: '${dir1} / ${dir2} => ${mech}',
         },
         stack: Outputs.stacks,
         spread: Outputs.spread,
@@ -167,6 +191,7 @@ Options.Triggers.push({
           de: 'Blitz Sicher',
           ja: '雷安置',
           cn: '雷安全',
+          ko: '번개 안전',
         },
       },
     },
@@ -182,6 +207,7 @@ Options.Triggers.push({
           de: 'Feuer Sicher',
           ja: '炎安置',
           cn: '火安全',
+          ko: '불 안전',
         },
       },
     },
@@ -222,46 +248,196 @@ Options.Triggers.push({
           de: 'Feuer',
           ja: '炎',
           cn: '火',
+          ko: '불',
         },
         lightning: {
           en: 'Lightning',
           de: 'Blitz',
           ja: '雷',
           cn: '雷',
+          ko: '번개',
         },
         one: {
           en: '1',
           de: '1',
           ja: '1',
           cn: '1',
+          ko: '1',
         },
         two: {
           en: '2',
           de: '2',
           ja: '2',
           cn: '2',
+          ko: '2',
         },
         three: {
           en: '3',
           de: '3',
           ja: '3',
           cn: '3',
+          ko: '3',
         },
         tether: {
           en: '${num}: ${elem}',
           de: '${num}: ${elem}',
           ja: '${num}: ${elem}',
           cn: '${num}: ${elem}',
+          ko: '${num}: ${elem}',
         },
         all: {
           en: '${e1} => ${e2} => ${e3} => ${e4}',
           de: '${e1} => ${e2} => ${e3} => ${e4}',
           ja: '${e1} => ${e2} => ${e3} => ${e4}',
           cn: '${e1} => ${e2} => ${e3} => ${e4}',
+          ko: '${e1} => ${e2} => ${e3} => ${e4}',
         },
       },
     },
     // P2 -- Usurper Of Frost
+    {
+      id: 'FRU P2 Quadruple Slap First',
+      type: 'StartsUsing',
+      netRegex: { id: '9CFF', source: 'Usurper of Frost' },
+      response: Responses.tankBuster(),
+      run: (data, matches) => data.p2QuadrupleFirstTarget = matches.target,
+    },
+    {
+      // Cleansable debuff may be applied with first cast (9CFF)
+      // although there are ways to avoid appplication (e.g. Warden's Paean)
+      id: 'FRU P2 Quadruple Slap Debuff Gain',
+      type: 'GainsEffect',
+      netRegex: { effectId: '1042', source: 'Usurper of Frost', capture: false },
+      run: (data) => data.p2QuadrupleDebuffApplied = true,
+    },
+    {
+      id: 'FRU P2 Quadruple Slap Debuff Loss',
+      type: 'LosesEffect',
+      netRegex: { effectId: '1042', source: 'Usurper of Frost', capture: false },
+      run: (data) => data.p2QuadrupleDebuffApplied = false,
+    },
+    {
+      id: 'FRU P2 Quadruple Slap Second',
+      type: 'StartsUsing',
+      // short (2.2s) cast time
+      netRegex: { id: '9D00', source: 'Usurper of Frost' },
+      response: (data, matches, output) => {
+        // cactbot-builtin-response
+        output.responseOutputStrings = {
+          onYou: Outputs.tankBusterOnYou,
+          onTarget: Outputs.tankBusterOnPlayer,
+          busterCleanse: {
+            en: '${buster} (Cleanse?)',
+          },
+        };
+        const onTarget = output.onTarget({ player: data.party.member(matches.target) });
+        let busterStr;
+        if (data.me === matches.target)
+          busterStr = output.onYou();
+        else if (
+          data.p2QuadrupleFirstTarget === matches.target &&
+          data.p2QuadrupleDebuffApplied &&
+          data.CanCleanse()
+        ) {
+          busterStr = output.busterCleanse({ buster: onTarget });
+        } else
+          busterStr = onTarget;
+        if (data.me === matches.target || data.role === 'healer')
+          return { alertText: busterStr };
+        return { infoText: busterStr };
+      },
+    },
+    {
+      id: 'FRU P2 Diamond Dust',
+      type: 'StartsUsing',
+      netRegex: { id: '9D05', source: 'Usurper of Frost', capture: false },
+      response: Responses.bigAoe(),
+    },
+    {
+      id: 'FRU P2 Axe/Scythe Kick Collect',
+      type: 'StartsUsing',
+      // 9D0A - Axe Kick (be out), 9D0B - Scythe Kick (be in)
+      netRegex: { id: ['9D0A', '9D0B'], source: 'Oracle\'s Reflection' },
+      // there are 2 actors 180 degrees apart, but we only need to collect one
+      run: (data, matches) => data.p2AxeScytheSafe = matches.id === '9D0A' ? 'out' : 'in',
+    },
+    {
+      id: 'FRU P2 Icicle Impact Initial Collect',
+      type: 'StartsUsingExtra',
+      netRegex: { id: '9D06' },
+      // there are 2 actors 180 degrees apart, but we only need to collect one
+      condition: (data) => data.p2IcicleImpactStart === 'unknown',
+      suppressSeconds: 1,
+      run: (data, matches) => {
+        const x = parseFloat(matches.x);
+        const y = parseFloat(matches.y);
+        const dir = Directions.xyTo8DirOutput(x, y, centerX, centerY);
+        data.p2IcicleImpactStart = dir;
+      },
+    },
+    {
+      id: 'FRU P2 House of Light/Frigid Stone',
+      type: 'HeadMarker',
+      netRegex: { id: '0159' },
+      alertText: (data, matches, output) => {
+        data.p2FrigidStoneTargets.push(matches.target);
+        if (data.p2FrigidStoneTargets.length !== 4)
+          return;
+        const inOut = data.p2AxeScytheSafe ? output[data.p2AxeScytheSafe]() : output.unknown();
+        // Assumes that if first Icicle Impacts spawn on cardinals, House of Light baits will also be
+        // cardinals and Frigid Stone puddle drops will be intercards, and vice versa.
+        if (data.p2FrigidStoneTargets.includes(data.me)) {
+          const dir = data.p2IcicleImpactStart === 'unknown'
+            ? output.unknown()
+            : (isCardinalDir(data.p2IcicleImpactStart)
+              ? output.intercards()
+              : output.cardinals());
+          return output.dropPuddle({ inOut: inOut, dir: dir });
+        }
+        const dir = data.p2IcicleImpactStart === 'unknown'
+          ? output.unknown()
+          : (isCardinalDir(data.p2IcicleImpactStart) ? output.cardinals() : output.intercards());
+        return output.baitCleave({ inOut: inOut, dir: dir });
+      },
+      outputStrings: {
+        dropPuddle: {
+          en: '${inOut} + Far => Drop Puddle (${dir})',
+        },
+        baitCleave: {
+          en: '${inOut} + Close Bait (${dir})',
+        },
+        in: Outputs.in,
+        out: Outputs.out,
+        cardinals: Outputs.cardinals,
+        intercards: Outputs.intercards,
+        unknown: Outputs.unknown,
+      },
+    },
+    {
+      id: 'FRU P2 Heavenly Strike',
+      type: 'Ability',
+      // use the 'star' (Frigid Stone) drops to fire this alert, as Heavenly Strike has no cast time.
+      netRegex: { id: '9D07', capture: false },
+      suppressSeconds: 1,
+      alertText: (data, _matches, output) => {
+        const startDir = data.p2IcicleImpactStart;
+        const startIdx = p2KnockbackDirs.indexOf(startDir);
+        if (startIdx === -1)
+          return output.kb();
+        // give safe directional outputs in the same order they appear in p2KnockbackDirs
+        const dir1 = startIdx < 4 ? startDir : p2KnockbackDirs[startIdx - 4] ?? 'unknown';
+        const dir2 = startIdx >= 4 ? startDir : p2KnockbackDirs[startIdx + 4] ?? 'unknown';
+        return output.kbDir({ kb: output.kb(), dir1: output[dir1](), dir2: output[dir2]() });
+      },
+      outputStrings: {
+        kbDir: {
+          en: '${kb} (${dir1}/${dir2})',
+        },
+        kb: Outputs.knockback,
+        ...Directions.outputStrings8Dir,
+        unknown: Outputs.unknown,
+      },
+    },
     // Crystals
     // P3 -- Oracle Of Darkness
     // P4 -- Duo
@@ -271,6 +447,8 @@ Options.Triggers.push({
     {
       'locale': 'en',
       'replaceText': {
+        'Axe Kick/Scythe Kick': 'Axe/Scythe Kick',
+        'Shining Armor + Frost Armor': 'Shining + Frost Armor',
         'Sinbound Fire III/Sinbound Thunder III': 'Sinbound Fire/Thunder',
       },
     },
@@ -280,6 +458,9 @@ Options.Triggers.push({
       'replaceSync': {
         'Fatebreaker(?!\')': 'fusioniert(?:e|er|es|en) Ascian',
         'Fatebreaker\'s Image': 'Abbild des fusionierten Ascians',
+        'Usurper of Frost': 'Shiva-Mitron',
+        'Oracle\'s Reflection': 'Spiegelbild des Orakels',
+        'Ice Veil': 'Immerfrost-Kristall',
       },
       'replaceText': {
         'Blastburn': 'Brandstoß',
@@ -308,6 +489,9 @@ Options.Triggers.push({
       'replaceSync': {
         'Fatebreaker(?!\')': 'Sabreur de destins',
         'Fatebreaker\'s Image': 'double du Sabreur de destins',
+        'Usurper of Frost': 'Shiva-Mitron',
+        'Oracle\'s Reflection': 'reflet de la prêtresse',
+        'Ice Veil': 'bloc de glaces éternelles',
       },
       'replaceText': {
         'Blastburn': 'Explosion brûlante',
@@ -336,6 +520,9 @@ Options.Triggers.push({
       'replaceSync': {
         'Fatebreaker(?!\')': 'フェイトブレイカー',
         'Fatebreaker\'s Image': 'フェイトブレイカーの幻影',
+        'Usurper of Frost': 'シヴァ・ミトロン',
+        'Oracle\'s Reflection': '巫女の鏡像',
+        'Ice Veil': '永久氷晶',
       },
       'replaceText': {
         'Blastburn': 'バーンブラスト',
