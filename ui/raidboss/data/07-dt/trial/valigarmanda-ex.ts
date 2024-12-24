@@ -72,7 +72,7 @@ const bigAoeOutputStrings: OutputStrings = {
     fr: 'Donut (Intérieur)',
     ja: 'ドーナツの中へ',
     cn: '中间月环',
-    ko: '도넛 안으로',
+    ko: '도넛 (중앙으로)',
   },
   out: Outputs.outOfMelee,
 };
@@ -1165,7 +1165,8 @@ const triggerSet: TriggerSet<Data> = {
         'Ruin Foretold': '재앙의 징조',
         'Ruinfall': '재앙 강하',
         'Scourge of Fire': '화염의 재난',
-        'Scourge of Ice': '얼음의 재난',
+        'Scourge of Ice(?!/)': '얼음의 재난',
+        'Scourge of Ice/Fire': '얼음/불의 재난',
         'Scourge of Thunder': '번개의 재난',
         'Skyruin': '살아있는 재앙',
         'Slithering Strike': '미끄러운 강타',
