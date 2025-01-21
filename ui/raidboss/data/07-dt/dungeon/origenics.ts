@@ -610,7 +610,6 @@ const triggerSet: TriggerSet<Data> = {
     },
     {
       'locale': 'fr',
-      'missingTranslations': true,
       'replaceSync': {
         'Ambrose the Undeparted': 'Ambrose',
         'Deceiver': 'Mystificatrix',
@@ -619,6 +618,11 @@ const triggerSet: TriggerSet<Data> = {
         'Origenics Sentry G9': 'sentinelle de l\'Origenèse G9',
       },
       'replaceText': {
+        '--mid-north--': '--Milieu Nord--',
+        '\\(cages\\)': '(Cages)',
+        '\\(lance\\)': '(Lance)',
+        '\\(puddle drop\\)': '(Dépose des flaques)',
+        '\\(spread\\)': '(Dispersion)',
         'Bionic Thrash': 'Bras bionique',
         'Collective Agony': 'Agonie collective',
         'Convulsive Crush': 'Rouste',

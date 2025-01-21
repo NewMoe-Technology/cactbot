@@ -13,6 +13,9 @@ export interface Data extends RaidbossData {
 const triggerSet: TriggerSet<Data> = {
   id: 'MareLamentorum',
   zoneId: ZoneId.MareLamentorum,
+  comments: {
+    en: 'A Rank Hunts',
+  },
   resetWhenOutOfCombat: false,
   initData: () => {
     return {
