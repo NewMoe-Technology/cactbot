@@ -1,6 +1,9 @@
 Options.Triggers.push({
   id: 'TheRaktikaGreatwood',
   zoneId: ZoneId.TheRaktikaGreatwood,
+  comments: {
+    en: 'A Rank Hunts',
+  },
   triggers: [
     {
       id: 'Hunt Grassman Chest Thump',

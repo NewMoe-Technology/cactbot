@@ -1,6 +1,9 @@
 Options.Triggers.push({
   id: 'Labyrinthos',
   zoneId: ZoneId.Labyrinthos,
+  comments: {
+    en: 'A Rank Hunts',
+  },
   triggers: [
     {
       id: 'Hunt Hulder Lay of Mislaid Memory',

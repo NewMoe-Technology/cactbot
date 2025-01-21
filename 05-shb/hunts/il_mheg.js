@@ -1,6 +1,9 @@
 Options.Triggers.push({
   id: 'IlMheg',
   zoneId: ZoneId.IlMheg,
+  comments: {
+    en: 'A Rank Hunts',
+  },
   triggers: [
     {
       id: 'Hunt Pauldia Rusting Claw',

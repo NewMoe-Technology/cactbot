@@ -7,6 +7,9 @@ const effectIdToForcedMarchDir = {
 Options.Triggers.push({
   id: 'Urqopacha',
   zoneId: ZoneId.Urqopacha,
+  comments: {
+    en: 'A Rank Hunts',
+  },
   triggers: [
     // ****** A-RANK: Nechuciho ****** //
     {

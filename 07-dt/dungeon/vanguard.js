@@ -93,10 +93,9 @@ Options.Triggers.push({
       type: 'GainsEffect',
       netRegex: { effectId: 'EDA' },
       condition: Conditions.targetIsYou(),
-      // 15s duration - countdown ends at 14s for safety (game lag)
-      delaySeconds: 10,
-      durationSeconds: 5,
-      countdownSeconds: 14,
+      // 15s duration
+      delaySeconds: (_data, matches) => parseFloat(matches.duration) - 5,
+      countdownSeconds: 5,
       response: Responses.stopMoving(),
     },
     {
@@ -208,7 +207,6 @@ Options.Triggers.push({
     },
     {
       'locale': 'fr',
-      'missingTranslations': true,
       'replaceSync': {
         'Protector': 'Protecteur',
         'Vanguard Commander R8': 'commandant de L\'Avant-garde R8',
@@ -216,6 +214,9 @@ Options.Triggers.push({
         'Zander the Snakeskinner': 'Zander le constricteur',
       },
       'replaceText': {
+        '\\(corners\\)': '(Coins)',
+        '\\(ground AoEs\\)': '(AoE au sol)',
+        '\\(sides\\)': '(Côtés)',
         '(?<! )Rush': 'Ruée',
         'Aerial Offensive': 'Attaque aérienne',
         'Battery Circuit': 'Fulgurocanon rotatif',

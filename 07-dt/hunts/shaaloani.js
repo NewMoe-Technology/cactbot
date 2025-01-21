@@ -165,6 +165,9 @@ const identifyOrbSafeSpots = (pattern) => {
 Options.Triggers.push({
   id: 'Shaaloani',
   zoneId: ZoneId.Shaaloani,
+  comments: {
+    en: 'A Rank Hunts and Ttokrrone boss FATE',
+  },
   initData: () => ({
     yeheheTurnBuffs: [],
     ttokSandOrbs: [],

@@ -1,6 +1,9 @@
 Options.Triggers.push({
   id: 'YakTel',
   zoneId: ZoneId.YakTel,
+  comments: {
+    en: 'A Rank Hunts',
+  },
   initData: () => ({
     rraxTriplicateSafe: [],
   }),
