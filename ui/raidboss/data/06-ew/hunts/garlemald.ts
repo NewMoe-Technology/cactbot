@@ -10,6 +10,9 @@ export type Data = RaidbossData;
 const triggerSet: TriggerSet<Data> = {
   id: 'Garlemald',
   zoneId: ZoneId.Garlemald,
+  comments: {
+    en: 'A Rank Hunts',
+  },
   triggers: [
     {
       id: 'Hunt Aegeiros Leafstorm',

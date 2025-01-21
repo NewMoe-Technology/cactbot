@@ -70,7 +70,7 @@ const kDirectoryDefaultText = {
 };
 
 // Translating data folders to a category name.
-const kPrefixToCategory = {
+export const kPrefixToCategory = {
   '00-misc': {
     en: 'General Triggers',
     de: 'General Trigger',
@@ -138,7 +138,7 @@ const kPrefixToCategory = {
 };
 
 // Translating data subfolders to encounter type.
-const kDirectoryToCategory = {
+export const kDirectoryToCategory = {
   alliance: {
     en: 'Alliance Raid',
     de: 'Allianz-Raid',

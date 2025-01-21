@@ -20,6 +20,9 @@ export interface Data extends RaidbossData {
 const triggerSet: TriggerSet<Data> = {
   id: 'Urqopacha',
   zoneId: ZoneId.Urqopacha,
+  comments: {
+    en: 'A Rank Hunts',
+  },
   triggers: [
     // ****** A-RANK: Nechuciho ****** //
     {
