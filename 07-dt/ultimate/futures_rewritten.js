@@ -75,21 +75,27 @@ const findURNorthDirNum = (dirs) => {
 const p3UROutputStrings = {
   yNorthStrat: {
     en: '${debuff} (${dir})',
+    cn: '${debuff} (${dir})',
   },
   dirCombo: {
     en: '${inOut} + ${dir}',
+    cn: '${inOut} + ${dir}',
   },
   fireSpread: {
     en: 'Fire - Spread',
+    cn: '火分散',
   },
   dropRewind: {
     en: 'Drop Rewind',
+    cn: '放置回返',
   },
   baitStoplight: {
     en: 'Bait Stoplight',
+    cn: '引导激光',
   },
   avoidStoplights: {
     en: 'Avoid stoplights',
+    cn: '远离激光',
   },
   stack: Outputs.stackMarker,
   middle: Outputs.middle,
@@ -100,6 +106,7 @@ Options.Triggers.push({
   zoneId: ZoneId.FuturesRewrittenUltimate,
   comments: {
     en: 'Triggers: P1-3 / Timeline: P1-5',
+    cn: '触发器: P1-3 / 时间轴: P1-5',
   },
   config: [
     {
@@ -124,7 +131,7 @@ Options.Triggers.push({
       id: 'ultimateRel',
       comment: {
         en:
-          `Y North, DPS E-SW, Supp W-NE: <a href="https://pastebin.com/ue7w9jJH" target="_blank">LesBin<a>.  
+          `Y North, DPS E-SW, Supp W-NE: <a href="https://pastebin.com/ue7w9jJH" target="_blank">LesBin<a>.
           Directional output is true north (i.e., "east" means actual east,
           not wherever is east of the "Y" north spot).`,
       },
@@ -165,6 +172,7 @@ Options.Triggers.push({
       phase: 'p1',
       actorSetPosTracker: {},
       p1ConcealSafeDirs: [...Directions.output8Dir],
+      p1SeenBurnishedGlory: false,
       p1FallOfFaithTethers: [],
       p2QuadrupleFirstTarget: '',
       p2QuadrupleDebuffApplied: false,
@@ -312,6 +320,7 @@ Options.Triggers.push({
       type: 'StartsUsing',
       netRegex: { id: '9CEA', source: 'Fatebreaker', capture: false },
       response: Responses.bleedAoe(),
+      run: (data) => data.p1SeenBurnishedGlory = true,
     },
     {
       id: 'FRU P1 Burnt Strike Fire',
@@ -381,85 +390,104 @@ Options.Triggers.push({
     },
     {
       id: 'FRU P1 Fall of Faith Collector',
-      type: 'StartsUsing',
+      type: 'Tether',
       netRegex: {
-        id: ['9CC9', '9CCC'],
+        id: ['00F9', '011F'],
         source: ['Fatebreaker', 'Fatebreaker\'s Image'],
         capture: true,
       },
-      durationSeconds: (data) => data.p1FallOfFaithTethers.length >= 3 ? 8.7 : 3,
-      infoText: (data, matches, output) => {
-        const curTether = matches.id === '9CC9' ? 'fire' : 'lightning';
+      // Only collect after Burnished Glory, since '00F9' tethers are used during TotH.
+      condition: (data) => data.phase === 'p1' && data.p1SeenBurnishedGlory,
+      durationSeconds: (data) => data.p1FallOfFaithTethers.length >= 3 ? 12.2 : 3,
+      response: (data, matches, output) => {
+        // cactbot-builtin-response
+        output.responseOutputStrings = {
+          fire: {
+            en: 'Fire',
+            de: 'Feuer',
+            ja: '炎',
+            cn: '火',
+            ko: '불',
+          },
+          lightning: {
+            en: 'Lightning',
+            de: 'Blitz',
+            ja: '雷',
+            cn: '雷',
+            ko: '번개',
+          },
+          one: {
+            en: '1',
+            de: '1',
+            ja: '1',
+            cn: '1',
+            ko: '1',
+          },
+          two: {
+            en: '2',
+            de: '2',
+            ja: '2',
+            cn: '2',
+            ko: '2',
+          },
+          three: {
+            en: '3',
+            de: '3',
+            ja: '3',
+            cn: '3',
+            ko: '3',
+          },
+          onYou: {
+            en: 'On YOU',
+          },
+          tether: {
+            en: '${num}: ${elem} (${target})',
+            de: '${num}: ${elem} (${target})',
+            ja: '${num}: ${elem} (${target})',
+            cn: '${num}: ${elem} (${target})',
+            ko: '${num}: ${elem} (${target})',
+          },
+          all: {
+            en: '${e1} => ${e2} => ${e3} => ${e4}',
+            de: '${e1} => ${e2} => ${e3} => ${e4}',
+            ja: '${e1} => ${e2} => ${e3} => ${e4}',
+            cn: '${e1} => ${e2} => ${e3} => ${e4}',
+            ko: '${e1} => ${e2} => ${e3} => ${e4}',
+          },
+        };
+        const curTether = matches.id === '00F9' ? 'fire' : 'lightning';
         data.p1FallOfFaithTethers.push(curTether);
         if (data.p1FallOfFaithTethers.length < 4) {
           const num = data.p1FallOfFaithTethers.length === 1
             ? 'one'
             : (data.p1FallOfFaithTethers.length === 2 ? 'two' : 'three');
-          return output.tether({
-            num: output[num](),
-            elem: output[curTether](),
-          });
+          if (data.me === matches.target)
+            return {
+              alertText: output.tether({
+                num: output[num](),
+                elem: output[curTether](),
+                target: output.onYou(),
+              }),
+            };
+          return {
+            infoText: output.tether({
+              num: output[num](),
+              elem: output[curTether](),
+              target: data.party.member(matches.target).nick,
+            }),
+          };
         }
         const [e1, e2, e3, e4] = data.p1FallOfFaithTethers;
         if (e1 === undefined || e2 === undefined || e3 === undefined || e4 === undefined)
           return;
-        return output.all({
-          e1: output[e1](),
-          e2: output[e2](),
-          e3: output[e3](),
-          e4: output[e4](),
-        });
-      },
-      outputStrings: {
-        fire: {
-          en: 'Fire',
-          de: 'Feuer',
-          ja: '炎',
-          cn: '火',
-          ko: '불',
-        },
-        lightning: {
-          en: 'Lightning',
-          de: 'Blitz',
-          ja: '雷',
-          cn: '雷',
-          ko: '번개',
-        },
-        one: {
-          en: '1',
-          de: '1',
-          ja: '1',
-          cn: '1',
-          ko: '1',
-        },
-        two: {
-          en: '2',
-          de: '2',
-          ja: '2',
-          cn: '2',
-          ko: '2',
-        },
-        three: {
-          en: '3',
-          de: '3',
-          ja: '3',
-          cn: '3',
-          ko: '3',
-        },
-        tether: {
-          en: '${num}: ${elem}',
-          de: '${num}: ${elem}',
-          ja: '${num}: ${elem}',
-          cn: '${num}: ${elem}',
-          ko: '${num}: ${elem}',
-        },
-        all: {
-          en: '${e1} => ${e2} => ${e3} => ${e4}',
-          de: '${e1} => ${e2} => ${e3} => ${e4}',
-          ja: '${e1} => ${e2} => ${e3} => ${e4}',
-          cn: '${e1} => ${e2} => ${e3} => ${e4}',
-          ko: '${e1} => ${e2} => ${e3} => ${e4}',
-        },
+        return {
+          infoText: output.all({
+            e1: output[e1](),
+            e2: output[e2](),
+            e3: output[e3](),
+            e4: output[e4](),
+          }),
+        };
       },
     },
     // ************************
@@ -579,12 +607,15 @@ Options.Triggers.push({
       outputStrings: {
         combo: {
           en: '${inOut} + ${dir} => ${mech}',
+          cn: '${inOut} + ${dir} => ${mech}',
         },
         dropPuddle: {
           en: 'Drop Puddle',
+          cn: '放置冰花',
         },
         baitCleave: {
           en: 'Bait',
+          cn: '引导水波',
         },
         in: Outputs.in,
         out: Outputs.out,
@@ -607,6 +638,7 @@ Options.Triggers.push({
       outputStrings: {
         kbDir: {
           en: '${kb} (${dir1}/${dir2})',
+          cn: '${kb} (${dir1}/${dir2})',
         },
         kb: Outputs.knockback,
         ...Directions.outputStrings8Dir,
@@ -736,6 +768,7 @@ Options.Triggers.push({
       outputStrings: {
         baitCleave: {
           en: 'Bait cleave',
+          cn: '引导水波',
         },
       },
     },
@@ -750,6 +783,7 @@ Options.Triggers.push({
       outputStrings: {
         baitCleave: {
           en: 'Bait cleave',
+          cn: '引导水波',
         },
       },
     },
@@ -796,9 +830,11 @@ Options.Triggers.push({
       outputStrings: {
         puddle: {
           en: 'Puddles on you (w/ ${other})',
+          cn: '放置大圈 (和 ${other})',
         },
         tether: {
           en: 'Tether on you (Puddles: ${p1}, ${p2})',
+          cn: '拉线踩塔 (大圈: ${p1}, ${p2})',
         },
       },
     },
@@ -813,9 +849,11 @@ Options.Triggers.push({
         output.responseOutputStrings = {
           towerSoak: {
             en: 'Soak middle tower',
+            cn: '踩塔',
           },
           towerAvoid: {
             en: 'Avoid middle tower',
+            cn: '不去踩塔',
           },
         };
         return data.p2LightsteepedCount === 2
@@ -842,6 +880,7 @@ Options.Triggers.push({
       outputStrings: {
         afterTower: {
           en: '${partnerSpread} (after tower)',
+          cn: '踩塔后 + ${partnerSpread}',
         },
         partners: Outputs.stackPartner,
         spread: Outputs.spread,
@@ -872,6 +911,7 @@ Options.Triggers.push({
       outputStrings: {
         targetVeil: {
           en: 'Target Ice Veil',
+          cn: '集火永久冰晶',
         },
       },
     },
@@ -968,21 +1008,27 @@ Options.Triggers.push({
       outputStrings: {
         debuffSolo: {
           en: '${debuff}',
+          cn: '${debuff}',
         },
         debuffShared: {
           en: '${debuff} (w/ ${other})',
+          cn: '${debuff} (和 ${other})',
         },
         shortFire: {
           en: 'Short Fire',
+          cn: '短火',
         },
         mediumFire: {
           en: 'Medium Fire',
+          cn: '中火',
         },
         longFire: {
           en: 'Long Fire',
+          cn: '长火',
         },
         ice: {
           en: 'Ice',
+          cn: '冰点名',
         },
       },
     },
@@ -1093,8 +1139,11 @@ Options.Triggers.push({
         const debuff = data.p3RelativityDebuff;
         if (debuff === undefined)
           return;
-        if (data.triggerSetConfig.ultimateRel !== 'yNorthDPSEast')
+        if (data.triggerSetConfig.ultimateRel !== 'yNorthDPSEast') {
+          if (debuff === 'ice')
+            return role === 'dps' ? output.iceDps() : output.iceSupport();
           return output[debuff]();
+        }
         const dirStr = data.p3RelativityMyDirStr;
         if (debuff === 'longFire')
           return output.yNorthStrat({ debuff: output.longFire(), dir: dirStr });
@@ -1166,8 +1215,11 @@ Options.Triggers.push({
         const debuff = data.p3RelativityDebuff;
         if (debuff === undefined)
           return;
-        if (data.triggerSetConfig.ultimateRel !== 'yNorthDPSEast')
+        if (data.triggerSetConfig.ultimateRel !== 'yNorthDPSEast') {
+          if (debuff === 'ice')
+            return role === 'dps' ? output.iceDps() : output.iceSupport();
           return output[debuff]();
+        }
         const dirStr = data.p3RelativityMyDirStr;
         if (debuff === 'shortFire')
           return output.yNorthStrat({ debuff: output.shortFire(), dir: dirStr });
@@ -1276,12 +1328,15 @@ Options.Triggers.push({
         output.responseOutputStrings = {
           onYou: {
             en: 'Shared tank cleave on YOU',
+            cn: '坦克分摊点名',
           },
           share: {
             en: 'Shared tank cleave on ${target}',
+            cn: '坦克分摊 (和 ${target})',
           },
           avoid: {
             en: 'Avoid tank cleave',
+            cn: '远离分摊顺劈',
           },
         };
         if (data.me === matches.target)
@@ -1292,6 +1347,41 @@ Options.Triggers.push({
       },
     },
     // ***** Apocalypse *****
+    // Get the player's cardinal dir relative to the boss when the Dark Water debuffs are applied
+    // If the player takes the dark water stack on a different cardinal dir, they swapped groups
+    // and will need to stay swapped throughout the mechanic.
+    {
+      id: 'FRU P3 Apoc Dark Water Side Collect',
+      type: 'GainsEffect',
+      netRegex: { effectId: '99D', capture: false },
+      condition: (data) => data.phase === 'p3-apoc',
+      suppressSeconds: 1,
+      promise: async (data) => {
+        const combatantData = await callOverlayHandler({
+          call: 'getCombatants',
+          names: [data.me],
+        });
+        const me = combatantData.combatants[0];
+        if (!me)
+          return;
+        data.p3ApocInitialSide = me.PosX > centerX ? 'east' : 'west';
+      },
+    },
+    {
+      id: 'FRU P3 Apoc Dark Water Swap Check',
+      type: 'Ability',
+      netRegex: { id: '9D4F' },
+      condition: (data, matches) => data.phase === 'p3-apoc' && data.me === matches.target,
+      run: (data, matches) => {
+        // this is set for the first dark water stack; don't overwrite it
+        if (data.p3ApocGroupSwap !== undefined)
+          return;
+        const x = parseFloat(matches.targetX);
+        const stackSide = x > centerX ? 'east' : 'west';
+        // if p3ApocInitialSide isn't set for whatever reason, assume no swap (for safety)
+        data.p3ApocGroupSwap = (data.p3ApocInitialSide ?? stackSide) !== stackSide;
+      },
+    },
     {
       id: 'FRU P3 Apoc Dark Water Debuff',
       type: 'GainsEffect',
@@ -1304,10 +1394,10 @@ Options.Triggers.push({
         const debuffLength = dur < 11 ? 'short' : (dur < 30 ? 'medium' : 'long');
         data.p3ApocDebuffs[debuffLength].push(matches.target);
         if (data.me === matches.target)
-          data.p3MyApocDebuff = debuffLength;
+          data.p3ApocMyDebuff = debuffLength;
         if (data.p3ApocDebuffCount < 6)
           return;
-        data.p3MyApocDebuff ??= 'none';
+        data.p3ApocMyDebuff ??= 'none';
         // Add the two players who didn't get a debuff
         const noDebuffs = data.party.partyNames.filter((name) =>
           !data.p3ApocDebuffs.short.includes(name) &&
@@ -1315,25 +1405,30 @@ Options.Triggers.push({
           !data.p3ApocDebuffs.long.includes(name)
         );
         data.p3ApocDebuffs.none = [...noDebuffs];
-        const [same] = data.p3ApocDebuffs[data.p3MyApocDebuff].filter((p) => p !== data.me);
+        const [same] = data.p3ApocDebuffs[data.p3ApocMyDebuff].filter((p) => p !== data.me);
         const player = data.party.member(same).nick;
-        return output.combo({ debuff: output[data.p3MyApocDebuff](), same: player });
+        return output.combo({ debuff: output[data.p3ApocMyDebuff](), same: player });
       },
       outputStrings: {
         combo: {
           en: 'Stack: ${debuff} (w/ ${same})',
+          cn: '${debuff} 分摊 (和 ${same})',
         },
         short: {
           en: 'Short',
+          cn: '短',
         },
         medium: {
           en: 'Medium',
+          cn: '中',
         },
         long: {
           en: 'Long',
+          cn: '长',
         },
         none: {
           en: 'No Debuff',
+          cn: '无点名',
         },
         unknown: Outputs.unknown,
       },
@@ -1394,6 +1489,7 @@ Options.Triggers.push({
       outputStrings: {
         safe: {
           en: '(Apoc safe later: ${dir1})',
+          cn: '${dir1} 稍后安全',
         },
         ...Directions.outputStrings8Dir,
         or: Outputs.or,
@@ -1458,6 +1554,7 @@ Options.Triggers.push({
       outputStrings: {
         safe: {
           en: 'Safe: ${dir1} (lean ${dir2})',
+          cn: '${dir1} 偏 ${dir2} 安全',
         },
         ...Directions.outputStrings8Dir,
         or: Outputs.or,
@@ -1494,9 +1591,18 @@ Options.Triggers.push({
       condition: (data) => data.phase === 'p3-apoc',
       delaySeconds: 1,
       suppressSeconds: 1,
-      infoText: (_data, _matches, output) => output.stacks(),
-      outputStrings: {
-        stacks: Outputs.stacks,
+      response: (data, _matches, output) => {
+        // cactbot-builtin-response
+        output.responseOutputStrings = {
+          stacks: Outputs.stacks,
+          stacksSwap: {
+            en: '${stacks} (Swapped)',
+          },
+        };
+        const stacksStr = output.stacks();
+        return data.p3ApocGroupSwap
+          ? { alertText: output.stacksSwap({ stacks: stacksStr }) }
+          : { infoText: stacksStr };
       },
     },
     {
@@ -1525,6 +1631,7 @@ Options.Triggers.push({
       outputStrings: {
         bait: {
           en: 'Bait Jump (${dirs})?',
+          cn: '${dirs} 引导超级跳',
         },
         ...Directions.outputStrings8Dir,
         or: Outputs.or,
@@ -1535,10 +1642,17 @@ Options.Triggers.push({
       type: 'Ability',
       netRegex: { id: '9CF5', source: 'Oracle of Darkness', capture: false },
       durationSeconds: 7,
-      alertText: (_data, _matches, output) => output.kbStacks(),
+      alertText: (data, _matches, output) => {
+        const kbStacks = output.kbStacks();
+        return data.p3ApocGroupSwap ? output.kbStacksSwap({ kbStacks: kbStacks }) : kbStacks;
+      },
       outputStrings: {
         kbStacks: {
           en: 'Knockback => Stacks',
+          cn: '击退 => 四四分摊',
+        },
+        kbStacksSwap: {
+          en: '${kbStacks} (Swapped)',
         },
       },
     },
@@ -1577,6 +1691,15 @@ Options.Triggers.push({
         'Usurper of Frost': 'Shiva-Mitron',
         'Oracle\'s Reflection': 'Spiegelbild des Orakels',
         'Ice Veil': 'Immerfrost-Kristall',
+        'Frozen Mirror': 'Eisspiegel',
+        'Holy Light': 'heilig\\[a\\] Licht',
+        'Crystal of Darkness': '[^\|]+',
+        'Crystal of Light': 'Lichtkristall',
+        'Oracle of Darkness': 'Orakel\\[p\\] der Dunkelheit',
+        'Fragment of Fate': '[^\|]+',
+        'Sorrow\'s Hourglass': 'Sanduhr\\[p\\] der Sorge',
+        'Drachen Wanderer': 'Seele\\[p\\] des heiligen Drachen',
+        'Pandora': '[^\|]+', // FIXME
       },
       'replaceText': {
         'Blastburn': 'Brandstoß',
@@ -1597,6 +1720,102 @@ Options.Triggers.push({
         'Sinsmoke': 'Sündenflamme',
         'Turn Of The Heavens': 'Kreislauf der Wiedergeburt',
         'Utopian Sky': 'Paradiestrennung',
+        'the Path of Darkness': 'Pfad der Dunkelheit',
+        'Cruel Path of Light': '[^\|]+',
+        'Cruel Path of Darkness': 'Umbrales Prisma',
+        'Icecrusher': '[^\|]+',
+        'Unmitigated Explosion': 'Detonation',
+        'Solemn Charge': 'Wütende Durchbohrung',
+        'Bow Shock': 'Schockpatrone',
+        'Brightfire': 'Lichtflamme',
+        'Bound of Faith': 'Sünden-Erdstoß',
+        'Edge of Oblivion': '[^\|]+',
+        'Mirror, Mirror': 'Spiegelland',
+        'Mirror Image': 'Spiegelbild',
+        'Darkest Dance': 'Finsterer Tanz',
+        'Frost Armor': 'Frostrüstung',
+        'Shining Armor': 'Funkelnde Rüstung',
+        'Drachen Armor': 'Drachenrüstung',
+        'the Path of Light': 'Pfad des Lichts',
+        'the House of Light': 'Tsunami des Lichts',
+        'Quadruple Slap': 'Quadraschlag',
+        'Twin Stillness': 'Zwillingsschwerter der Stille',
+        'Twin Silence': 'Zwillingsschwerter der Ruhe',
+        'Diamond Dust': 'Diamantenstaub',
+        'Icicle Impact': 'Eiszapfen-Schlag',
+        'Frigid Stone': 'Eisstein',
+        'Frigid Needle': 'Eisnadel',
+        'Axe Kick': 'Axttritt',
+        '(?<!Reflected )Scythe Kick': 'Abwehrtritt',
+        'Reflected Scythe Kick': 'Spiegelung: Abwehrtritt',
+        'Heavenly Strike': 'Himmelszorn',
+        'Sinbound Holy': 'Sünden-Sanctus',
+        'Hallowed Ray': 'Heiliger Strahl',
+        'Light Rampant': 'Überflutendes Licht',
+        'Bright Hunger': 'Erosionslicht',
+        'Inescapable Illumination': 'Expositionslicht',
+        'Refulgent Fate': 'Fluch des Lichts',
+        'Lightsteep': 'Exzessives Licht',
+        'Powerful Light': 'Entladenes Licht',
+        'Luminous Hammer': 'Gleißende Erosion',
+        'Burst': 'Einschlag',
+        'Banish III(?! )': 'Verbannga',
+        'Banish III Divided': 'Geteiltes Verbannga',
+        'Absolute Zero': 'Absoluter Nullpunkt',
+        'Swelling Frost': 'Frostwoge',
+        'Junction': 'Kopplung',
+        'Hallowed Wings': 'Heilige Schwingen',
+        'Wings Dark and Light': '[^\|]+',
+        'Polarizing Paths': '[^\|]+',
+        'Sinbound Meltdown': 'Sündenschmelze',
+        'Sinbound Fire(?! )': 'Sünden-Feuer',
+        'Akh Rhai': 'Akh Rhai',
+        'Darklit Dragonsong': '[^\|]+',
+        'Crystallize Time': '[^\|]+',
+        'Longing of the Lost': 'Heiliger Drache',
+        'Joyless Dragonsong': 'Drachenlied der Verzweiflung',
+        'Materialization': 'Konkretion',
+        'Akh Morn': 'Akh Morn',
+        'Morn Afah': 'Morn Afah',
+        'Tidal Light': 'Welle des Lichts',
+        'Hiemal Storm': 'Hiemaler Sturm',
+        'Hiemal Ray': 'Hiemaler Strahl',
+        'Sinbound Blizzard III': 'Sünden-Eisga',
+        'Endless Ice Age': 'Lichtflut',
+        'Depths of Oblivion': '[^\|]+',
+        'Memory Paradox': '[^\|]+',
+        'Paradise Lost': 'Verlorenes Paradies',
+        'Hell\'s Judgment': 'Höllenurteil',
+        'Ultimate Relativity': 'Fatale Relativität',
+        'Return': 'Rückführung',
+        'Return IV': 'Giga-Rückführung',
+        'Spell-in-Waiting Refrain': 'Inkantatische Verzögerung',
+        'Dark Water III': 'Dunkel-Aquaga',
+        'Dark Eruption': 'Dunkle Eruption',
+        'Dark Fire III': 'Dunkel-Feuga',
+        'Unholy Darkness': 'Unheiliges Dunkel',
+        'Shadoweye': 'Schattenauge',
+        'Dark Blizzard III': 'Dunkel-Eisga',
+        'Dark Aero III': 'Dunkel-Windga',
+        'Quietus': 'Quietus',
+        'Shockwave Pulsar': 'Schockwellenpulsar',
+        'Somber Dance': 'Düsterer Tanz',
+        'Shell Crusher': 'Hüllenbrecher',
+        'Spirit Taker': 'Geistesdieb',
+        'Black Halo': 'Geschwärzter Schein',
+        'Speed': 'Geschwindigkeit',
+        'Quicken': 'Schnell',
+        'Slow': 'Gemach',
+        'Apocalypse': 'Apokalypse',
+        'Maelstrom': 'Mahlstrom',
+        'Memory\'s End': 'Ende der Erinnerungen',
+        'Fulgent Blade': '[^\|]+',
+        'Polarizing Strikes': '[^\|]+',
+        'Paradise Regained': 'Wiedergewonnenes Paradies',
+        'Twin Poles': '[^\|]+',
+        'Pandora\'s Box': '[^\|]+',
+        'Cyckonic Break': 'Zyklon-Brecher',
+        'Fated Burn Mark': 'Todesmal',
       },
     },
     {
@@ -1608,6 +1827,15 @@ Options.Triggers.push({
         'Usurper of Frost': 'Shiva-Mitron',
         'Oracle\'s Reflection': 'reflet de la prêtresse',
         'Ice Veil': 'bloc de glaces éternelles',
+        'Frozen Mirror': 'miroir de glace',
+        'Holy Light': 'lumière sacrée',
+        'Crystal of Darkness': '[^\|]+',
+        'Crystal of Light': 'cristal de Lumière',
+        'Oracle of Darkness': 'prêtresse des Ténèbres',
+        'Fragment of Fate': '[^\|]+',
+        'Sorrow\'s Hourglass': 'sablier de chagrin',
+        'Drachen Wanderer': 'esprit du Dragon divin',
+        'Pandora': '[^\|]+', // FIXME
       },
       'replaceText': {
         'Blastburn': 'Explosion brûlante',
@@ -1628,6 +1856,102 @@ Options.Triggers.push({
         'Sinsmoke': 'Flammes du péché',
         'Turn Of The Heavens': 'Cercles rituels',
         'Utopian Sky': 'Ultime paradis',
+        'the Path of Darkness': 'Voie de Ténèbres',
+        'Cruel Path of Light': '[^\|]+',
+        'Cruel Path of Darkness': 'Déluge de Ténèbres',
+        'Icecrusher': '[^\|]+',
+        'Unmitigated Explosion': 'Explosion',
+        'Solemn Charge': 'Charge perçante',
+        'Bow Shock': 'Arc de choc',
+        'Brightfire': 'Flammes de Lumière',
+        'Bound of Faith': 'Percée illuminée',
+        'Edge of Oblivion': '[^\|]+',
+        'Mirror, Mirror': 'Monde des miroirs',
+        'Mirror Image': 'Double dans le miroir',
+        'Darkest Dance': 'Danse de la nuit profonde',
+        'Frost Armor': 'Armure de givre',
+        'Shining Armor': 'Armure scintillante',
+        'Drachen Armor': 'Armure des dragons',
+        'the Path of Light': 'Voie de Lumière',
+        'the House of Light': 'Raz-de-lumière',
+        'Quadruple Slap': 'Frappe quadruplée',
+        'Twin Stillness': 'Entaille de la quiétude',
+        'Twin Silence': 'Entaille de la tranquilité',
+        'Diamond Dust': 'Poussière de diamant',
+        'Icicle Impact': 'Impact de stalactite',
+        'Frigid Stone': 'Rocher de glace',
+        'Frigid Needle': 'Dards de glace',
+        'Axe Kick': 'Jambe pourfendeuse',
+        '(?<!Reflected )Scythe Kick': 'Jambe faucheuse',
+        'Reflected Scythe Kick': 'Réverbération : Jambe faucheuse',
+        'Heavenly Strike': 'Frappe céleste',
+        'Sinbound Holy': 'Miracle authentique',
+        'Hallowed Ray': 'Rayon Miracle',
+        'Light Rampant': 'Débordement de Lumière',
+        'Bright Hunger': 'Lumière dévorante',
+        'Inescapable Illumination': 'Lumière révélatrice',
+        'Refulgent Fate': 'Lien de Lumière',
+        'Lightsteep': 'Lumière excédentaire',
+        'Powerful Light': 'Explosion sacrée',
+        'Luminous Hammer': 'Érosion lumineuse',
+        'Burst': 'Explosion',
+        'Banish III(?! )': 'Méga Bannissement',
+        'Banish III Divided': 'Méga Bannissement fractionné',
+        'Absolute Zero': 'Zéro absolu',
+        'Swelling Frost': 'Vague de glace',
+        'Junction': 'Jonction',
+        'Hallowed Wings': 'Aile sacrée',
+        'Wings Dark and Light': '[^\|]+',
+        'Polarizing Paths': '[^\|]+',
+        'Sinbound Meltdown': 'Fusion authentique',
+        'Sinbound Fire(?! )': 'Feu authentique',
+        'Akh Rhai': 'Akh Rhai',
+        'Darklit Dragonsong': '[^\|]+',
+        'Crystallize Time': '[^\|]+',
+        'Longing of the Lost': 'Esprit du Dragon divin',
+        'Joyless Dragonsong': 'Chant de désespoir',
+        'Materialization': 'Concrétisation',
+        'Akh Morn': 'Akh Morn',
+        'Morn Afah': 'Morn Afah',
+        'Tidal Light': 'Grand torrent de Lumière',
+        'Hiemal Storm': 'Tempête hiémale',
+        'Hiemal Ray': 'Rayon hiémal',
+        'Sinbound Blizzard III': 'Méga Glace authentique',
+        'Endless Ice Age': 'Déluge de Lumière',
+        'Depths of Oblivion': '[^\|]+',
+        'Memory Paradox': '[^\|]+',
+        'Paradise Lost': 'Paradis perdu',
+        'Hell\'s Judgment': 'Jugement dernier',
+        'Ultimate Relativity': 'Compression temporelle fatale',
+        'Return': 'Retour',
+        'Return IV': 'Giga Retour',
+        'Spell-in-Waiting Refrain': 'Déphasage incantatoire',
+        'Dark Water III': 'Méga Eau ténébreuse',
+        'Dark Eruption': 'Éruption ténébreuse',
+        'Dark Fire III': 'Méga Feu ténébreux',
+        'Unholy Darkness': 'Miracle ténébreux',
+        'Shadoweye': 'Œil de l\'ombre',
+        'Dark Blizzard III': 'Méga Glace ténébreuse',
+        'Dark Aero III': 'Méga Vent ténébreux',
+        'Quietus': 'Quietus',
+        'Shockwave Pulsar': 'Pulsar à onde de choc',
+        'Somber Dance': 'Danse du crépuscule',
+        'Shell Crusher': 'Broyeur de carapace',
+        'Spirit Taker': 'Arracheur d\'esprit',
+        'Black Halo': 'Halo de noirceur',
+        'Speed': 'Vitesse',
+        'Quicken': 'Accélération',
+        'Slow': 'Lenteur',
+        'Apocalypse': 'Apocalypse',
+        'Maelstrom': 'Maelström',
+        'Memory\'s End': 'Mort des souvenirs',
+        'Fulgent Blade': '[^\|]+',
+        'Polarizing Strikes': '[^\|]+',
+        'Paradise Regained': 'Paradis retrouvé',
+        'Twin Poles': '[^\|]+',
+        'Pandora\'s Box': '[^\|]+',
+        'Cyckonic Break': 'Brisement cyclonique',
+        'Fated Burn Mark': 'Marque de mort explosive',
       },
     },
     {
@@ -1639,6 +1963,15 @@ Options.Triggers.push({
         'Usurper of Frost': 'シヴァ・ミトロン',
         'Oracle\'s Reflection': '巫女の鏡像',
         'Ice Veil': '永久氷晶',
+        'Frozen Mirror': '氷面鏡',
+        'Holy Light': '聖なる光',
+        'Crystal of Darkness': '闇水晶',
+        'Crystal of Light': '光水晶',
+        'Oracle of Darkness': '闇の巫女',
+        'Fragment of Fate': '未来の欠片',
+        'Sorrow\'s Hourglass': '悲しみの砂時計',
+        'Drachen Wanderer': '聖竜気',
+        'Pandora': 'パンドラ・ミトロン',
       },
       'replaceText': {
         'Blastburn': 'バーンブラスト',
@@ -1659,6 +1992,102 @@ Options.Triggers.push({
         'Sinsmoke': 'シンフレイム',
         'Turn Of The Heavens': '転輪召',
         'Utopian Sky': '楽園絶技',
+        'the Path of Darkness': '闇の波動',
+        'Cruel Path of Light': '光の重波動',
+        'Cruel Path of Darkness': '闇の重波動',
+        'Icecrusher': '削氷撃',
+        'Unmitigated Explosion': '大爆発',
+        'Solemn Charge': 'チャージスラスト',
+        'Bow Shock': 'バウショック',
+        'Brightfire': '光炎',
+        'Bound of Faith': 'シンソイルスラスト',
+        'Edge of Oblivion': '忘却の此方',
+        'Mirror, Mirror': '鏡の国',
+        'Mirror Image': '鏡写し',
+        'Darkest Dance': '暗夜の舞踏技',
+        'Frost Armor': 'フロストアーマー',
+        'Shining Armor': 'ブライトアーマー',
+        'Drachen Armor': 'ドラゴンアーマー',
+        'the Path of Light': '光の波動',
+        'the House of Light': '光の津波',
+        'Quadruple Slap': 'クアドラストライク',
+        'Twin Stillness': '静寂の双剣技',
+        'Twin Silence': '閑寂の双剣技',
+        'Diamond Dust': 'ダイアモンドダスト',
+        'Icicle Impact': 'アイシクルインパクト',
+        'Frigid Stone': 'アイスストーン',
+        'Frigid Needle': 'アイスニードル',
+        'Axe Kick': 'アクスキック',
+        '(?<!Reflected )Scythe Kick': 'サイスキック',
+        'Reflected Scythe Kick': 'ミラーリング・サイスキック',
+        'Heavenly Strike': 'ヘヴンリーストライク',
+        'Sinbound Holy': 'シンホーリー',
+        'Hallowed Ray': 'ホーリーレイ',
+        'Light Rampant': '光の暴走',
+        'Bright Hunger': '浸食光',
+        'Inescapable Illumination': '曝露光',
+        'Refulgent Fate': '光の呪縛',
+        'Lightsteep': '過剰光',
+        'Powerful Light': '光爆',
+        'Luminous Hammer': 'ルミナスイロード',
+        'Burst': '爆発',
+        'Banish III(?! )': 'バニシュガ',
+        'Banish III Divided': 'ディバイデッド・バニシュガ',
+        'Absolute Zero': '絶対零度',
+        'Swelling Frost': '凍波',
+        'Junction': 'ジャンクション',
+        'Hallowed Wings': 'ホーリーウィング',
+        'Wings Dark and Light': '光と闇の片翼',
+        'Polarizing Paths': '星霊の剣',
+        'Sinbound Meltdown': 'シンメルトン',
+        'Sinbound Fire(?! )': 'シンファイア',
+        'Akh Rhai': 'アク・ラーイ',
+        'Darklit Dragonsong': '光と闇の竜詩',
+        'Crystallize Time': '時間結晶',
+        'Longing of the Lost': '聖竜気',
+        'Joyless Dragonsong': '絶望の竜詩',
+        'Materialization': '具象化',
+        'Akh Morn': 'アク・モーン',
+        'Morn Afah': 'モーン・アファー',
+        'Tidal Light': '光の大波',
+        'Hiemal Storm': 'ハイマルストーム',
+        'Hiemal Ray': 'ハイマルレイ',
+        'Sinbound Blizzard III': 'シンブリザガ',
+        'Endless Ice Age': '光の氾濫',
+        'Depths of Oblivion': '忘却の彼方',
+        'Memory Paradox': 'メモリー·パラドックス',
+        'Paradise Lost': '失楽園',
+        'Hell\'s Judgment': 'ヘル・ジャッジメント',
+        'Ultimate Relativity': '時間圧縮・絶',
+        'Return': 'リターン',
+        'Return IV': 'リタンジャ',
+        'Spell-in-Waiting Refrain': 'ディレイスペル・リフレイン',
+        'Dark Water III': 'ダークウォタガ',
+        'Dark Eruption': 'ダークエラプション',
+        'Dark Fire III': 'ダークファイガ',
+        'Unholy Darkness': 'ダークホーリー',
+        'Shadoweye': 'シャドウアイ',
+        'Dark Blizzard III': 'ダークブリザガ',
+        'Dark Aero III': 'ダークエアロガ',
+        'Quietus': 'クワイタス',
+        'Shockwave Pulsar': 'ショックウェーブ・パルサー',
+        'Somber Dance': '宵闇の舞踏技',
+        'Shell Crusher': 'シェルクラッシャー',
+        'Spirit Taker': 'スピリットテイカー',
+        'Black Halo': 'ブラックヘイロー',
+        'Speed': 'スピード',
+        'Quicken': 'クイック',
+        'Slow': 'スロウ',
+        'Apocalypse': 'アポカリプス',
+        'Maelstrom': 'メイルシュトローム',
+        'Memory\'s End': 'エンド・オブ・メモリーズ',
+        'Fulgent Blade': '光塵の剣',
+        'Polarizing Strikes': '星霊の剣',
+        'Paradise Regained': 'パラダイスリゲイン',
+        'Twin Poles': '光と闇の双剣技',
+        'Pandora\'s Box': 'パンドラの櫃',
+        'Cyckonic Break': 'サイクロニックブレイク',
+        'Fated Burn Mark': '死爆印',
       },
     },
   ],
