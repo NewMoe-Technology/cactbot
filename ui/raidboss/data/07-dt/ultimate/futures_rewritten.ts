@@ -13,7 +13,8 @@ import { NetMatches } from '../../../../../types/net_matches';
 import { TriggerSet } from '../../../../../types/trigger';
 
 // TODO:
-//  - P4 + P5
+//  - P4: Somber Dance (busters), Edge of Oblivion aoes?
+//  - P5: All
 
 type Phase = 'p1' | 'p2-dd' | 'p2-mm' | 'p2-lr' | 'p3-ur' | 'p3-apoc' | 'p4-dld' | 'p4-ct' | 'p5';
 const phases: { [id: string]: Phase } = {
@@ -107,6 +108,26 @@ const findURNorthDirNum = (dirs: number[]): number => {
 type ApocDebuffLength = 'short' | 'medium' | 'long' | 'none';
 type ApocDebuffMap = Record<ApocDebuffLength, string[]>;
 
+type CTRole = 'redIce' | 'redWind' | 'blueIce' | 'blueWater' | 'blueUnholy' | 'blueEruption';
+const ctCollectDebuffs = ['red', 'blue', 'ice', 'wind'] as const;
+type CTCollectDebuff = typeof ctCollectDebuffs[number];
+type CTCollectDebuffsMap = Record<CTCollectDebuff, string[]>;
+
+type CTAllDebuff = CTCollectDebuff | 'water' | 'unholy' | 'eruption';
+
+const isCTCollectDebuff = (debuff: CTAllDebuff): debuff is CTCollectDebuff => {
+  return ctCollectDebuffs.includes(debuff as CTCollectDebuff);
+};
+const ctDebuffMap: { [effectId: string]: CTAllDebuff } = {
+  'CBF': 'red', // Wyrmclaw
+  'CC0': 'blue', // Wyrmfang
+  '99E': 'ice', // Spell-in-Waiting: Dark Blizzard III
+  '99F': 'wind', // Spell-in-Waiting: Dark Aero III
+  '99D': 'water', // Spell-in-Waiting: Dark Water III
+  '996': 'unholy', // Spell-in-Waiting: Unholy Darkness
+  '99C': 'eruption', // Spell-in-Waiting: Dark Eruption
+};
+
 const p3UROutputStrings = {
   yNorthStrat: {
     en: '${debuff} (${dir})',
@@ -142,6 +163,8 @@ export interface Data extends RaidbossData {
     sinboundRotate: 'aacc' | 'addposonly'; // aacc = always away, cursed clockwise
     ultimateRel: 'yNorthDPSEast' | 'none';
     apoc: 'dpsNE-CW' | 'none';
+    darklit: 'healerPlantNW' | 'none';
+    ct: 'earlyPopSouth' | 'none';
   };
   // General
   phase: Phase | 'unknown';
@@ -175,6 +198,17 @@ export interface Data extends RaidbossData {
   p3ApocGroupSwap?: boolean;
   p3ApocFirstDirNum?: number;
   p3ApocRotationDir?: 1 | -1; // 1 = clockwise, -1 = counterclockwise
+  // P4 -- Duo
+  p4DarklitTetherCount: number;
+  p4DarklitTethers: { [player: string]: string[] };
+  p4DarklitCleaves: string[];
+  p4DarklitStacks: string[];
+  p4DarklitTowerStackLoc?: 'north' | 'south';
+  p4CTMyRole?: CTRole;
+  p4CTDebuffs: CTCollectDebuffsMap;
+  p4CTPartnerRole?: string;
+  p4CTStoplights: { [id: string]: NetMatches['AddedCombatant'] };
+  p4CTTidalDirs: number[];
 }
 
 const triggerSet: TriggerSet<Data> = {
@@ -190,15 +224,21 @@ const triggerSet: TriggerSet<Data> = {
       comment: {
         en:
           `Always Away, Cursed Clockwise: <a href="https://pastebin.com/ue7w9jJH" target="_blank">LesBin<a>`,
+        cn: `总是远离,·180°·顺时针:·<a·href="https://pastebin.com/ue7w9jJH"·target="_blank">LesBin<a>`,
       },
       name: {
         en: 'P2 Diamond Dust / Sinbound Holy',
+        cn: 'P2 钻石星尘 / 罪神圣',
       },
       type: 'select',
       options: {
         en: {
           'Always Away, Cursed Clockwise': 'aacc',
           'Call Add Position Only': 'addposonly',
+        },
+        cn: {
+          '总是远离, 180° 顺时针': 'aacc',
+          '仅播报分身位置': 'addposonly',
         },
       },
       default: 'aacc', // `addposonly` is not super helpful, and 'aacc' seems to be predominant
@@ -210,15 +250,23 @@ const triggerSet: TriggerSet<Data> = {
           `Y North, DPS E-SW, Supp W-NE: <a href="https://pastebin.com/ue7w9jJH" target="_blank">LesBin<a>.
           Directional output is true north (i.e., "east" means actual east,
           not wherever is east of the "Y" north spot).`,
+        cn:
+          `Y 北, DPS 东-西南, T奶 西-东北: <a href="https://pastebin.com/ue7w9jJH" target="_blank">LesBin<a>.
+          方向输出为真北 (即 “东”表示实际的东, 而不是相对于 “Y” 北的东)。`,
       },
       name: {
         en: 'P3 Ultimate Relativity',
+        cn: 'P3 时间压缩·绝',
       },
       type: 'select',
       options: {
         en: {
           'Y North, DPS E-SW, Supp W-NE': 'yNorthDPSEast',
           'Call Debuffs w/ No Positions': 'none',
+        },
+        cn: {
+          'Y 北, DPS 东-西南, T奶 西-东北': 'yNorthDPSEast',
+          '仅播报 Debuff, 不播报方位': 'none',
         },
       },
       default: 'yNorthDPSEast',
@@ -228,9 +276,12 @@ const triggerSet: TriggerSet<Data> = {
       comment: {
         en:
           `DPS NE->S, Support SW->N: <a href="https://pastebin.com/ue7w9jJH" target="_blank">LesBin<a>`,
+        cn:
+          `DPS 东北->南, T奶 西南->北: <a href="https://pastebin.com/ue7w9jJH" target="_blank">LesBin<a>`,
       },
       name: {
         en: 'P3 Apocalypse',
+        cn: 'P3 启示',
       },
       type: 'select',
       options: {
@@ -238,8 +289,60 @@ const triggerSet: TriggerSet<Data> = {
           'DPS NE->S, Support SW->N': 'dpsNE-CW',
           'Call All Safe': 'none',
         },
+        cn: {
+          'DPS 东北->南, T奶 西南->北': 'dpsNE-CW',
+          '播报所有安全区': 'none',
+        },
       },
       default: 'dpsNE-CW',
+    },
+    {
+      id: 'darklit',
+      comment: {
+        en:
+          `Role Quadrants, Healer Plant NW: <a href="https://pastebin.com/ue7w9jJH" target="_blank">LesBin<a>`,
+        cn: `按职能四分组,·奶妈在西北:·<a·href="https://pastebin.com/ue7w9jJH"·target="_blank">LesBin<a>`,
+      },
+      name: {
+        en: 'P4 Darklit Dragonsong',
+        cn: 'P4 光与暗的龙诗',
+      },
+      type: 'select',
+      options: {
+        en: {
+          'Role Quads, Healer Plant NW': 'healerPlantNW',
+          'Call Tower/Cone Only': 'none',
+        },
+        cn: {
+          '按职能四分组, 奶妈在西北': 'healerPlantNW',
+          '仅播报塔/扇形': 'none',
+        },
+      },
+      default: 'healerPlantNW',
+    },
+    {
+      id: 'ct',
+      comment: {
+        en:
+          `Early Pop, Winds South: <a href="https://pastebin.com/ue7w9jJH" target="_blank">LesBin<a>`,
+        cn: `龙头早撞, 风南: <a href="https://pastebin.com/ue7w9jJH" target="_blank">LesBin<a>`,
+      },
+      name: {
+        en: 'P4 Crystallize Time',
+        cn: 'P4 时间结晶',
+      },
+      type: 'select',
+      options: {
+        en: {
+          'Early Pop, Winds South': 'earlyPopSouth',
+          'Call Initial Debuffs Only': 'none',
+        },
+        cn: {
+          '龙头早撞, 风南': 'earlyPopSouth',
+          '仅播报初始 Debuff': 'none',
+        },
+      },
+      default: 'earlyPopSouth',
     },
   ],
   timelineFile: 'futures_rewritten.txt',
@@ -269,7 +372,18 @@ const triggerSet: TriggerSet<Data> = {
         long: [],
         none: [],
       },
-      p3CalledApoc: false,
+      p4DarklitTetherCount: 0,
+      p4DarklitTethers: {},
+      p4DarklitCleaves: [],
+      p4DarklitStacks: [],
+      p4CTDebuffs: {
+        blue: [],
+        red: [],
+        ice: [],
+        wind: [],
+      },
+      p4CTStoplights: {},
+      p4CTTidalDirs: [],
     };
   },
   timelineTriggers: [],
@@ -283,17 +397,18 @@ const triggerSet: TriggerSet<Data> = {
       netRegex: { id: Object.keys(phases) },
       run: (data, matches) => data.phase = phases[matches.id] ?? 'unknown',
     },
+    // ************************
+    // P1-- Fatebreaker
+    // ************************
     {
       id: 'FRU ActorSetPos Collector',
       type: 'ActorSetPos',
       netRegex: { id: '4[0-9A-F]{7}', capture: true },
+      condition: (data) => data.phase === 'p1',
       run: (data, matches) => {
         data.actorSetPosTracker[matches.id] = matches;
       },
     },
-    // ************************
-    // P1-- Fatebreaker
-    // ************************
     {
       id: 'FRU P1 Cyclonic Break Fire',
       type: 'StartsUsing',
@@ -519,6 +634,7 @@ const triggerSet: TriggerSet<Data> = {
           },
           onYou: {
             en: 'On YOU',
+            cn: '点名',
           },
           tether: {
             en: '${num}: ${elem} (${target})',
@@ -611,6 +727,7 @@ const triggerSet: TriggerSet<Data> = {
           onTarget: Outputs.tankBusterOnPlayer,
           busterCleanse: {
             en: '${buster} (Cleanse?)',
+            cn: '${buster} (驱散?)',
           },
         };
 
@@ -785,20 +902,25 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         aaccCursed: {
           en: 'Cursed - Fast Clockwise',
+          cn: '180° - 快速顺时针',
         },
         aaccRotateCCW: Outputs.counterclockwise,
         aaccRotateCW: Outputs.clockwise,
         same: {
           en: 'Cursed - Add on knockback',
+          cn: '180° - 分身在脚下',
         },
         opposite: {
           en: 'Cursed - Add opposite you',
+          cn: '180° - 分身在对面',
         },
         clockwise: {
           en: 'Add is clockwise',
+          cn: '分身在顺时针',
         },
         counterclockwise: {
           en: 'Add is counterclockwise',
+          cn: '分身在逆时针',
         },
       },
     },
@@ -823,6 +945,7 @@ const triggerSet: TriggerSet<Data> = {
         output.responseOutputStrings = {
           aaccSilence: {
             en: '(stay in front)',
+            cn: '(待在正面)',
           },
           silence: Outputs.front,
           stillness: Outputs.back,
@@ -1138,6 +1261,7 @@ const triggerSet: TriggerSet<Data> = {
       id: 'FRU P3 Ultimate Relativity Stoplight Collect',
       type: 'AddedCombatant',
       netRegex: { npcBaseId: '17832' },
+      condition: (data) => data.phase === 'p3-ur',
       run: (data, matches) => data.p3RelativityStoplights[matches.id] = matches,
     },
     {
@@ -1737,6 +1861,7 @@ const triggerSet: TriggerSet<Data> = {
           stacks: Outputs.stacks,
           stacksSwap: {
             en: '${stacks} (Swapped)',
+            cn: '${stacks} (换位后)',
           },
         };
         const stacksStr = output.stacks!();
@@ -1795,6 +1920,7 @@ const triggerSet: TriggerSet<Data> = {
         },
         kbStacksSwap: {
           en: '${kbStacks} (Swapped)',
+          cn: '${kbStacks} (换位后)',
         },
       },
     },
@@ -1808,7 +1934,719 @@ const triggerSet: TriggerSet<Data> = {
     // ************************
     // P4 -- Duo
     // ************************
+    {
+      id: 'FRU P4 Akh Rhai',
+      // positions snapshot when hidden combatants are added, but they have unreliable names
+      // we can safely base this on the timing of the vfx effect that precedes the snapshot
+      type: 'GainsEffect',
+      netRegex: { effectId: '8E1', capture: false },
+      condition: (data) => data.phase === 'p4-dld',
+      delaySeconds: 4.7,
+      suppressSeconds: 1,
+      response: Responses.moveAway('alert'),
+    },
+    {
+      id: 'FRU P4 Akh Morn',
+      type: 'StartsUsing',
+      netRegex: { id: '9D6E', source: 'Oracle of Darkness', capture: false },
+      alertText: (_data, _matches, output) => output.stacks!(),
+      outputStrings: {
+        stacks: Outputs.stacks,
+      },
+    },
+    {
+      id: 'FRU P4 Morn Afah',
+      type: 'StartsUsing',
+      netRegex: { id: '9D70', source: 'Oracle of Darkness', capture: false },
+      durationSeconds: 6,
+      alertText: (_data, _matches, output) => output.stack!(),
+      outputStrings: {
+        stack: Outputs.getTogether,
+      },
+    },
+    // ***** Darklit Dragonsong *****
+    {
+      id: 'FRU P4 Darklit Dragonsong',
+      type: 'StartsUsing',
+      netRegex: { id: '9D6D', source: 'Oracle of Darkness', capture: false },
+      response: Responses.bigAoe(),
+    },
+    {
+      id: 'FRU P4 Darklit Stacks Collect',
+      type: 'GainsEffect',
+      netRegex: { effectId: '99D' }, // Spell-in-Waiting: Dark Water III
+      condition: (data) => data.phase === 'p4-dld',
+      run: (data, matches) => data.p4DarklitStacks.push(matches.target),
+    },
+    {
+      id: 'FRU P4 Darklit Tether + Cleave Collect',
+      type: 'Tether',
+      netRegex: { id: '006E' }, // Refulgent Chain
+      condition: (data) => data.phase === 'p4-dld',
+      run: (data, matches) => {
+        data.p4DarklitTetherCount++;
+        (data.p4DarklitTethers[matches.source] ??= []).push(matches.target);
+        (data.p4DarklitTethers[matches.target] ??= []).push(matches.source);
 
+        if (data.p4DarklitTetherCount === 4)
+          data.p4DarklitCleaves = data.party.partyNames.filter(
+            (name) => !(Object.keys(data.p4DarklitTethers).includes(name)),
+          );
+      },
+    },
+    // The logic for tether swaps, bait swaps, and possible stack swaps is fairly concise.
+    // It's not comprehensive (specifically, we can't determine which DPS need to flex
+    // and when for the cone baits), but otherwise it's accurate.  See inline comments.
+    {
+      id: 'FRU P4 Darklit Tower / Bait',
+      type: 'Tether',
+      netRegex: { id: '006E', capture: false }, // Refulgent Chain
+      condition: (data) => data.phase === 'p4-dld' && data.p4DarklitTetherCount === 4,
+      durationSeconds: 9,
+      response: (data, _matches, output) => {
+        // cactbot-builtin-response
+        output.responseOutputStrings = {
+          towerNoSwap: {
+            en: 'Tower (no swaps)',
+            cn: '塔 (无换位)',
+          },
+          towerOtherSwap: {
+            en: 'Tower (${p1} + ${p2} swap)',
+            cn: '塔 (${p1} + ${p2} 换位)',
+          },
+          towerYouSwap: {
+            en: 'Tower (swap w/${player})',
+            cn: '塔 (与 ${player} 换位)',
+          },
+          tower: { // if no strat set, or cannot determine
+            en: 'Tower',
+            cn: '塔',
+          },
+          bait: { // for supports in healerPlantNW, or no strat
+            en: 'Bait Cone',
+            cn: '诱导扇形',
+          },
+          baitDPS: { // for DPS in healerPlantNW
+            en: 'Bait Cone (w/ ${otherDps})',
+            cn: '诱导扇形 (与 ${otherDps})',
+          },
+        };
+
+        const isHealerPlantNW = data.triggerSetConfig.darklit === 'healerPlantNW';
+
+        const baitPlayers = data.p4DarklitCleaves;
+        const towerPlayers = Object.keys(data.p4DarklitTethers);
+        const myMech = baitPlayers.includes(data.me)
+          ? 'bait'
+          : (towerPlayers.includes(data.me) ? 'tower' : 'none');
+
+        if (myMech === 'none')
+          return;
+        else if (baitPlayers.length !== 4 || towerPlayers.length !== 4)
+          return { alertText: output[myMech]!() };
+        else if (!isHealerPlantNW)
+          return { alertText: output[myMech]!() };
+
+        // Identify the tethered player with the stack marker.
+        const towerStackPlayer = data.p4DarklitStacks.filter((p) => towerPlayers.includes(p))[0];
+
+        const defaultOutput = { alertText: output[myMech]!() };
+
+        // Map out roles and sanity check that we have 1 tank, 1 healer, and 2 dps in each group
+        // (for the inevitable TankFRU, SoloHealerFRU, etc.)
+        let towerTank = '';
+        let towerHealer = '';
+        const towerDps: string[] = [];
+        for (const player of towerPlayers) {
+          const role = data.party.member(player).role;
+          if (role === 'tank')
+            towerTank = player;
+          else if (role === 'healer')
+            towerHealer = player;
+          else if (role === 'dps')
+            towerDps.push(player);
+          else
+            return defaultOutput;
+        }
+        if (towerTank === '' || towerHealer === '' || towerDps.length !== 2)
+          return defaultOutput;
+
+        let baitTank = '';
+        let baitHealer = '';
+        const baitDps: string[] = [];
+        for (const player of baitPlayers) {
+          const role = data.party.member(player).role;
+          if (role === 'tank')
+            baitTank = player;
+          else if (role === 'healer')
+            baitHealer = player;
+          else if (role === 'dps')
+            baitDps.push(player);
+          else
+            return defaultOutput;
+        }
+        if (baitTank === '' || baitHealer === '' || baitDps.length !== 2)
+          return defaultOutput;
+
+        // Handle tower stuff first.
+        // Figuring out the pattern (bowtie, box, hourglass) to determine who should swap would
+        // (a) require knowing which DPS is which role (M1, M2, R1, R2), or (b) trying to infer
+        // roles + swaps based on player positions when tethers go out. Both options are messy.
+        // But we can make this simple, because tethers always connect 1 tank, 1 healer, and 2 DPS:
+        //   - If a dps is tethered to both a tank & healer, it's bowtie - no swaps.
+        //   - If not, the dps tethered to the tank swaps with the tank (true for hourglass + box).
+        // Once we know this, we also now know whether the tower player with the stack marker
+        // will be in the north or south group (for healerPlantNW).
+
+        // Check if a dps has tank + healer tethers; if so, bowtie. Done.
+        const towerDps1 = towerDps[0] ?? '';
+        const towerDps1Tethers = data.p4DarklitTethers[towerDps1];
+        if (towerDps1Tethers?.includes(towerTank) && towerDps1Tethers?.includes(towerHealer)) {
+          if (isHealerPlantNW && [towerTank, towerHealer].includes(towerStackPlayer ?? ''))
+            data.p4DarklitTowerStackLoc = 'north';
+          else if (isHealerPlantNW)
+            data.p4DarklitTowerStackLoc = 'south';
+
+          if (myMech === 'tower')
+            return { infoText: output.towerNoSwap!() };
+        } else {
+          // Not bowtie, so find the DPS that's tethered to the tank.
+          const dpsWithTank = towerDps.find((dps) =>
+            data.p4DarklitTethers[dps]?.includes(towerTank)
+          );
+          if (dpsWithTank === undefined)
+            return defaultOutput;
+
+          if (isHealerPlantNW && [towerHealer, dpsWithTank].includes(towerStackPlayer ?? ''))
+            data.p4DarklitTowerStackLoc = 'north';
+          else if (isHealerPlantNW)
+            data.p4DarklitTowerStackLoc = 'south';
+
+          if (myMech === 'tower') {
+            if (dpsWithTank === data.me)
+              return {
+                alertText: output.towerYouSwap!({
+                  player: data.party.member(towerTank).toString(),
+                }),
+              };
+            else if (towerTank === data.me)
+              return {
+                alertText: output.towerYouSwap!({
+                  player: data.party.member(dpsWithTank).toString(),
+                }),
+              };
+            return {
+              infoText: output.towerOtherSwap!({
+                p1: data.party.member(dpsWithTank).toString(),
+                p2: data.party.member(towerTank).toString(),
+              }),
+            };
+          }
+        }
+
+        // Bait players last.
+        // To properly figure out side-flexing (e.g. M1 and M2 are both baiting), again, we'd need
+        // to know who was in what role or infer it from positions, and no clean solution.
+        // So, instead, we can tell the tank and healer to bait, and we can tell the DPS
+        // who the other DPS baiter is, and let them figure out if that requires a swap. /shrug
+        if ([baitTank, baitHealer].includes(data.me))
+          return { infoText: output.bait!() };
+        else if (baitDps.includes(data.me)) {
+          const otherDps = baitDps.find((dps) => dps !== data.me);
+          if (otherDps === undefined)
+            return defaultOutput;
+          return {
+            alertText: output.baitDPS!({
+              otherDps: data.party.member(otherDps).toString(),
+            }),
+          };
+        }
+
+        return defaultOutput;
+      },
+    },
+    {
+      id: 'FRU P4 Darklit Cleave Stack',
+      type: 'Tether',
+      netRegex: { id: '006E', capture: false }, // Refulgent Chain
+      condition: (data) => data.phase === 'p4-dld' && data.p4DarklitTetherCount === 4,
+      delaySeconds: 2, // a little breathing room to process the tower/bait call
+      durationSeconds: 7,
+      response: (data, _matches, output) => {
+        // cactbot-builtin-response
+        output.responseOutputStrings = {
+          stackOnYou: { // default/fallthrough
+            en: '(stack on you later)',
+            cn: '(稍后分摊点名)',
+          },
+          // stack is on you
+          stackOnYouNoSwap: {
+            en: '(stack on you later - no swap)',
+            cn: '(稍后分摊点名 - 不换位)',
+          },
+          dpsStackOnYouSwap: {
+            en: 'Stacks: You swap w/ Support',
+            cn: '分摊: 与T/奶换位',
+          },
+          healerStackOnYouSwap: {
+            en: 'Stacks: You swap w/ Ranged/Flex',
+            cn: '分摊: 与远程/灵活位换位',
+          },
+          tankStackOnYouSwap: {
+            en: 'Stacks: You swap w/ Melee/Flex',
+            cn: '分摊: 与近战/灵活位换位',
+          },
+          // stack on someone else (not your role), so you may be required to swap
+          dpsStackOnHealerSwap: {
+            en: 'Stacks: ${healer} swap w/ Ranged/Flex',
+            cn: '分摊: ${healer} 与远程/灵活位换位',
+          },
+          dpsStackOnTankSwap: {
+            en: 'Stacks: ${tank} swap w/ Melee/Flex',
+            cn: '分摊: ${tank} 与近战/灵活位换位',
+          },
+          supportStackOnDpsSwap: {
+            en: 'Stacks: ${dps} swap w/ Support',
+            cn: '分摊: ${dps} 与T/奶换位',
+          },
+        };
+        const isHealerPlantNW = data.triggerSetConfig.darklit === 'healerPlantNW';
+
+        // Only bother with output if the player is baiting, and if we can tell which baiter has the stack
+        const baitPlayers = data.p4DarklitCleaves;
+        const baitStackPlayer = data.p4DarklitStacks.find((p) => baitPlayers.includes(p));
+        if (baitStackPlayer === undefined || !baitPlayers.includes(data.me))
+          return {};
+        const stackName = data.party.member(baitStackPlayer).toString();
+
+        const isStackOnMe = data.me === baitStackPlayer;
+        const defaultOutput = isStackOnMe ? { infoText: output.stackOnYou!() } : {};
+        const myRole = data.role;
+        const stackRole = data.party.member(baitStackPlayer).role;
+        if (stackRole === undefined)
+          return defaultOutput;
+
+        // Sanity check for non-standard party comp, or this trigger won't work
+        const tankCount = baitPlayers.filter((p) => data.party.member(p)?.role === 'tank').length;
+        const healerCount =
+          baitPlayers.filter((p) => data.party.member(p)?.role === 'healer').length;
+        const dpsCount = baitPlayers.filter((p) => data.party.member(p)?.role === 'dps').length;
+        if (tankCount !== 1 || healerCount !== 1 || dpsCount !== 2)
+          return defaultOutput;
+
+        const baitStackLoc = stackRole === 'dps' ? 'south' : 'north';
+        if (data.p4DarklitTowerStackLoc === undefined || !isHealerPlantNW)
+          return defaultOutput;
+        const towerStackLoc = data.p4DarklitTowerStackLoc;
+
+        // if stacks are already split N/S, no swaps required
+        // TODO: Could return an infoText indicating the baiter with the stack doesn't need to swap?
+        if (baitStackLoc !== towerStackLoc)
+          return isStackOnMe
+            ? { infoText: output.stackOnYouNoSwap!() }
+            : defaultOutput; // could return a infoText indicating no swaps are needed?
+
+        // stacks are together, so we need to call for a swap
+        if (isStackOnMe)
+          switch (myRole) {
+            case 'dps':
+              return { alertText: output.dpsStackOnYouSwap!() };
+            case 'healer':
+              return { alertText: output.healerStackOnYouSwap!() };
+            case 'tank':
+              return { alertText: output.tankStackOnYouSwap!() };
+            default:
+              return defaultOutput;
+          }
+
+        // if the stack is on the other dps/support, player doesn't have to do anything
+        // TODO: Could return an infoTexts indicating the bait with the stack needs to swap?
+        if (
+          (myRole === 'dps' && stackRole === 'dps') ||
+          (myRole === 'healer' && stackRole === 'tank') ||
+          (myRole === 'tank' && stackRole === 'healer')
+        )
+          return defaultOutput;
+
+        // if the stack is on the other role, the player may have to swap
+        // but we don't know which DPS is the melee (for tank swap) or ranged (for healer swap)
+        // so we have to leave it up to the player to figure out
+        if (myRole === 'healer' || myRole === 'tank')
+          return { alertText: output.supportStackOnDpsSwap!({ dps: stackName }) };
+        else if (myRole === 'dps' && stackRole === 'healer')
+          return { alertText: output.dpsStackOnHealerSwap!({ healer: stackName }) };
+        else if (myRole === 'dps' && stackRole === 'tank')
+          return { alertText: output.dpsStackOnTankSwap!({ tank: stackName }) };
+
+        return defaultOutput;
+      },
+    },
+    {
+      id: 'FRU P4 Darklit Spirit Taker',
+      type: 'StartsUsing',
+      netRegex: { id: '9D60', source: 'Oracle of Darkness', capture: false },
+      condition: (data) => data.phase === 'p4-dld',
+      delaySeconds: 0.5, // delay until after Path of Light snapshots
+      durationSeconds: 2,
+      response: Responses.spread('alert'),
+    },
+    {
+      id: 'FRU P4 Hallowed Wings',
+      type: 'StartsUsing',
+      netRegex: { id: ['9D23', '9D24'], source: 'Usurper of Frost' },
+      condition: (data) => data.phase === 'p4-dld',
+      delaySeconds: 1, // avoid collision with Spirit Taker
+      infoText: (_data, matches, output) => {
+        const dir = matches.id === '9D23' ? 'east' : 'west';
+        return output.combo!({ dir: output[dir]!(), stacks: output.stacks!() });
+      },
+      outputStrings: {
+        combo: {
+          en: '${dir} => ${stacks}',
+          cn: '${dir} => ${stacks}',
+        },
+        east: Outputs.east,
+        west: Outputs.west,
+        stacks: Outputs.stacks,
+      },
+    },
+    // ***** Crystallize Time *****
+    {
+      id: 'FRU P4 Crystallize Time',
+      type: 'StartsUsing',
+      netRegex: { id: '9D6A', source: 'Oracle of Darkness', capture: false },
+      delaySeconds: 3,
+      durationSeconds: 7,
+      response: Responses.bigAoe(),
+    },
+    // For Crystallize Time, we can determine redWind (x2), blueWater, blueUnholy, and
+    // blueEruption from a single debuff. But determining redIce (x2) and blueIce requires multiple
+    // debuffs. We need to collect both redIces and redWinds to name the other player.
+    {
+      id: 'FRU P4 Crystallize Time Debuff Collect',
+      type: 'GainsEffect',
+      netRegex: { effectId: Object.keys(ctDebuffMap) },
+      condition: (data) => data.phase === 'p4-ct',
+      run: (data, matches) => {
+        const debuff = ctDebuffMap[matches.effectId];
+        if (!debuff)
+          return;
+
+        if (isCTCollectDebuff(debuff))
+          data.p4CTDebuffs[debuff].push(matches.target);
+
+        // we're done collecting, so we only care about personal debuffs now
+        if (data.me !== matches.target)
+          return;
+
+        if (debuff === 'wind')
+          data.p4CTMyRole = 'redWind';
+        else if (debuff === 'water')
+          data.p4CTMyRole = 'blueWater';
+        else if (debuff === 'unholy')
+          data.p4CTMyRole = 'blueUnholy';
+        else if (debuff === 'eruption')
+          data.p4CTMyRole = 'blueEruption';
+        // if redIce/blueIce, data.p4CTMyRole gets set in the Debuff trigger below.
+      },
+    },
+    // Run once after collects are done; determine redIce/blueIce.
+    {
+      id: 'FRU P4 Crystallize Time Debuff',
+      type: 'GainsEffect',
+      netRegex: { effectId: Object.keys(ctDebuffMap), capture: false },
+      condition: (data) => data.phase === 'p4-ct',
+      delaySeconds: 0.4,
+      durationSeconds: 8,
+      suppressSeconds: 1,
+      infoText: (data, _matches, output) => {
+        const debuff = data.p4CTMyRole;
+
+        if (debuff === 'redWind') {
+          const partner = data.party.member(data.p4CTDebuffs.wind.filter((p) => p !== data.me)[0]);
+          data.p4CTPartnerRole = partner.role;
+          return output.comboText!({ debuff: output.redWind!(), player: partner.toString() });
+        }
+
+        // if debuff is undefined, player has redIce or blueIce, and we need to determine which.
+        if (debuff === undefined) {
+          if (!data.p4CTDebuffs.ice.includes(data.me))
+            return output.text!({ debuff: output.unknown!() });
+
+          if (data.p4CTDebuffs.blue.includes(data.me)) {
+            data.p4CTMyRole = 'blueIce';
+            return output.text!({ debuff: output.blueIce!() });
+          }
+
+          if (data.p4CTDebuffs.red.includes(data.me)) {
+            data.p4CTMyRole = 'redIce';
+            const partner = data.party.member(
+              data.p4CTDebuffs.ice
+                .filter((p) => p !== data.me)
+                .filter((p) => data.p4CTDebuffs.red.includes(p))[0],
+            );
+            data.p4CTPartnerRole = partner.role;
+            return output.comboText!({ debuff: output.redIce!(), player: partner.toString() });
+          }
+
+          // Fallthrough, should never happen.
+          return output.text!({ debuff: output.unknown!() });
+        }
+
+        return output.text!({ debuff: output[debuff]!() });
+      },
+      outputStrings: {
+        text: {
+          en: '${debuff} on You',
+          cn: '${debuff} 点名',
+        },
+        comboText: {
+          en: '${debuff} (w/ ${player})',
+          cn: '${debuff} (与 ${player})',
+        },
+        redIce: {
+          en: 'Red Ice',
+          cn: '短红',
+        },
+        redWind: {
+          en: 'Wind/Aero',
+          cn: '长红',
+        },
+        blueIce: {
+          en: 'Blue Ice',
+          cn: '蓝冰',
+        },
+        blueWater: {
+          en: 'Water (stack)',
+          cn: '水 (分摊)',
+        },
+        blueUnholy: {
+          en: 'Unholy (stack)',
+          cn: '圣 (分摊)',
+        },
+        blueEruption: {
+          en: 'Eruption (spread)',
+          cn: '暗 (分散)',
+        },
+        unknown: Outputs.unknown,
+      },
+    },
+    {
+      id: 'FRU P4 Crystallize Time Stoplight Collect',
+      type: 'AddedCombatant',
+      netRegex: { npcBaseId: '17837' },
+      condition: (data) => data.phase === 'p4-ct',
+      run: (data, matches) => data.p4CTStoplights[matches.id] = matches,
+    },
+    {
+      id: 'FRU P4 Crystallize Time Initial Position',
+      type: 'Tether',
+      // Boss always tethers the N/S stoplights yellow (fast), and then either
+      // the NE/SW or NW/SE pair are purple (slow).  We only need the northern purple stoplight.
+      netRegex: { id: '0085' },
+      condition: (data) => data.phase === 'p4-ct' && data.triggerSetConfig.ct === 'earlyPopSouth',
+      durationSeconds: 9,
+      alertText: (data, matches, output) => {
+        const id = matches.sourceId;
+        const stoplight = data.p4CTStoplights[id];
+        if (stoplight === undefined)
+          return;
+
+        const x = parseFloat(stoplight.x);
+        const y = parseFloat(stoplight.y);
+        const spreadDirNum = Directions.xyTo8DirNum(x, y, centerX, centerY);
+
+        if (spreadDirNum !== 1 && spreadDirNum !== 7)
+          return;
+
+        const spreadDir = Directions.output8Dir[spreadDirNum] ?? 'unknown';
+        const stackDir = Directions.output8Dir[(spreadDirNum + 4) % 8] ?? 'unknown';
+        const debuff = data.p4CTMyRole;
+        const role = data.role;
+
+        if (!debuff)
+          return;
+
+        if (debuff.startsWith('blue')) {
+          const dirStr = debuff === 'blueEruption' ? output[spreadDir]!() : output[stackDir]!();
+          const mechStr = debuff === 'blueEruption' ? output.spread!() : output.stack!();
+          return output.blue!({ mech: mechStr, dir: dirStr });
+        }
+
+        // For redIce and redWind, we can't determine same-role swap priorities, so we can only give a
+        // single directional output if we *know* no swap is required.  Otherwise, call both dirs.
+        if (debuff === 'redIce') {
+          const comboDirStr = `${output['dirE']!()} / ${output['dirW']!()}`;
+          const sameDebuffRole = data.p4CTPartnerRole;
+          const partyStackDirStr = output.partyStack!({ dir: output[stackDir]!() });
+
+          if (sameDebuffRole === undefined || role === sameDebuffRole)
+            return output.redIce!({ dir: comboDirStr, followup: partyStackDirStr });
+
+          let myDirNum: number;
+          if (role === 'dps') // always east if T/H has other redIce
+            myDirNum = 2;
+          else if (role === 'healer') // always west if T/D has other redIce
+            myDirNum = 6;
+          else if (sameDebuffRole === 'dps') // tank stays west
+            myDirNum = 6;
+          // tank + healer, tank flexes east
+          else
+            myDirNum = 2;
+
+          const myDirStr = output[Directions.output8Dir[myDirNum] ?? 'unknown']!();
+          // if the redIce player is adjacent to the eruption player, they move north after
+          const followupStr = Math.abs(myDirNum - spreadDirNum) === 1
+            ? output.stackNorth!()
+            : output.dodgeSouth!();
+          return output.redIce!({ dir: myDirStr, followup: followupStr });
+        }
+
+        if (debuff === 'redWind') {
+          const comboDirStr = `${output['dirSE']!()} / ${output['dirSW']!()}`;
+          const sameDebuffRole = data.p4CTPartnerRole;
+
+          if (sameDebuffRole === undefined || role === sameDebuffRole)
+            return comboDirStr;
+
+          let myDirNum: number;
+          if (role === 'dps') // always SE if T/H has other redWind
+            myDirNum = 3;
+          else if (role === 'healer') // always SW if T/D has other redWind
+            myDirNum = 5;
+          else if (sameDebuffRole === 'dps') // tank stays SW
+            myDirNum = 5;
+          // tank + healer, tank flexes SE
+          else
+            myDirNum = 3;
+
+          return output[Directions.output8Dir[myDirNum] ?? 'unknown']!();
+        }
+
+        return output.unknown!();
+      },
+      outputStrings: {
+        blue: {
+          en: '${mech} (${dir})',
+          cn: '${mech} (${dir})',
+        },
+        redIce: {
+          en: '${dir} ${followup}',
+          cn: '${dir} ${followup}',
+        },
+        dodgeSouth: {
+          en: '(dodge S after)',
+          cn: '(稍后避开下)',
+        },
+        stackNorth: {
+          en: '(stack N after)',
+          cn: '(稍后去上分摊)',
+        },
+        // used if there is a role-flex and we don't know whether they are E or W.
+        partyStack: {
+          en: '(party stack is ${dir})',
+          cn: '(在 ${dir} 全员分摊)',
+        },
+        spread: Outputs.spread,
+        stack: Outputs.getTogether,
+        unknown: Outputs.unknown,
+        ...Directions.outputStrings8Dir,
+      },
+    },
+    {
+      id: 'FRU P4 Crystallize Time Blue Cleanse',
+      type: 'Ability',
+      netRegex: { id: '9D55', capture: false }, // Unholy Darkness
+      condition: (data) => data.phase === 'p4-ct',
+      delaySeconds: 2,
+      durationSeconds: 8,
+      suppressSeconds: 1,
+      infoText: (data, _matches, output) => {
+        const debuff = data.p4CTMyRole;
+        if (!debuff)
+          return;
+
+        const isEarlyPopS = data.triggerSetConfig.ct === 'earlyPopSouth';
+        if (debuff.startsWith('blue'))
+          return isEarlyPopS ? output.cleanseSpot!({ spot: output[debuff]!() }) : output.cleanse!();
+        return output.avoidCleanse!();
+      },
+      outputStrings: {
+        cleanseSpot: {
+          en: 'Cleanse: ${spot}',
+          cn: '净化: ${spot}',
+        },
+        cleanse: { // if no strat
+          en: 'Cleanse',
+          cn: '净化',
+        },
+        avoidCleanse: {
+          en: 'Avoid cleanse puddles',
+          cn: '避开净化圈',
+        },
+        blueWater: Directions.outputStrings8Dir.dirSE!,
+        blueUnholy: Directions.outputStrings8Dir.dirE!,
+        blueEruption: Directions.outputStrings8Dir.dirW!,
+        blueIce: Directions.outputStrings8Dir.dirSW!,
+      },
+    },
+    {
+      id: 'FRU P4 Crystallize Time Tidal Light Collect',
+      type: 'StartsUsing',
+      netRegex: { id: '9D3B' }, // Tidal Light
+      condition: (data) => data.phase === 'p4-ct',
+      run: (data, matches) => {
+        const x = parseFloat(matches.x);
+        const y = parseFloat(matches.y);
+        const dirNum = Directions.xyTo8DirNum(x, y, centerX, centerY);
+        data.p4CTTidalDirs.push(dirNum);
+      },
+    },
+    {
+      id: 'FRU P4 Crystallize Time Drop Rewind',
+      type: 'GainsEffect',
+      netRegex: { effectId: '1070' }, // Spell-in-Waiting: Return
+      condition: (data, matches) => data.phase === 'p4-ct' && data.me === matches.target,
+      delaySeconds: (_data, matches) => parseFloat(matches.duration) - 8,
+      countdownSeconds: 8,
+      alertText: (data, _matches, output) => {
+        const unknownStr = output.rewind!({ spot: output.unknown!() });
+        if (data.p4CTTidalDirs.length !== 2)
+          return unknownStr;
+
+        // re-use findURNorthDirNum() to find the intercard between the two starting Tidal spots
+        const intersectDirNum = findURNorthDirNum(data.p4CTTidalDirs);
+        if (intersectDirNum === -1)
+          return unknownStr;
+
+        const dir = Directions.output8Dir[intersectDirNum];
+        if (dir === undefined)
+          return unknownStr;
+
+        return output.rewind!({ spot: output[dir]!() });
+      },
+      outputStrings: {
+        rewind: {
+          en: 'Drop Rewind: ${spot}',
+          cn: '放置回返: ${spot}',
+        },
+        unknown: Outputs.unknown,
+        ...Directions.outputStringsIntercardDir,
+      },
+    },
+    {
+      id: 'FRU P4 Crystallize Time Spirit Taker',
+      type: 'GainsEffect',
+      netRegex: { effectId: '994' }, // Return
+      condition: (data, matches) => data.phase === 'p4-ct' && data.me === matches.target,
+      alertText: (_data, _matches, output) => output.spreadAvoid!(),
+      outputStrings: {
+        spreadAvoid: {
+          en: 'Spread -- Avoid crystal',
+          cn: '分摊 -- 避开水晶',
+        },
+      },
+    },
     // ************************
     // P5 -- Pandora
     // ************************
@@ -1823,6 +2661,9 @@ const triggerSet: TriggerSet<Data> = {
         'Dark Fire III/Unholy Darkness': '(spreads/stack)',
         'Dark Fire III/Dark Blizzard III/Unholy Darkness': '(spreads/donut/stack)',
         'Shadoweye/Dark Water III/Dark Eruption': '(gazes/stack/spreads)',
+        'Dark Water III + Hallowed Wings': '(cleave + stacks)',
+        'Dark Blizzard III + Dark Eruption + Dark Aero III': '(donut + spread + KBs)',
+        'The Path of Darkness + The Path of Light': '(exa-lines)',
       },
     },
     {
@@ -2230,6 +3071,166 @@ const triggerSet: TriggerSet<Data> = {
         'Twin Poles': '光と闇の双剣技',
         'Pandora\'s Box': 'パンドラの櫃',
         'Cyckonic Break': 'サイクロニックブレイク',
+        'Fated Burn Mark': '死爆印',
+      },
+    },
+    {
+      'locale': 'cn',
+      'replaceSync': {
+        'Fatebreaker(?!\')': '绝命战士',
+        'Fatebreaker\'s Image': '绝命战士的幻影',
+        'Usurper of Frost': '希瓦·米特隆',
+        'Oracle\'s Reflection': '巫女的镜像',
+        'Ice Veil': '永久冰晶',
+        'Frozen Mirror': '冰面镜',
+        'Holy Light': '圣光',
+        'Crystal of Darkness': '暗水晶',
+        'Crystal of Light': '光水晶',
+        'Oracle of Darkness': '暗之巫女',
+        'Fragment of Fate': '未来的碎片',
+        'Sorrow\'s Hourglass': '悲伤的沙漏',
+        'Drachen Wanderer': '圣龙气息',
+        'Pandora': '潘多拉·米特隆',
+      },
+      'replaceText': {
+        '\\(cast\\)': '(咏唱)',
+        '\\(close\\)': '(近)',
+        '\\(damage\\)': '(伤害)',
+        '\\(far\\)': '(远)',
+        '\\(fast\\)': '(快)',
+        '\\(fire\\)': '(火)',
+        '\\(follow-up\\)': '(后续)',
+        '\\(group tower\\)': '(小队塔)',
+        '\\(jump\\)': '(跳)',
+        '\\(knockback\\)': '(击退)',
+        '\\(lightning\\)': '(雷)',
+        '\\(normal\\)': '(正常)',
+        '\\(puddles\\)': '(圈)',
+        '\\(rewind drop\\)': '(放置回返)',
+        '\\(slow\\)': '(慢)',
+        '\\(solo towers\\)': '(单人塔)',
+        '\\(stun \\+ cutscene\\)': '(眩晕 + 动画)',
+        '\\(stun \\+ rewind\\)': '(眩晕 + 回返)',
+        '\\(targeted\\)': '(定向)',
+        '--jump south--': '--跳南--',
+        '--Oracle center--': '--巫女中央--',
+        '--Oracle targetable--': '--巫女可选中--',
+        '--Oracle untargetable--': '--巫女不可选中--',
+        '--reposition--': '--归位--',
+        '--Usurper untargetable--': '--希瓦·米特隆不可选中--',
+        'Blastburn': '火燃爆',
+        'Blasting Zone': '爆破领域',
+        'Burn Mark': '爆印',
+        'Burnished Glory': '光焰圆光',
+        'Burnout': '雷燃爆',
+        'Burnt Strike': '燃烧击',
+        'Cyclonic Break': '暴风破',
+        'Explosion': '爆炸',
+        'Fall Of Faith': '罪壤断',
+        'Floating Fetters': '浮游拘束',
+        'Powder Mark Trail': '连锁爆印铭刻',
+        'Sinblaze': '罪冰焰',
+        'Sinbound Fire III': '罪爆炎',
+        'Sinbound Thunder III': '罪暴雷',
+        'Sinsmite': '罪雷',
+        'Sinsmoke': '罪炎',
+        'Turn Of The Heavens': '光轮召唤',
+        'Utopian Sky': '乐园绝技',
+        'the Path of Darkness': '暗之波动',
+        'Cruel Path of Light': '光之波涛',
+        'Cruel Path of Darkness': '暗之波涛',
+        'Icecrusher': '碎冰击',
+        'Unmitigated Explosion': '大爆炸',
+        'Solemn Charge': '急冲刺',
+        'Bow Shock': '弓形冲波',
+        'Brightfire': '光炎',
+        'Bound of Faith': '罪壤刺',
+        'Edge of Oblivion': '忘却的此岸',
+        'Mirror, Mirror': '镜中奇遇',
+        'Mirror Image': '镜中显影',
+        'Darkest Dance': '暗夜舞蹈',
+        'Frost Armor': '冰霜护甲',
+        'Shining Armor': '闪光护甲',
+        'Drachen Armor': '圣龙护甲',
+        'the Path of Light': '光之波动',
+        'the House of Light': '光之海啸',
+        'Quadruple Slap': '四剑斩',
+        'Twin Stillness': '静寂的双剑技',
+        'Twin Silence': '闲寂的双剑技',
+        'Diamond Dust': '钻石星尘',
+        'Icicle Impact': '冰柱冲击',
+        'Frigid Stone': '冰石',
+        'Frigid Needle': '冰针',
+        'Axe Kick': '阔斧回旋踢',
+        '(?<!Reflected )Scythe Kick': '镰形回旋踢',
+        'Reflected Scythe Kick': '连锁反射：镰形回旋踢',
+        'Heavenly Strike': '天降一击',
+        'Sinbound Holy': '罪神圣',
+        'Hallowed Ray': '神圣射线',
+        'Light Rampant': '光之失控',
+        'Bright Hunger': '侵蚀光',
+        'Inescapable Illumination': '曝露光',
+        'Refulgent Fate': '光之束缚',
+        'Lightsteep': '过量光',
+        'Powerful Light': '光爆',
+        'Luminous Hammer': '光流侵蚀',
+        'Burst': '爆炸',
+        'Banish III(?! )': '强放逐',
+        'Banish III Divided': '分裂强放逐',
+        'Absolute Zero': '绝对零度',
+        'Swelling Frost': '寒波',
+        'Junction': '融合',
+        'Hallowed Wings': '神圣之翼',
+        'Wings Dark and Light': '光与暗的孤翼',
+        'Polarizing Paths': '星灵之剑',
+        'Sinbound Meltdown': '罪熔毁',
+        'Sinbound Fire(?! )': '罪火炎',
+        'Akh Rhai': '天光轮回',
+        'Darklit Dragonsong': '光与暗的龙诗',
+        'Crystallize Time': '时间结晶',
+        'Longing of the Lost': '圣龙气息',
+        'Joyless Dragonsong': '绝望龙诗',
+        'Materialization': '赋形',
+        'Akh Morn': '死亡轮回',
+        'Morn Afah': '无尽顿悟',
+        'Tidal Light': '光之巨浪',
+        'Hiemal Storm': '严冬风暴',
+        'Hiemal Ray': '严冬射线',
+        'Sinbound Blizzard III': '罪冰封',
+        'Endless Ice Age': '光之泛滥',
+        'Depths of Oblivion': '忘却的彼岸',
+        'Memory Paradox': '记忆悖论',
+        'Paradise Lost': '失乐园',
+        'Hell\'s Judgment': '地狱审判',
+        'Ultimate Relativity': '时间压缩·绝',
+        'Return': '回返',
+        'Return IV': '强回返',
+        'Spell-in-Waiting Refrain': '延迟咏唱·递进',
+        'Dark Water III': '黑暗狂水',
+        'Dark Eruption': '暗炎喷发',
+        'Dark Fire III': '黑暗爆炎',
+        'Unholy Darkness': '黑暗神圣',
+        'Shadoweye': '暗影之眼',
+        'Dark Blizzard III': '黑暗冰封',
+        'Dark Aero III': '黑暗暴风',
+        'Quietus': '寂灭',
+        'Shockwave Pulsar': '脉冲星震波',
+        'Somber Dance': '真夜舞蹈',
+        'Shell Crusher': '破盾一击',
+        'Spirit Taker': '碎灵一击',
+        'Black Halo': '黑色光环',
+        'Speed': '限速',
+        'Quicken': '神速',
+        '(?<!\\()Slow(?<!\\))': '减速',
+        'Apocalypse': '启示',
+        'Maelstrom': '巨漩涡',
+        'Memory\'s End': '记忆终结',
+        'Fulgent Blade': '光尘之剑',
+        'Polarizing Strikes': '星灵之剑',
+        'Paradise Regained': '复乐园',
+        'Twin Poles': '光与暗的双剑技',
+        'Pandora\'s Box': '潘多拉魔盒',
+        'Cyckonic Break': '暴风破',
         'Fated Burn Mark': '死爆印',
       },
     },
