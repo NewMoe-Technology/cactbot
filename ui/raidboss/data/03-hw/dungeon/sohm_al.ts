@@ -12,6 +12,8 @@ const triggerSet: TriggerSet<Data> = {
   zoneId: ZoneId.SohmAl,
   comments: {
     en: 'pre-6.2 rework',
+    de: 'Vor der 6.2 Überarbeitung',
+    fr: 'Avant le remaniement 6.2',
     cn: '6.2改版前',
   },
   timelineFile: 'sohm_al.txt',

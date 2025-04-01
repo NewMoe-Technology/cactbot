@@ -10,6 +10,8 @@ const triggerSet: TriggerSet<Data> = {
   zoneId: ZoneId.Yanxia,
   comments: {
     en: 'A Rank Hunts: Angada only',
+    de: 'A Rang Hohe Jagd: Nur Angada',
+    fr: 'Chasse Rang A : Angada uniquement',
     cn: '只有A级狩猎怪: 安迦达',
   },
   triggers: [

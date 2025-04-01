@@ -10,6 +10,8 @@ const triggerSet: TriggerSet<Data> = {
   zoneId: ZoneId.TheForbiddenLandEurekaPagos,
   comments: {
     en: 'Inactivity warning only',
+    de: 'Nur Inaktivitätswarnung',
+    fr: 'Avertissement d\'inactivité uniquement',
     cn: '只有无操作警告',
   },
   resetWhenOutOfCombat: false,
