@@ -13,6 +13,8 @@ Options.Triggers.push({
   zoneId: ZoneId.TheWorldOfDarkness,
   comments: {
     en: 'Mostly incomplete',
+    de: 'Größtenteils unvollständig',
+    fr: 'Majoritairement incomplet',
     cn: '大部分未完成',
   },
   triggers: [

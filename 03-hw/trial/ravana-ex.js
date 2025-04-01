@@ -3,6 +3,8 @@ Options.Triggers.push({
   zoneId: ZoneId.ThokAstThokExtreme,
   comments: {
     en: 'Timeline only, no triggers',
+    de: 'Nur Timeline, keine Trigger',
+    fr: 'Timeline seulement, aucun trigger',
     cn: '只有时间轴，没有触发器',
   },
   timelineFile: 'ravana-ex.txt',

@@ -1,6 +1,10 @@
 Options.Triggers.push({
   id: 'TheSunkenTempleOfQarn',
   zoneId: ZoneId.TheSunkenTempleOfQarn,
+  comments: {
+    en: 'pre-7.2 rework',
+    fr: 'Avant le remaniement 7.2',
+  },
   triggers: [
     {
       id: 'Sunken Quarn Doom',

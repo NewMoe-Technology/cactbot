@@ -68,6 +68,7 @@ Options.Triggers.push({
       outputStrings: {
         repeatedAOE: {
           en: 'Continuous light AoE',
+          de: 'Durchgehende Licht AoE',
           cn: '连续小AoE',
           ko: '지속적인 약한 전체 공격',
         },
@@ -120,6 +121,7 @@ Options.Triggers.push({
       outputStrings: {
         regaliaYou: {
           en: 'Laser tether on YOU',
+          de: 'Laserverbindung auf DIR',
           cn: '激光连线点名',
           ko: '레이저 선 대상자',
         },
@@ -149,6 +151,7 @@ Options.Triggers.push({
       outputStrings: {
         floating: {
           en: 'Gravitation -- Levitating',
+          de: 'Gravitation -- Schweben',
           cn: '重力 -- 上浮',
           ko: '중력 -- 상승',
         },
@@ -167,6 +170,7 @@ Options.Triggers.push({
       outputStrings: {
         falling: {
           en: 'Gravitation -- Falling',
+          de: 'Gravitation -- Fallen',
           cn: '重力 -- 下降',
           ko: '중력 -- 하강',
         },
@@ -185,6 +189,7 @@ Options.Triggers.push({
       outputStrings: {
         floating: {
           en: 'Gravitation -- Levitating',
+          de: 'Gravitation -- Schweben',
           cn: '重力 -- 上浮',
           ko: '중력 -- 상승',
         },
@@ -207,11 +212,13 @@ Options.Triggers.push({
       outputStrings: {
         fallCastle: {
           en: 'In front of ground windows',
+          de: 'Sei vor dem Fenster am Boden',
           cn: '正对下层空洞',
           ko: '아래쪽 뚫린 곳',
         },
         floatCastle: {
           en: 'In front of middle windows',
+          de: 'Sei vor dem Fenster in der Mitte',
           cn: '正对上层空洞',
           ko: '가운데층 뚫린 곳',
         },
@@ -225,6 +232,7 @@ Options.Triggers.push({
       outputStrings: {
         getInDonut: {
           en: 'Get in robot circle',
+          de: 'Geh in den Roboterkreis',
           cn: '小月环',
           ko: '로봇 원 안으로',
         },
@@ -254,6 +262,7 @@ Options.Triggers.push({
       outputStrings: {
         gazeLater: {
           en: 'Gaze on you soon',
+          de: 'Bald: Blick auf dir',
           cn: '石化眼点名',
           ko: '곧 시선징 대상자',
         },
@@ -277,11 +286,13 @@ Options.Triggers.push({
       outputStrings: {
         shriekYou: {
           en: 'Gaze -- look away from ${otherTarget}',
+          de: 'Blick -- schau weg von ${otherTarget}',
           cn: '石化眼 -- 背对 ${otherTarget}',
           ko: '시선징 -- ${otherTarget}에게서 뒤돌기',
         },
         shriekOthers: {
           en: 'Look away from ${comboTargets}',
+          de: 'Schau weg von ${comboTargets}',
           cn: '背对 ${comboTargets}',
           ko: '${comboTargets}에게서 뒤돌기',
         },
@@ -296,6 +307,7 @@ Options.Triggers.push({
       outputStrings: {
         bombLater: {
           en: 'Acceleration Bomb soon',
+          de: 'Bald: Beschleunigungsbombe',
           cn: '稍后 加速度炸弹',
           ko: '곧 가속도 폭탄',
         },
@@ -324,6 +336,7 @@ Options.Triggers.push({
       outputStrings: {
         flareMarker: {
           en: 'Flare on YOU',
+          de: 'Flare auf DIR',
           cn: '核爆点名',
           ko: '플레어 대상자',
         },
@@ -351,6 +364,7 @@ Options.Triggers.push({
       outputStrings: {
         fiveAOE: {
           en: '5x AoEs',
+          de: '5x AoEs',
           cn: 'AoE (5次)',
           ko: '전체공격 (5x)',
         },
@@ -358,6 +372,101 @@ Options.Triggers.push({
     },
   ],
   timelineReplace: [
+    {
+      'locale': 'de',
+      'missingTranslations': true,
+      'replaceSync': {
+        'Queen Eternal': 'Ewig(?:e|er|es|en) Königin',
+      },
+      'replaceText': {
+        '\\(abandonment\\)': '(Rote Dreiecke sammeln)',
+        '\\(all\\)': '(alle)',
+        '\\(cast\\)': '(wirken)',
+        '\\(cones\\)': '(Kegel)',
+        '\\(flare\\)': '(Flare)',
+        '\\(gaze\\)': '(Blick)',
+        '\\(pre-cast\\)': '(vor-wirken)',
+        '\\(puddles\\)': '(Flächen)',
+        '\\(raidwide\\)': '(raidweit)',
+        '\\(single\\)': '(einzel)',
+        '\\(stun\\)': '(Betäubung)',
+        'Absolute Authority': 'Absolute Autorität',
+        'Aethertithe': 'Ätherzehnt',
+        'Authority\'s Hold': 'Raumkontrolle: Ausbremsung',
+        'Besiegement': 'Durchschlag',
+        'Brutal Crown': 'Herrschaftsgewalt',
+        'Castellation': 'Kastellierung',
+        'Coronation': 'Krönung',
+        'Divide and Conquer': 'Teile und Herrsche',
+        'Downburst': 'Fallböe',
+        'Dynastic Diadem': 'Dynastisches Diadem',
+        'Legitimate Force': 'Legitime Herrschaft',
+        'Morning Stars': '',
+        'Powerful Gust': 'Starke Bö',
+        'Prosecution Of War': 'Kriegsklagen',
+        'Royal Banishment': 'Königliche Verbannung',
+        'Royal Domain': 'Hoheitsgebiet',
+        'Ruthless Regalia': 'Unbarmherzigkeit der Krone',
+        'Virtual Shift': 'Virtueller Umschwung',
+        'Waltz of the Regalia': 'Insignienwalzer',
+      },
+    },
+    {
+      'locale': 'fr',
+      'missingTranslations': true,
+      'replaceSync': {
+        'Queen Eternal': 'Reine Éternité',
+      },
+      'replaceText': {
+        'Absolute Authority': 'Autorité absolue',
+        'Aethertithe': 'Dîme d\'éther',
+        'Authority\'s Hold': 'Soumission absolue : explosion',
+        'Besiegement': 'Impact intense',
+        'Brutal Crown': 'Règne impitoyable',
+        'Castellation': 'Fortification',
+        'Coronation': 'Déploiement',
+        'Divide and Conquer': 'Diviser pour mieux régner',
+        'Downburst': 'Rafale descendante',
+        'Dynastic Diadem': 'Diadème dynastique',
+        'Legitimate Force': 'Force légitime',
+        'Morning Stars': '',
+        'Powerful Gust': 'Rafale latérale',
+        'Prosecution Of War': 'Réquisitoire guerrier',
+        'Royal Banishment': 'Bannissement royal',
+        'Royal Domain': 'Domaine royal',
+        'Ruthless Regalia': 'Monarchie brutale',
+        'Virtual Shift': 'Transfert virtuel',
+        'Waltz of the Regalia': 'Valse régalienne',
+      },
+    },
+    {
+      'locale': 'ja',
+      'missingTranslations': true,
+      'replaceSync': {
+        'Queen Eternal': 'エターナルクイーン',
+      },
+      'replaceText': {
+        'Absolute Authority': 'アブソリュート・オーソリティ',
+        'Aethertithe': 'エーテルレヴィー',
+        'Authority\'s Hold': '空間掌握：制動',
+        'Besiegement': '激突',
+        'Brutal Crown': 'ブルータルレガリア',
+        'Castellation': 'キャスタレーション',
+        'Coronation': '端末射出',
+        'Divide and Conquer': 'ディバイド・アンド・コンカー',
+        'Downburst': 'ダウンバースト',
+        'Dynastic Diadem': 'サークレットフォース',
+        'Legitimate Force': 'レジティメート・フォース',
+        'Morning Stars': '',
+        'Powerful Gust': '強風',
+        'Prosecution Of War': 'プロセキューション・ウォー',
+        'Royal Banishment': 'バニッシュレイ',
+        'Royal Domain': 'ロイヤルドメイン',
+        'Ruthless Regalia': 'ルースレスレガリア',
+        'Virtual Shift': 'ヴァーチャルシフト',
+        'Waltz of the Regalia': 'レガリア・ワルツ',
+      },
+    },
     {
       'locale': 'cn',
       'replaceSync': {
@@ -394,6 +503,44 @@ Options.Triggers.push({
         'Ruthless Regalia': '王法无情',
         'Virtual Shift': '虚景切换',
         'Waltz of the Regalia': '王权圆舞曲',
+      },
+    },
+    {
+      'locale': 'ko',
+      'replaceSync': {
+        'Queen Eternal': '이터널 퀸',
+      },
+      'replaceText': {
+        '\\(abandonment\\)': '(삼각형 징)',
+        '\\(all\\)': '(전부)',
+        '\\(cast\\)': '(시전)',
+        '\\(cones': '(삼각형',
+        '\\(flare\\)': '(플레어)',
+        '\\(gaze\\)': '(석화)',
+        '\\(pre-cast\\)': '(시전)',
+        '\\(puddles': '(장판',
+        '\\(raidwide\\)': '(전체공격)',
+        '\\(single\\)': '(개인)',
+        '\\(stun\\)': '(기절)',
+        'Absolute Authority': '절대 권력',
+        'Aethertithe': '에테르 징수',
+        'Authority\'s Hold': '공간 장악: 제동',
+        'Besiegement': '격돌',
+        'Brutal Crown': '잔혹한 왕권',
+        'Castellation': '성채 구축',
+        'Coronation': '단말 사출',
+        'Divide And Conquer': '분할 정복',
+        'Downburst': '하강 기류',
+        'Dynastic Diadem': '왕관의 힘',
+        'Legitimate Force': '정당한 힘',
+        'Morning Stars': '여명의 유성우',
+        'Powerful Gust': '강풍',
+        'Prosecution Of War': '전쟁 시행',
+        'Royal Banishment': '추방 광선',
+        'Royal Domain': '왕국령',
+        'Ruthless Regalia': '무자비한 왕권',
+        'Virtual Shift': '가상 공간 전환',
+        'Waltz of the Regalia': '왕가의 무곡',
       },
     },
   ],
