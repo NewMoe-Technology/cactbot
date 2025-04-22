@@ -1,3 +1,4 @@
+import { Responses } from '../../../../resources/responses';
 import ZoneId from '../../../../resources/zone_id';
 import { RaidbossData } from '../../../../types/data';
 import { TriggerSet } from '../../../../types/trigger';
@@ -14,6 +15,9 @@ const triggerSet: TriggerSet<Data> = {
   zoneId: ZoneId.MatchAll,
   comments: {
     en: 'General triggers for all occasions and zones',
+    de: 'Allgemeine Trigger für alle Anlässe und Zonen',
+    fr: 'Triggers généraux pour toutes les occasions et zones',
+    ja: '全ての状況、全てのエリアに共通するトリガー',
     cn: '适用于所有场合和区域的通用触发器',
   },
   triggers: [
@@ -36,7 +40,7 @@ const triggerSet: TriggerSet<Data> = {
         text: {
           en: 'Provoke: ${player}',
           de: 'Herausforderung: ${player}',
-          fr: 'Provocation: ${player}',
+          fr: 'Provocation : ${player}',
           ja: '挑発: ${player}',
           cn: '挑衅: ${player}',
           ko: '도발: ${player}',
@@ -65,7 +69,7 @@ const triggerSet: TriggerSet<Data> = {
         text: {
           en: 'Provoke: ${player}',
           de: 'Herausforderung: ${player}',
-          fr: 'Provocation: ${player}',
+          fr: 'Provocation : ${player}',
           ja: '挑発: ${player}',
           cn: '挑衅: ${player}',
           ko: '도발: ${player}',
@@ -73,7 +77,7 @@ const triggerSet: TriggerSet<Data> = {
         noTarget: {
           en: 'Provoke: ${player} (missed)',
           de: 'Herausforderung: ${player} (verfehlt)',
-          fr: 'Provocation: ${player} (manquée)',
+          fr: 'Provocation : ${player} (manquée)',
           ja: '挑発: ${player} (タゲなし)',
           cn: '挑衅: ${player} (无目标)',
           ko: '도발: ${player} (빗나감)',
@@ -98,7 +102,7 @@ const triggerSet: TriggerSet<Data> = {
         text: {
           en: 'Shirk: ${player}',
           de: 'Geteiltes Leid: ${player}',
-          fr: 'Dérobade: ${player}',
+          fr: 'Dérobade : ${player}',
           ja: 'シャーク: ${player}',
           cn: '退避: ${player}',
           ko: '기피: ${player}',
@@ -123,7 +127,7 @@ const triggerSet: TriggerSet<Data> = {
         text: {
           en: 'Holmgang: ${player}',
           de: 'Holmgang: ${player}',
-          fr: 'Holmgang: ${player}',
+          fr: 'Holmgang : ${player}',
           ja: 'ホルムギャング: ${player}',
           cn: '死斗: ${player}',
           ko: '일대일 결투: ${player}',
@@ -148,7 +152,7 @@ const triggerSet: TriggerSet<Data> = {
         text: {
           en: 'Hallowed: ${player}',
           de: 'Heiliger Boden: ${player}',
-          fr: 'Invincible: ${player}',
+          fr: 'Invincible : ${player}',
           ja: 'インビンシブル: ${player}',
           cn: '神圣领域: ${player}',
           ko: '천하무적: ${player}',
@@ -173,7 +177,7 @@ const triggerSet: TriggerSet<Data> = {
         text: {
           en: 'Bolide: ${player}',
           de: 'Meteoritenfall: ${player}',
-          fr: 'Bolide: ${player}',
+          fr: 'Bolide : ${player}',
           ja: 'ボーライド: ${player}',
           cn: '超火流星: ${player}',
           ko: '폭발 유성: ${player}',
@@ -198,7 +202,7 @@ const triggerSet: TriggerSet<Data> = {
         text: {
           en: 'Living: ${player}',
           de: 'Totenerweckung: ${player}',
-          fr: 'Mort-vivant: ${player}',
+          fr: 'Mort-vivant : ${player}',
           ja: 'リビングデッド: ${player}',
           cn: '行尸走肉: ${player}',
           ko: '산송장: ${player}',
@@ -223,7 +227,7 @@ const triggerSet: TriggerSet<Data> = {
         text: {
           en: 'Walking: ${player}',
           de: 'Erweckter: ${player}',
-          fr: 'Marcheur des limbes: ${player}',
+          fr: 'Marcheur des limbes : ${player}',
           ja: 'ウォーキングデッド: ${player}',
           cn: '死而不僵: ${player}',
           ko: '움직이는 시체: ${player}',
@@ -247,6 +251,15 @@ const triggerSet: TriggerSet<Data> = {
       sound: '../../resources/sounds/Overwatch/D.Va_-_Game_on.webm',
       soundVolume: 0.6,
     },
+    {
+      // https://xivapi.com/LogMessage/916
+      // en: 7 minutes have elapsed since your last activity. [...]
+      // There is no network packet for these log lines; so have to use GameLog.
+      id: 'General Falling Asleep',
+      type: 'GameLog',
+      netRegex: { line: '7 minutes have elapsed since your last activity..*?', capture: false },
+      response: Responses.wakeUp(),
+    },
   ],
   timelineReplace: [
     {
@@ -259,6 +272,8 @@ const triggerSet: TriggerSet<Data> = {
           'Du willst wahren Kampfgeist in der Trainingspuppe entfachen',
         'You burst out laughing at the striking dummy': 'Du lachst herzlich mit der Trainingspuppe',
         'You clap for the striking dummy': 'Du klatschst begeistert Beifall für die Trainingspuppe',
+        '7 minutes have elapsed since your last activity..*?':
+          'Seit deiner letzten Aktivität sind 7 Minuten vergangen.',
       },
     },
     {
@@ -273,6 +288,8 @@ const triggerSet: TriggerSet<Data> = {
         'You burst out laughing at the striking dummy':
           'Vous vous esclaffez devant le mannequin d\'entraînement',
         'You clap for the striking dummy': 'Vous applaudissez le mannequin d\'entraînement',
+        '7 minutes have elapsed since your last activity.':
+          'Votre personnage est inactif depuis 7 minutes',
       },
     },
     {
@@ -284,6 +301,7 @@ const triggerSet: TriggerSet<Data> = {
         'You psych yourself up alongside the striking dummy': '.*は木人に活を入れた',
         'You burst out laughing at the striking dummy': '.*は木人のことを大笑いした',
         'You clap for the striking dummy': '.*は木人に拍手した',
+        '7 minutes have elapsed since your last activity.': '操作がない状態になってから7分が経過しました。',
       },
     },
     {
@@ -295,6 +313,7 @@ const triggerSet: TriggerSet<Data> = {
         'You psych yourself up alongside the striking dummy': '.*激励木人',
         'You burst out laughing at the striking dummy': '.*看着木人高声大笑',
         'You clap for the striking dummy': '.*向木人送上掌声',
+        '7 minutes have elapsed since your last activity.': '已经7分钟没有进行任何操作',
       },
     },
     {
@@ -306,6 +325,7 @@ const triggerSet: TriggerSet<Data> = {
         'You psych yourself up alongside the striking dummy': '.*나무인형에게 힘을 불어넣습니다',
         'You burst out laughing at the striking dummy': '.*나무인형을 보고 폭소를 터뜨립니다',
         'You clap for the striking dummy': '.*나무인형에게 박수를 보냅니다',
+        '7 minutes have elapsed since your last activity..*?': '7분 동안 아무 조작을 하지 않았습니다',
       },
     },
   ],
