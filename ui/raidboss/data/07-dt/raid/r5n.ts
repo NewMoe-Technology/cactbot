@@ -4,8 +4,6 @@ import ZoneId from '../../../../../resources/zone_id';
 import { RaidbossData } from '../../../../../types/data';
 import { TriggerSet } from '../../../../../types/trigger';
 
-export type Data = RaidbossData;
-
 const mapEffectData = {
   // Deathwall turning off after clear?
   '00': {
@@ -321,10 +319,17 @@ const headMarkerData = {
 } as const;
 console.assert(headMarkerData);
 
+export interface Data extends RaidbossData {
+  deepCutTargets: string[];
+}
+
 const triggerSet: TriggerSet<Data> = {
   id: 'AacCruiserweightM1',
   zoneId: ZoneId.AacCruiserweightM1,
   timelineFile: 'r5n.txt',
+  initData: () => ({
+    deepCutTargets: [],
+  }),
   triggers: [
     {
       id: 'R5N Do the Hustle West Safe',
@@ -345,10 +350,27 @@ const triggerSet: TriggerSet<Data> = {
       },
     },
     {
+      // cast is self-targeted on boss
       id: 'R5N Deep Cut',
-      type: 'StartsUsing',
-      netRegex: { id: 'A6C6', source: 'Dancing Green', capture: true },
-      response: Responses.tankBuster(),
+      type: 'HeadMarker',
+      netRegex: { id: headMarkerData.tankLaser, capture: true },
+      infoText: (data, matches, output) => {
+        data.deepCutTargets.push(matches.target);
+        if (data.deepCutTargets.length < 2)
+          return;
+
+        if (data.deepCutTargets.includes(data.me))
+          return output.cleaveOnYou!();
+        return output.avoidCleave!();
+      },
+      run: (data) => {
+        if (data.deepCutTargets.length >= 2)
+          data.deepCutTargets = [];
+      },
+      outputStrings: {
+        cleaveOnYou: Outputs.tankCleaveOnYou,
+        avoidCleave: Outputs.avoidTankCleave,
+      },
     },
     {
       id: 'R5N Full Beat',
@@ -374,6 +396,84 @@ const triggerSet: TriggerSet<Data> = {
       netRegex: { id: ['A702', 'A703'], source: 'Dancing Green', capture: false },
       suppressSeconds: 5,
       response: Responses.spread(),
+    },
+  ],
+  timelineReplace: [
+    {
+      'locale': 'de',
+      'missingTranslations': true,
+      'replaceSync': {
+        'Dancing Green': 'Springhis Khan',
+      },
+      'replaceText': {
+        '\\(opposite\\)': '(gegenüber)',
+        '2-snap Twist': 'Zweifachzeig, Pose',
+        '4-snap Twist': 'Vierfachzeig, Pose',
+        'Arcady Night Fever': 'Arkadion-Tanzfieber',
+        'Celebrate Good Times': 'Völlig losgelöst',
+        'Deep Cut': 'Tiefschnitt',
+        'Disco Infernal': 'Disco Pogo',
+        'Do the Hustle': 'Schüttel deinen Speck',
+        'Eighth Beats': 'Achteltakt',
+        'Ensemble Assemble': 'Gruppen-Groove',
+        'Frogtourage': 'Schenkelschwinger',
+        'Full Beat': 'Ganzer Takt',
+        'Funky Floor': 'Tanzflächen-Tango',
+        'Let\'s Dance!': 'Fühl\' dich Disco!',
+        'Let\'s Pose!': 'Perfekte Pose',
+        'Moonburn': 'Mondglühen',
+        'Ride the Waves': 'Perfekte Welle',
+      },
+    },
+    {
+      'locale': 'fr',
+      'missingTranslations': true,
+      'replaceSync': {
+        'Dancing Green': 'Dancing Green',
+      },
+      'replaceText': {
+        '2-snap Twist': 'Double pointé & pose',
+        '4-snap Twist': 'Quadruple pointé & pose',
+        'Arcady Night Fever': 'Fièvre de l\'Arcadion',
+        'Celebrate Good Times': 'Lève les bras, balance-toi !',
+        'Deep Cut': 'Entaille profonde',
+        'Disco Infernal': 'Enfer du disco',
+        'Do the Hustle': 'Danse le Mia !',
+        'Eighth Beats': 'Tempo octuple',
+        'Ensemble Assemble': 'Rassemblement des danseurs',
+        'Frogtourage': 'danceur batracien',
+        'Full Beat': 'Tempo simple',
+        'Funky Floor': 'Terrain de danse',
+        'Let\'s Dance!': 'Alors on danse !',
+        'Let\'s Pose!': 'Prends la pose !',
+        'Moonburn': 'Flambée lunaire',
+        'Ride the Waves': 'Roulement de vagues',
+      },
+    },
+    {
+      'locale': 'ja',
+      'missingTranslations': true,
+      'replaceSync': {
+        'Dancing Green': 'ダンシング・グリーン',
+      },
+      'replaceText': {
+        '2-snap Twist': '2ポイント＆ポーズ',
+        '4-snap Twist': '4ポイント＆ポーズ',
+        'Arcady Night Fever': 'アルカディア・ナイトフィーバー',
+        'Celebrate Good Times': 'セレブレート・グッドタイムズ',
+        'Deep Cut': 'ディープカット',
+        'Disco Infernal': 'ディスコインファーナル',
+        'Do the Hustle': 'ドゥ・ザ・ハッスル',
+        'Eighth Beats': '8ビート',
+        'Ensemble Assemble': 'ダンサーズ・アッセンブル',
+        'Frogtourage': 'フロッグダンサー',
+        'Full Beat': '1ビート',
+        'Funky Floor': 'ダンシングフィールド',
+        'Let\'s Dance!': 'レッツダンス！',
+        'Let\'s Pose!': 'レッツポーズ！',
+        'Moonburn': 'ムーンバーン',
+        'Ride the Waves': 'ウェーブ・オン・ウェーブ',
+      },
     },
   ],
 };
