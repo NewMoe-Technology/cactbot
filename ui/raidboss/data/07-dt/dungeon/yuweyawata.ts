@@ -31,6 +31,7 @@ const triggerSet: TriggerSet<Data> = {
         text: {
           en: 'Away from falling pillar',
           de: 'Weg von der fallenden Säule',
+          fr: 'Éloignez-vous du pilier',
           cn: '远离柱子落点',
           ko: '기둥 추락지점에서 멀리 떨어지기',
         },
@@ -158,6 +159,7 @@ const triggerSet: TriggerSet<Data> = {
         text: {
           en: 'Away from boss',
           de: 'Weg vom Boss',
+          fr: 'Éloignez-vous du boss',
           cn: '远离 BOSS',
           ko: '보스에게서 멀어지기',
         },
@@ -232,7 +234,6 @@ const triggerSet: TriggerSet<Data> = {
     },
     {
       'locale': 'fr',
-      'missingTranslations': true,
       'replaceSync': {
         'Lindblum Zaghnal': 'zaghnal de Lindblum',
         'Lunipyati': 'Lunipyati',
@@ -240,6 +241,13 @@ const triggerSet: TriggerSet<Data> = {
         'Preserved Soul': 'âme préservée',
       },
       'replaceText': {
+        '\\(arcs\\)': '(Arcs)',
+        '\\(big\\)': '(Gros)',
+        '\\(multiple\\)': '(Multiple)',
+        '\\(spiral\\)': '(Spirale)',
+        '--adds 1 targetable--': '--Adds 1 ciblable--',
+        '--adds 2 targetable--': '--Adds 2 ciblable--',
+        '--adds 3 targetable--': '--Adds 3 ciblable--',
         'Beastly Roar': 'Rugissement bestial',
         'Bloodburst': 'Explosion sanguine',
         'Boulder Dance': 'Danse du roc',
