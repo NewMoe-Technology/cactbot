@@ -262,6 +262,7 @@ const contentTypeToLabel: {
     short: {
       en: 'Bozja',
       de: 'Bozja',
+      fr: 'Bozja',
       cn: '博兹雅',
       ko: '보즈야',
     },
@@ -269,11 +270,15 @@ const contentTypeToLabel: {
   [ContentType.OccultCrescent]: {
     full: {
       en: 'Occult Crescent',
+      fr: 'Croissant Occulte',
       cn: '蜃景幻界新月岛',
+      ko: '초승달 섬',
     },
     short: {
       en: 'Occult',
+      fr: 'Croissant',
       cn: '新月岛',
+      ko: '초승달 섬',
     },
   },
   [ContentType.DisciplesOfTheLand]: {
