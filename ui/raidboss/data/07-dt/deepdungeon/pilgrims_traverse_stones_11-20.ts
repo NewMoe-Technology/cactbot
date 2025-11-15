@@ -42,6 +42,9 @@ const triggerSet: TriggerSet<Data> = {
       // 398 = back right foot
       type: 'GainsEffect',
       netRegex: { effectId: '808', target: 'Forgiven Emulation', capture: true },
+      // rarely, there is a weird doubling of the 808 status loglines
+      // (possibly due to high latency or server load); suppress to avoid this
+      suppressSeconds: 2.5,
       infoText: (data, matches, output) => {
         const count = matches.count;
         (data.footOrder ??= []).push(count);
@@ -71,6 +74,7 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         text: {
           en: '${knockback} ${dir4} => ${dir1}',
+          de: '${knockback} ${dir4} => ${dir1}',
           cn: '${knockback} ${dir4} => ${dir1}',
         },
         knockback: Outputs.knockback,
@@ -95,8 +99,31 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         text: {
           en: 'Seed on YOU',
+          de: 'Samen auf DIR',
           cn: '种子点名',
         },
+      },
+    },
+  ],
+  timelineReplace: [
+    {
+      'locale': 'de',
+      'replaceSync': {
+        'Forgiven Emulation': 'geläutert(?:e|er|es|en) Wetteifer',
+      },
+    },
+    {
+      'locale': 'fr',
+      'missingTranslations': true,
+      'replaceSync': {
+        'Forgiven Emulation': 'imitation pardonnée',
+      },
+    },
+    {
+      'locale': 'ja',
+      'missingTranslations': true,
+      'replaceSync': {
+        'Forgiven Emulation': 'フォーギヴン・エミュレーション',
       },
     },
   ],
