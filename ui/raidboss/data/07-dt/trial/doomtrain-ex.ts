@@ -102,6 +102,7 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         bait: {
           en: 'Bait Puddles',
+          de: 'Flächen ködern',
           cn: '诱导雷圈',
         },
       },
@@ -195,6 +196,7 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         text: {
           en: 'Stored ${mech}',
+          de: 'Gespeichert ${mech}',
           cn: '已储存 ${mech}',
         },
         pairs: Outputs.stackPartner,
@@ -222,6 +224,7 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         text: {
           en: '${mech1} => ${mech2}',
+          de: '${mech1} => ${mech2}',
           cn: '${mech1} => ${mech2}',
         },
         unknown: Outputs.unknown,
@@ -253,6 +256,7 @@ const triggerSet: TriggerSet<Data> = {
         west: Outputs.west,
         text: {
           en: 'LoS ${turretDir} => Tankbusters',
+          de: 'LoS ${turretDir} => Tank-Busters',
           cn: '${turretDir} 箱体 => 双T死刑',
         },
       },
@@ -280,14 +284,17 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         text: {
           en: 'LoS ${turretDir} => ${mech1} => ${mech2}',
+          de: 'LoS ${turretDir} => ${mech1} => ${mech2}',
           cn: '${turretDir} 箱体 => ${mech1} => ${mech2}',
         },
         express: {
           en: '${knockback} => Dodge Lasers',
+          de: '${knockback} => Laser ausweichen',
           cn: '${knockback} => 躲避激光',
         },
         windpipe: {
           en: '${drawIn} => Away from Front',
+          de: '${drawIn} => Weg von Vorne',
           cn: '${drawIn} => 远离前方',
         },
         unknown: Outputs.unknown,
@@ -362,6 +369,7 @@ const triggerSet: TriggerSet<Data> = {
         ...Directions.outputStrings16Dir,
         text: {
           en: 'Train cleaves from ${dir}',
+          de: 'Zug Cleave ${dir}',
           cn: '火车从 ${dir} 攻击',
         },
       },
@@ -392,6 +400,7 @@ const triggerSet: TriggerSet<Data> = {
         ...Directions.outputStrings16Dir,
         text: {
           en: 'Train ${dir}, ${mech}',
+          de: 'Zug ${dir}, ${mech}',
           cn: '火车 ${dir}, ${mech}',
         },
       },
@@ -426,6 +435,7 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         text: {
           en: 'Tower x3 => Next Platform',
+          de: 'Turm x3 => Nächste Plattform',
           cn: '踩塔 x3 => 下一节车厢',
         },
       },
@@ -442,6 +452,7 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         text: {
           en: 'Tower x4 => Next Platform',
+          de: 'Turm x4 => Nächste Plattform',
           cn: '踩塔 x4 => 下一节车厢',
         },
       },
@@ -455,6 +466,7 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         text: {
           en: 'Down => Up',
+          de: 'Unten => Oben',
           cn: '先下 => 上',
         },
       },
@@ -468,6 +480,7 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         text: {
           en: 'Up => Down',
+          de: 'Oben => Unten',
           cn: '先上 => 下',
         },
       },
@@ -526,7 +539,13 @@ const triggerSet: TriggerSet<Data> = {
           return 10.5;
         return 13.5;
       },
-      suppressSeconds: 14,
+      suppressSeconds: (data) => {
+        if (data.hailMoveCount === 2)
+          return 7.5;
+        if (data.hailMoveCount === 3)
+          return 10.5;
+        return 13.5;
+      },
       infoText: (data, _matches, output) => {
         // Easy cases first
         // data.hailMoveCount === 4, no-op
@@ -566,6 +585,7 @@ const triggerSet: TriggerSet<Data> = {
         unknown: Outputs.unknown,
         text: {
           en: '${dir} Safe + Stacks',
+          de: '${dir} Sicher + sammeln',
           cn: '${dir} 安全 + 分摊',
         },
       },
@@ -589,6 +609,7 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         text: {
           en: 'Tower x5 => Next Platform',
+          de: 'Turm x5 => Nächste Plattform',
           cn: '踩塔 x5 => 下一节车厢',
         },
       },
@@ -608,10 +629,12 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         spreadIntoBait: {
           en: 'Spread AoEs => Bait Puddles',
+          de: 'AoEs verteilen => Flächen ködern',
           cn: '分散处理黄圈 => 诱导雷圈',
         },
         spreadIntoBuster: {
           en: 'Spread AoEs => Tankbusters',
+          de: 'AoEs verteilen => Tank-Busters',
           cn: '分散处理黄圈 => 双T死刑',
         },
       },
@@ -626,6 +649,7 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         text: {
           en: 'Tower x6 => Enrage',
+          de: 'Turm x6 => Finalangriff',
           cn: '踩塔 x6 => 狂暴',
         },
       },
@@ -647,16 +671,19 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         up: {
           en: 'Up (dodge turrets)',
+          de: 'Oben (Geschütztürmen ausweichen)',
           cn: '左箱体上',
         },
         down: {
           en: 'Down (dodge turrets)',
+          de: 'Unten (Geschütztürmen ausweichen)',
           cn: '左箱体侧',
         },
         east: Outputs.east,
         west: Outputs.west,
         text: {
           en: 'LoS ${turretDir}',
+          de: 'LoS ${turretDir}',
           cn: '${turretDir} 箱体',
         },
       },
@@ -687,18 +714,22 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         text: {
           en: '${mech1} => ${mech2}${mech3}',
+          de: '${mech1} => ${mech2}${mech3}',
           cn: '${mech1} => ${mech2}${mech3}',
         },
         express: {
           en: '${knockback} => Dodge Lasers',
+          de: '${knockback} => Laser ausweichen',
           cn: '${knockback} => 躲避激光',
         },
         windpipe: {
           en: '${drawIn} => Away from Front',
+          de: '${drawIn} => Weg von Vorne',
           cn: '${drawIn} => 远离前方',
         },
         tbFollowup: {
           en: ' => ${mech3}',
+          de: ' => ${mech3}',
           cn: ' => ${mech3}',
         },
         unknown: Outputs.unknown,
@@ -711,6 +742,121 @@ const triggerSet: TriggerSet<Data> = {
     },
   ],
   timelineReplace: [
+    {
+      'locale': 'de',
+      'replaceSync': {
+        'Aether': 'Äthersphäre',
+        'Doomtrain': 'Doomtrain',
+        'Kinematic Turret': 'Eskortgeschütz',
+      },
+      'replaceText': {
+        '\\(bait\\)': '(ködern)',
+        '\\(detonate\\)': '(explodieren)',
+        'Aetherial Ray': 'Ätherstrahl',
+        'Aetherochar': 'Ätherreigen',
+        'Aetherosote': 'Ätherschlag',
+        'Arcane Revelation': 'Ätherausstoß',
+        'Dead Man\'s Blastpipe': 'Schneller Ruß',
+        'Dead Man\'s Express': 'InterBlitz-Express S',
+        'Dead Man\'s Overdraught': 'Toter Übertakt',
+        'Dead Man\'s Windpipe': 'Schneller Sog',
+        'Derail(?!ment)': 'Entgleisung',
+        'Derailment Siege': 'Schienenbruch',
+        'Electray': 'Elektroblitz',
+        'Hail of Thunder': 'Donnerhagel',
+        'Headlight': 'Spitzensignal',
+        'Hyperconductive Plasma': 'Supraleitendes Plasma',
+        'Hyperexplosive Plasma': 'Dichtes Plasma',
+        'Lightning Burst': 'Blitzknall',
+        '(?<! )Overdraught': 'Überstrom',
+        '(?<! )Plasma(?! )': 'Plasma',
+        'Plasma Beam': 'Plasmastrahl',
+        'Plummet': 'Abfallen',
+        'Psychokinesis': 'Psychokinese',
+        'Runaway Train': 'Endlose Irrfahrt',
+        'Shockwave': 'Schockwelle',
+        'Third Rail': 'Stromschiene',
+        'Thunderous Breath': 'Gewitteratem',
+        'Turret Crossing': 'Kanonenkreuzung',
+        'Unlimited Express': 'Unregional-Express',
+      },
+    },
+    {
+      'locale': 'fr',
+      'missingTranslations': true,
+      'replaceSync': {
+        'Aether': 'sphère éthérée',
+        'Doomtrain': 'Glasya-Labolas',
+        'Kinematic Turret': 'tourelle d\'escorte',
+      },
+      'replaceText': {
+        'Aetherial Ray': 'Rayon éthéré',
+        'Aetherochar': 'Rayon éthéré',
+        'Aetherosote': 'Choc éthéré',
+        'Arcane Revelation': 'Déploiement arcanique',
+        'Dead Man\'s Blastpipe': 'Émission turbo',
+        'Dead Man\'s Express': 'Express turbo',
+        'Dead Man\'s Overdraught': 'Surcharge turbo',
+        'Dead Man\'s Windpipe': 'Aspirateur turbo',
+        'Derail(?!ment)': 'Déraillement',
+        'Derailment Siege': 'Déraillement violent',
+        'Electray': 'Rayon électrique',
+        'Hail of Thunder': 'Déluge électrique',
+        'Headlight': 'Regard glacial',
+        'Hyperconductive Plasma': 'Plasma hyperconducteur',
+        'Hyperexplosive Plasma': 'Plasma destructeur',
+        'Lightning Burst': 'Explosion électrique',
+        '(?<! )Overdraught': 'Surcharge débordante',
+        '(?<! )Plasma(?! )': 'Plasma explosif',
+        'Plasma Beam': 'Rayon plasma',
+        'Plummet': 'Chute',
+        'Psychokinesis': 'Psychokinésie',
+        'Runaway Train': 'Train fou',
+        'Shockwave': 'Onde de choc',
+        'Third Rail': 'Troisième rail',
+        'Thunderous Breath': 'Souffle électrique',
+        'Turret Crossing': 'Tourelles croisées',
+        'Unlimited Express': 'Express illimité',
+      },
+    },
+    {
+      'locale': 'ja',
+      'missingTranslations': true,
+      'replaceSync': {
+        'Aether': 'エーテルスフィア',
+        'Doomtrain': 'グラシャラボラス',
+        'Kinematic Turret': 'エスコートタレット',
+      },
+      'replaceText': {
+        'Aetherial Ray': 'エーテルレイ',
+        'Aetherochar': 'エーテルバレット',
+        'Aetherosote': 'エーテルブラスター',
+        'Arcane Revelation': '魔法陣展開',
+        'Dead Man\'s Blastpipe': 'ブーステッド・エミッション',
+        'Dead Man\'s Express': 'ブーステッド・エクスプレス',
+        'Dead Man\'s Overdraught': 'オーバーブースト',
+        'Dead Man\'s Windpipe': 'ブーステッド・バキューム',
+        'Derail(?!ment)': 'ディレール',
+        'Derailment Siege': 'ディレールパウンド',
+        'Electray': 'エレクトロレイ',
+        'Hail of Thunder': 'サンダーレイン',
+        'Headlight': 'ヘッドライト',
+        'Hyperconductive Plasma': '重雷',
+        'Hyperexplosive Plasma': '重爆雷',
+        'Lightning Burst': 'サンダーバースト',
+        '(?<! )Overdraught': 'オーバーフロウ',
+        '(?<! )Plasma(?! )': '爆雷',
+        'Plasma Beam': 'プラズマレイ',
+        'Plummet': '落下',
+        'Psychokinesis': 'サイコキネシス',
+        'Runaway Train': '果てしなき暴走',
+        'Shockwave': '衝撃波',
+        'Third Rail': 'フラッシュサンダー',
+        'Thunderous Breath': 'サンダーブレス',
+        'Turret Crossing': '随伴機出撃',
+        'Unlimited Express': 'アンリミテッドエクスプレス',
+      },
+    },
     {
       'locale': 'cn',
       'replaceSync': {
