@@ -269,6 +269,7 @@ const triggerSet: TriggerSet<Data> = {
         dodge: {
           en: 'Dodge Lines',
           cn: '避开直线',
+          ko: '직선장판 피하기',
         },
       },
     },
@@ -302,6 +303,7 @@ const triggerSet: TriggerSet<Data> = {
         text: {
           en: '${dir1} max melee => ${dir2} max melee',
           cn: '${dir1} 最大近战距离 => ${dir2} 最大近战距离',
+          ko: '${dir1} 칼끝딜 => ${dir2} 칼끝딜',
         },
         left: Outputs.left,
         right: Outputs.right,
@@ -373,6 +375,7 @@ const triggerSet: TriggerSet<Data> = {
         away: {
           en: 'Away from bats ${dir1}/${dir2}',
           cn: '远离蝙蝠 ${dir1}/${dir2}',
+          ko: '박쥐 피하기 ${dir1}/${dir2}',
         },
       },
     },
@@ -400,6 +403,7 @@ const triggerSet: TriggerSet<Data> = {
         away: {
           en: 'Away from bats ${dir1}/${dir2}/${dir3}',
           cn: '远离蝙蝠 ${dir1}/${dir2}/${dir3}',
+          ko: '박쥐 피하기 ${dir1}/${dir2}/${dir3}',
         },
       },
     },
@@ -495,14 +499,17 @@ const triggerSet: TriggerSet<Data> = {
         text: {
           en: 'Flails ${flail1Dist} ${flail1Dir}/${flail2Dist} ${flail2Dir}',
           cn: '刺锤 ${flail1Dist} ${flail1Dir}/${flail2Dist} ${flail2Dir}',
+          ko: '철퇴 ${flail1Dist} ${flail1Dir}/${flail2Dist} ${flail2Dir}',
         },
         near: {
           en: 'Near',
           cn: '近',
+          ko: '가까이',
         },
         far: {
           en: 'Far',
           cn: '远',
+          ko: '멀리',
         },
         ...Directions.outputStringsIntercardDir,
       },
@@ -538,6 +545,38 @@ const triggerSet: TriggerSet<Data> = {
         'Pulping Pulse': '碎烂脉冲',
         'Sadistic Screech': '施虐的尖啸',
         'Vamp Stomp': '血魅的靴踏音',
+      },
+    },
+    {
+      'locale': 'tc',
+      'missingTranslations': true,
+      'replaceSync': {
+        // 'Coffinmaker': '', // FIXME '致命刑锯'
+        // 'Fatal Flail': '', // FIXME '致命刺锤'
+        // 'Vamp Fatale': '', // FIXME '致命美人'
+        // 'Vampette Fatale': '', // FIXME '致命蝙蝠'
+      },
+      'replaceText': {
+        // '--Coffinmaker targetable--': '', // FIXME '--致命刑锯可选中--'
+        // '--Flail targetable--': '', // FIXME '--致命刺锤可选中--'
+        // '--Vamp Fatale untargetable--': '', // FIXME '--致命美人不可选中--'
+        // 'Aetherletting': '', // FIXME '以太流失'
+        // 'Blast Beat': '', // FIXME '共振波'
+        // 'Brutal Rain': '', // FIXME '粗暴之雨'
+        // 'Coffinfiller': '', // FIXME '冲出'
+        // 'Crowd Kill': '', // FIXME '全场杀伤'
+        // 'Dead Wake': '', // FIXME '前进'
+        // 'Finale Fatale': '', // FIXME '致命的闭幕曲'
+        // 'Flaying Fry': '', // FIXME '剥蚀的低嗓'
+        // 'Half Moon': '', // FIXME '月之半相'
+        // 'Hardcore': '', // FIXME '硬核之声'
+        // 'Insatiable Thirst': '', // FIXME '贪欲无厌'
+        // 'Killer Voice': '', // FIXME '魅亡之音'
+        // 'Penetrating Pitch': '', // FIXME '尖锐的音调'
+        'Plummet': '掉落',
+        // 'Pulping Pulse': '', // FIXME '碎烂脉冲'
+        // 'Sadistic Screech': '', // FIXME '施虐的尖啸'
+        // 'Vamp Stomp': '', // FIXME '血魅的靴踏音'
       },
     },
   ],
