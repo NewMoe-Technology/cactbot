@@ -72,6 +72,7 @@ Options.Triggers.push({
           en: 'Bait Puddles',
           de: 'Flächen ködern',
           cn: '诱导雷圈',
+          ko: '장판 유도',
         },
       },
     },
@@ -166,6 +167,7 @@ Options.Triggers.push({
           en: 'Stored ${mech}',
           de: 'Gespeichert ${mech}',
           cn: '已储存 ${mech}',
+          ko: '${mech} 저장',
         },
         pairs: Outputs.stackPartner,
         spread: Outputs.spread,
@@ -194,6 +196,7 @@ Options.Triggers.push({
           en: '${mech1} => ${mech2}',
           de: '${mech1} => ${mech2}',
           cn: '${mech1} => ${mech2}',
+          ko: '${mech1} => ${mech2}',
         },
         unknown: Outputs.unknown,
         knockback: Outputs.knockback,
@@ -226,6 +229,7 @@ Options.Triggers.push({
           en: 'LoS ${turretDir} => Tankbusters',
           de: 'LoS ${turretDir} => Tank-Busters',
           cn: '${turretDir} 箱体 => 双T死刑',
+          ko: '${turretDir} 상자 => 탱버',
         },
       },
     },
@@ -254,16 +258,19 @@ Options.Triggers.push({
           en: 'LoS ${turretDir} => ${mech1} => ${mech2}',
           de: 'LoS ${turretDir} => ${mech1} => ${mech2}',
           cn: '${turretDir} 箱体 => ${mech1} => ${mech2}',
+          ko: '${turretDir} 상자 => ${mech1} => ${mech2}',
         },
         express: {
           en: '${knockback} => Dodge Lasers',
           de: '${knockback} => Laser ausweichen',
           cn: '${knockback} => 躲避激光',
+          ko: '${knockback} => 레이저 피하기',
         },
         windpipe: {
           en: '${drawIn} => Away from Front',
           de: '${drawIn} => Weg von Vorne',
           cn: '${drawIn} => 远离前方',
+          ko: '${drawIn} => 맨 앞 피하기',
         },
         unknown: Outputs.unknown,
         east: Outputs.east,
@@ -331,6 +338,7 @@ Options.Triggers.push({
           en: 'Train cleaves from ${dir}',
           de: 'Zug Cleave ${dir}',
           cn: '火车从 ${dir} 攻击',
+          ko: '${dir}에서 기차 공격',
         },
       },
     },
@@ -362,6 +370,7 @@ Options.Triggers.push({
           en: 'Train ${dir}, ${mech}',
           de: 'Zug ${dir}, ${mech}',
           cn: '火车 ${dir}, ${mech}',
+          ko: '기차 ${dir}, ${mech}',
         },
       },
     },
@@ -397,6 +406,7 @@ Options.Triggers.push({
           en: 'Tower x3 => Next Platform',
           de: 'Turm x3 => Nächste Plattform',
           cn: '踩塔 x3 => 下一节车厢',
+          ko: '탑 x3 => 다음 플랫폼',
         },
       },
     },
@@ -414,6 +424,7 @@ Options.Triggers.push({
           en: 'Tower x4 => Next Platform',
           de: 'Turm x4 => Nächste Plattform',
           cn: '踩塔 x4 => 下一节车厢',
+          ko: '탑 x4 => 다음 플랫폼',
         },
       },
     },
@@ -428,6 +439,7 @@ Options.Triggers.push({
           en: 'Down => Up',
           de: 'Unten => Oben',
           cn: '先下 => 上',
+          ko: '아래 => 위',
         },
       },
     },
@@ -442,6 +454,7 @@ Options.Triggers.push({
           en: 'Up => Down',
           de: 'Oben => Unten',
           cn: '先上 => 下',
+          ko: '위 => 아래',
         },
       },
     },
@@ -543,6 +556,7 @@ Options.Triggers.push({
           en: '${dir} Safe + Stacks',
           de: '${dir} Sicher + sammeln',
           cn: '${dir} 安全 + 分摊',
+          ko: '${dir} 안전 + 쉐어',
         },
       },
     },
@@ -567,6 +581,7 @@ Options.Triggers.push({
           en: 'Tower x5 => Next Platform',
           de: 'Turm x5 => Nächste Plattform',
           cn: '踩塔 x5 => 下一节车厢',
+          ko: '탑 x5 => 다음 플랫폼',
         },
       },
     },
@@ -587,11 +602,13 @@ Options.Triggers.push({
           en: 'Spread AoEs => Bait Puddles',
           de: 'AoEs verteilen => Flächen ködern',
           cn: '分散处理黄圈 => 诱导雷圈',
+          ko: '산개징 => 장판 유도',
         },
         spreadIntoBuster: {
           en: 'Spread AoEs => Tankbusters',
           de: 'AoEs verteilen => Tank-Busters',
           cn: '分散处理黄圈 => 双T死刑',
+          ko: '산개징 => 탱버',
         },
       },
     },
@@ -607,6 +624,7 @@ Options.Triggers.push({
           en: 'Tower x6 => Enrage',
           de: 'Turm x6 => Finalangriff',
           cn: '踩塔 x6 => 狂暴',
+          ko: '탑 x6 => 전멸기',
         },
       },
     },
@@ -629,11 +647,13 @@ Options.Triggers.push({
           en: 'Up (dodge turrets)',
           de: 'Oben (Geschütztürmen ausweichen)',
           cn: '左箱体上',
+          ko: '위 (포탑 피하기)',
         },
         down: {
           en: 'Down (dodge turrets)',
           de: 'Unten (Geschütztürmen ausweichen)',
           cn: '左箱体侧',
+          ko: '아래 (포탑 피하기)',
         },
         east: Outputs.east,
         west: Outputs.west,
@@ -641,6 +661,7 @@ Options.Triggers.push({
           en: 'LoS ${turretDir}',
           de: 'LoS ${turretDir}',
           cn: '${turretDir} 箱体',
+          ko: '${turretDir} 포탑 피하기',
         },
       },
     },
@@ -672,21 +693,25 @@ Options.Triggers.push({
           en: '${mech1} => ${mech2}${mech3}',
           de: '${mech1} => ${mech2}${mech3}',
           cn: '${mech1} => ${mech2}${mech3}',
+          ko: '${mech1} => ${mech2}${mech3}',
         },
         express: {
           en: '${knockback} => Dodge Lasers',
           de: '${knockback} => Laser ausweichen',
           cn: '${knockback} => 躲避激光',
+          ko: '${knockback} => 레이저 피하기',
         },
         windpipe: {
           en: '${drawIn} => Away from Front',
           de: '${drawIn} => Weg von Vorne',
           cn: '${drawIn} => 远离前方',
+          ko: '${drawIn} => 맨 앞 피하기',
         },
         tbFollowup: {
           en: ' => ${mech3}',
           de: ' => ${mech3}',
           cn: ' => ${mech3}',
+          ko: ' => ${mech3}',
         },
         unknown: Outputs.unknown,
         knockback: Outputs.knockback,
@@ -850,6 +875,46 @@ Options.Triggers.push({
         'Thunderous Breath': '雷鸣吐息',
         'Turret Crossing': '炮塔出击',
         'Unlimited Express': '无控急行',
+      },
+    },
+    {
+      'locale': 'tc',
+      'missingTranslations': true,
+      'replaceSync': {
+        'Aether': '乙太晶球',
+        // 'Doomtrain': '', // FIXME '格莱杨拉波尔'
+        // 'Kinematic Turret': '', // FIXME '护卫炮塔'
+      },
+      'replaceText': {
+        // '\\(bait\\)': '', // FIXME '(诱导)'
+        // '\\(detonate\\)': '', // FIXME '(爆炸)'
+        'Aetherial Ray': '乙太射線',
+        // 'Aetherochar': '', // FIXME '以太炮'
+        // 'Aetherosote': '', // FIXME '以太冲击波'
+        'Arcane Revelation': '魔法陣展開',
+        // 'Dead Man\'s Blastpipe': '', // FIXME '超增压排雾'
+        // 'Dead Man\'s Express': '', // FIXME '超增压急行'
+        // 'Dead Man\'s Overdraught': '', // FIXME '超增压'
+        // 'Dead Man\'s Windpipe': '', // FIXME '超增压抽雾'
+        // 'Derail(?!ment)': '', // FIXME '脱轨'
+        // 'Derailment Siege': '', // FIXME '脱轨捶打'
+        'Electray': '雷轉質射線',
+        // 'Hail of Thunder': '', // FIXME '雷光雨'
+        'Headlight': '前照光',
+        // 'Hyperconductive Plasma': '', // FIXME '重雷'
+        // 'Hyperexplosive Plasma': '', // FIXME '重爆雷'
+        'Lightning Burst': '雷電爆發',
+        // '(?<! )Overdraught': '', // FIXME '溢流'
+        // '(?<! )Plasma(?! )': '', // FIXME '爆雷'
+        // 'Plasma Beam': '', // FIXME '等离子射线'
+        'Plummet': '掉落',
+        'Psychokinesis': '念動反應',
+        // 'Runaway Train': '', // FIXME '无尽狂奔'
+        'Shockwave': '衝擊波',
+        // 'Third Rail': '', // FIXME '雷光一闪'
+        'Thunderous Breath': '雷鳴吐息',
+        // 'Turret Crossing': '', // FIXME '炮塔出击'
+        // 'Unlimited Express': '', // FIXME '无控急行'
       },
     },
   ],
