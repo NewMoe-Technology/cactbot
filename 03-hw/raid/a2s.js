@@ -22,8 +22,8 @@ Options.Triggers.push({
           fr: 'Étourdissez bientôt',
           ja: 'まもなくスタン',
           cn: '马上眩晕',
-          tc: '馬上眩暈',
           ko: '곧 기절',
+          tc: '馬上眩暈',
         },
       },
     },
@@ -41,8 +41,8 @@ Options.Triggers.push({
           fr: 'Bombe',
           ja: '爆弾',
           cn: '炸弹出现',
-          tc: '炸彈出現',
           ko: '폭탄',
+          tc: '炸彈出現',
         },
       },
     },
@@ -61,8 +61,8 @@ Options.Triggers.push({
           fr: 'Maintenez ${player} Max PV',
           ja: '${player}のHPを満タンに保つ',
           cn: '保持${player}满血',
-          tc: '保持${player}滿血',
           ko: '"${player}" 풀피 유지',
+          tc: '保持 ${player} 滿血',
         },
       },
     },
@@ -80,8 +80,8 @@ Options.Triggers.push({
           fr: 'Double cannon sur VOUS',
           ja: '自分にブームカノン',
           cn: '红球点名',
-          tc: '紅球點名',
           ko: '우레 포격 대상자',
+          tc: '紅球點名',
         },
       },
     },
@@ -106,8 +106,8 @@ Options.Triggers.push({
           fr: 'Étourdissez le soldat',
           ja: 'スタン：ソルジャー',
           cn: '眩晕士兵',
-          tc: '眩暈士兵',
           ko: '병사 기절시키기',
+          tc: '眩暈士兵',
         },
       },
     },
@@ -257,7 +257,6 @@ Options.Triggers.push({
     },
     {
       'locale': 'tc',
-      'missingTranslations': true,
       'replaceSync': {
         'Boomtype Magitek Gobwalker G-VII': '爆破型7號哥布林戰車',
         'Giant Bomb': '最終炸彈',
@@ -278,17 +277,17 @@ Options.Triggers.push({
         'Brainhurt Breakblock': '精神防護',
         'Carpet Bomb': '地毯式轟炸',
         '(?<!Massive )Explosion': '爆炸',
-        // 'Gobwalker': '', // FIXME '哥布林战车'
-        // 'Gobwidow': '', // FIXME '哥布林黑寡妇'
-        // 'Hardhelm': '', // FIXME '戈耳狄硬盔兵'
-        // 'Hardmind': '', // FIXME '戈耳狄铁心兵'
+        'Gobwalker': '哥布林戰車',
+        'Gobwidow': '哥布林黑寡婦',
+        'Hardhelm': '戈耳狄硬盔兵',
+        'Hardmind': '戈耳狄鐵心兵',
         'Jagd Doll': '狩獵人偶',
         'Kaltstrahl': '寒光',
         'Massive Explosion': '大爆炸',
-        // 'Sniper': '', // FIXME '戈耳狄狙击手'
-        // 'Soldier': '', // FIXME '戈耳狄士兵'
-        // 'Wave': '', // FIXME '波'
-        // '\\(mid\\)': '', // FIXME '(中央)'
+        'Sniper': '戈耳狄狙擊手',
+        'Soldier': '戈耳狄士兵',
+        'Wave (\\d+)': '第$1波',
+        '\\(mid\\)': '(中央)',
       },
     },
     {

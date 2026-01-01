@@ -7,8 +7,8 @@ Options.Triggers.push({
     de: 'Vor der 6.3 Überarbeitung',
     fr: 'Avant le remaniement 6.3',
     cn: '6.3改版前',
-    tc: '6.3改版前',
     ko: '6.3 개편 전',
+    tc: '6.3改版前',
   },
   timelineFile: 'xelphatol.txt',
   timelineTriggers: [
@@ -68,8 +68,8 @@ Options.Triggers.push({
           fr: 'Zone au sol sur VOUS',
           ja: '自分に風',
           cn: '风圈点名',
-          tc: '風圈點名',
           ko: '장판 대상자',
+          tc: '風圈點名',
         },
       },
     },
@@ -248,7 +248,6 @@ Options.Triggers.push({
     },
     {
       'locale': 'tc',
-      'missingTranslations': true,
       'replaceSync': {
         'Abalathian Hornbill': '阿巴拉提亞犀鳥',
         'Dotoli Ciloc': '旋風扇德托里·西羅克',
@@ -261,9 +260,9 @@ Options.Triggers.push({
         'Floating Turret': '氣球砲塔',
       },
       'replaceText': {
-        // '\\(buster\\)': '', // FIXME '(死刑)'
-        // '\\(line\\)': '', // FIXME '(直线)'
-        // '\\(aoe\\)': '', // FIXME '(AOE)'
+        '\\(buster\\)': '(死刑)',
+        '\\(line\\)': '(直線)',
+        '\\(aoe\\)': '(AOE)',
         'Aerial Blast': '大氣爆發',
         'Air Raid': '空襲',
         'Bill': '堅喙',

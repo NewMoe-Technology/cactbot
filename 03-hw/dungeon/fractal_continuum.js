@@ -60,8 +60,8 @@ Options.Triggers.push({
           fr: 'Utilisez un incubateur',
           ja: 'キメラ培養器を使う',
           cn: '打开笼子',
-          tc: '打開籠子',
           ko: '키메라 배양기 사용하기',
+          tc: '打開籠子',
         },
       },
     },
@@ -78,8 +78,8 @@ Options.Triggers.push({
           fr: 'Guérison => Debuff bombe',
           ja: 'エスナ：魔科学爆弾',
           cn: '康复魔炸弹',
-          tc: '康復魔炸彈',
           ko: '폭탄 디버프 해제',
+          tc: '復原 魔炸彈debuff',
         },
       },
     },
@@ -223,9 +223,8 @@ Options.Triggers.push({
     },
     {
       'locale': 'tc',
-      'missingTranslations': true,
       'replaceSync': {
-        // 'Clockwork Alarum': '', // FIXME '发条报警虫'
+        'Clockwork Alarum': '發條報警蟲',
         'Exhibit level III': '第三展示區',
         'Minotaur': '米諾陶洛斯',
         'Phantom Ray': '魅影射線',

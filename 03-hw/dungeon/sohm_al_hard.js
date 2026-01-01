@@ -34,8 +34,8 @@ Options.Triggers.push({
           fr: 'Éloignez-vous des spores',
           ja: 'スポアサックから離れる',
           cn: '远离大孢囊',
-          tc: '遠離大孢囊',
           ko: '큰 포자 주머니에게서 떨어지기',
+          tc: '遠離大孢囊',
         },
       },
     },
@@ -55,8 +55,8 @@ Options.Triggers.push({
           fr: 'Guérison sur ${player}',
           ja: 'エスナ：${player}',
           cn: '康复${player}',
-          tc: '康復${player}',
           ko: '${player} 에스나',
+          tc: '復原 ${player}',
         },
       },
     },
@@ -129,8 +129,8 @@ Options.Triggers.push({
           fr: 'Déposez la zone au sol à l\'extérieur',
           ja: '外周に置く',
           cn: '人群外放圈圈',
-          tc: '人群外放圈圈',
           ko: '바깥쪽으로 장판 유도하기',
+          tc: '人群外放圈圈',
         },
       },
     },
@@ -270,7 +270,6 @@ Options.Triggers.push({
     },
     {
       'locale': 'tc',
-      'missingTranslations': true,
       'replaceSync': {
         'Gowrow': '高牢怪龍',
         'The Wound': '靈傷',
@@ -282,12 +281,12 @@ Options.Triggers.push({
         'Lava Scorpion': '熔岩蠍',
       },
       'replaceText': {
-        // '\\(Adds x2\\)': '', // FIXME '(小怪x2)'
-        // '\\(Adds x4\\)': '', // FIXME '(小怪x4)'
-        // '\\(Back\\)': '', // FIXME '(后)'
-        // '\\(Front\\)': '', // FIXME '(前)'
-        // '\\(Readies\\)': '', // FIXME '(准备)'
-        // '\\(Ring\\)': '', // FIXME '(月环)'
+        '\\(Adds x2\\)': '(小怪x2)',
+        '\\(Adds x4\\)': '(小怪x4)',
+        '\\(Back\\)': '(後)',
+        '\\(Front\\)': '(前)',
+        '\\(Readies\\)': '(準備)',
+        '\\(Ring\\)': '(月環)',
         'Wild Horn': '野性利角',
         'Spore Sac': '孢囊',
         'Realm Shaker': '震撼領域',

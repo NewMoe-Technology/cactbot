@@ -71,8 +71,8 @@ Options.Triggers.push({
           fr: 'Gobrayon sur ${player}',
           ja: '${player}にゴブ式波動砲',
           cn: '波动炮点${player}',
-          tc: '波動炮點${player}',
           ko: '"${player}" 고블린식 파동포',
+          tc: '波動砲點 ${player}',
         },
         sizzlebeamOnYou: {
           en: 'Sizzlebeam on YOU',
@@ -80,8 +80,8 @@ Options.Triggers.push({
           fr: 'Gobrayon sur VOUS',
           ja: '自分にゴブ式波動砲',
           cn: '波动炮点名',
-          tc: '波動炮點名',
           ko: '고블린식 파동포 대상자',
+          tc: '波動砲點名',
         },
       },
     },
@@ -104,8 +104,8 @@ Options.Triggers.push({
           fr: 'Bombe, dispersez-vous',
           ja: '爆弾、散開',
           cn: '炸弹，散开',
-          tc: '炸彈，散開',
           ko: '폭탄 뿌리기',
+          tc: '炸彈，散開',
         },
       },
     },
@@ -122,8 +122,8 @@ Options.Triggers.push({
           fr: 'Marquage prison',
           ja: '隔離部屋',
           cn: '监狱点名',
-          tc: '監獄點名',
           ko: '감옥 징 대상자',
+          tc: '監獄點名',
         },
       },
     },
@@ -143,8 +143,8 @@ Options.Triggers.push({
           fr: 'Lien prison',
           ja: '隔離部屋線',
           cn: '监狱连线',
-          tc: '監獄連線',
           ko: '감옥 줄 대상자',
+          tc: '監獄連線',
         },
       },
     },
@@ -192,8 +192,8 @@ Options.Triggers.push({
           fr: 'Cassez le cadenas',
           ja: '錠前を破れ',
           cn: '打破锁',
-          tc: '打破鎖',
           ko: '자물쇠 부수기',
+          tc: '打破鎖',
         },
       },
     },
@@ -209,8 +209,8 @@ Options.Triggers.push({
           fr: 'Tuez le cœur',
           ja: '真心を倒す',
           cn: '击杀真心',
-          tc: '擊殺真心',
           ko: '진심 없애기',
+          tc: '擊殺真心',
         },
       },
     },
@@ -227,8 +227,8 @@ Options.Triggers.push({
           fr: 'Fournaise sur VOUS',
           ja: '自分に灼熱',
           cn: '热风点名',
-          tc: '熱風點名',
           ko: '뜨거운 바람 대상자',
+          tc: '熱風點名',
         },
       },
     },
@@ -371,7 +371,6 @@ Options.Triggers.push({
     },
     {
       'locale': 'tc',
-      'missingTranslations': true,
       'replaceSync': {
         'Bomb': '炸彈',
         'Boomtype Magitek Gobwalker G-VII': '7號哥布林戰車L型',
@@ -384,22 +383,22 @@ Options.Triggers.push({
         'The electrocution gallery': '公開處刑廣場',
       },
       'replaceText': {
-        // 'Big Doll': '', // FIXME '大人偶'
-        // 'Bomb(?!(s|en))': '', // FIXME '炸弹'
-        // 'Bombs': '', // FIXME '炸弹'
-        // '(?<! )Doll': '', // FIXME '人偶'
+        'Big Doll': '大人偶',
+        'Bomb(?!(s|en))': '炸彈',
+        'Bombs': '炸彈',
+        '(?<! )Doll': '人偶',
         'Flamethrower': '火焰噴射器',
-        // 'Hammertime': '', // FIXME '惩戒'
-        // 'Jails': '', // FIXME '监狱'
-        // 'Get Prey': '', // FIXME '监狱点名'
-        // 'Get Tether': '', // FIXME '监狱连线'
+        'Hammertime': '懲戒',
+        'Jails': '監獄',
+        'Get Prey': '監獄點名',
+        'Get Tether': '監獄連線',
         'Kill Heart': '聲援',
-        // 'Resync': '', // FIXME '重新同步'
+        'Resync': '重新同步',
         'Sizzlebeam': '哥布式波動砲',
         'Sizzlespark': '哥布林火花',
-        // 'Small Doll(?!s)': '', // FIXME '小人偶'
-        // 'Small Dolls': '', // FIXME '小人偶'
-        // 'Stun Heart': '', // FIXME '击晕真心'
+        'Small Doll(?!s)': '小人偶',
+        'Small Dolls': '小人偶',
+        'Stun Heart': '擊暈真心',
         'Uplander Doom': '齊射',
         'Zoomdoom': '哥布火箭',
       },
