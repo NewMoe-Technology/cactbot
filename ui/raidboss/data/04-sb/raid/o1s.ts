@@ -29,8 +29,8 @@ const triggerSet: TriggerSet<Data> = {
           fr: 'Aile déferlante : Placez-vous à côté du boss',
           ja: 'ブレスウィング: ボスに近づく',
           cn: '站boss附近',
-          tc: '站boss附近',
           ko: '날개바람: 보스 옆으로',
+          tc: '站boss附近',
         },
       },
     },
@@ -56,7 +56,7 @@ const triggerSet: TriggerSet<Data> = {
       id: 'O1S Charybdis',
       type: 'StartsUsing',
       netRegex: { id: '1ED3', source: 'Alte Roite', capture: false },
-      response: Responses.aoe(),
+      response: Responses.hpTo1Aoe('alert'),
     },
   ],
   timelineReplace: [

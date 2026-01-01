@@ -37,8 +37,8 @@ const triggerSet: TriggerSet<Data> = {
           fr: 'Aile déferlante : Placez-vous à côté du boss',
           ja: 'ブレスウィング: ボスに近づく',
           cn: '站boss附近',
-          tc: '站boss附近',
           ko: '날개바람: 보스 옆으로',
+          tc: '站boss附近',
         },
       },
     },
@@ -67,7 +67,7 @@ const triggerSet: TriggerSet<Data> = {
       netRegex: { id: '23DB', source: 'Alte Roite', capture: false },
       condition: (data) => data.role === 'healer' || data.job === 'BLU',
       // Alert rather than info, as any further raid damage is lethal if unhealed.
-      response: Responses.aoe('alert'),
+      response: Responses.hpTo1Aoe('alert'),
     },
     {
       id: 'O1N Twin Bolt',

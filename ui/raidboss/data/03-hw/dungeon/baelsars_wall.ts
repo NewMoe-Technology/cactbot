@@ -14,8 +14,8 @@ const triggerSet: TriggerSet<Data> = {
     de: 'Vor der 6.3 Überarbeitung',
     fr: 'Avant le remaniement 6.3',
     cn: '6.3改版前',
-    tc: '6.3改版前',
     ko: '6.3 개편 전',
+    tc: '6.3改版前',
   },
   timelineFile: 'baelsars_wall.txt',
   timelineTriggers: [
@@ -104,8 +104,8 @@ const triggerSet: TriggerSet<Data> = {
           fr: 'Cassez la chaînes sur ${player}',
           ja: '${player}の線を破れ',
           cn: '击破 ${player} 的锁链',
-          tc: '擊破 ${player} 的鎖鏈',
           ko: '${player}의 사슬 부수기',
+          tc: '擊破 ${player} 的鎖鏈',
         },
       },
     },
@@ -262,7 +262,6 @@ const triggerSet: TriggerSet<Data> = {
     },
     {
       'locale': 'tc',
-      'missingTranslations': true,
       'replaceSync': {
         'Armored Weapon': '武裝重甲',
         'Blade Of The Griffin': '獅鷲之刃',
@@ -275,7 +274,7 @@ const triggerSet: TriggerSet<Data> = {
         'Via Praetoria': '天營路',
       },
       'replaceText': {
-        // '--teleport': '', // FIXME '--传送'
+        '--teleport': '--傳送',
         'Assault Cannon': '突擊加農砲',
         'Beak Of The Griffin': '獅鷲之喙',
         'Big Boot': '大靴重踹',

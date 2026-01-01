@@ -27,8 +27,8 @@ const triggerSet: TriggerSet<Data> = {
           fr: 'Transcendance maintenant !',
           ja: 'タンクLBを！',
           cn: '坦克LB！',
-          tc: '坦克LB！',
           ko: '지금 탱리밋 사용!',
+          tc: '坦克LB！',
         },
       },
     },
@@ -74,8 +74,8 @@ const triggerSet: TriggerSet<Data> = {
           fr: 'Dispersez-vous (Pas de package !)',
           ja: '散開（重ならないように）',
           cn: '分散（不去分摊！）',
-          tc: '分散（不去分攤！）',
           ko: '산개（모이지마세요!）',
+          tc: '分散（不去分攤！）',
         },
       },
     },
@@ -114,8 +114,8 @@ const triggerSet: TriggerSet<Data> = {
           fr: 'Lasers',
           ja: 'レーザー',
           cn: '十字圣礼',
-          tc: '十字聖禮',
           ko: '십자 성례',
+          tc: '十字聖禮',
         },
       },
     },
@@ -132,8 +132,8 @@ const triggerSet: TriggerSet<Data> = {
           fr: 'Lien Zone au sol sur VOUS',
           ja: '自分に線',
           cn: '放圈连线点名',
-          tc: '放圈連線點名',
           ko: '장판 남기는 선 대상자',
+          tc: '放圈連線點名',
         },
       },
     },
@@ -324,7 +324,6 @@ const triggerSet: TriggerSet<Data> = {
     },
     {
       'locale': 'tc',
-      'missingTranslations': true,
       'replaceSync': {
         '(?<! )Alexander(?! )': '亞歷山大',
         'Alexander Prime': '至尊亞歷山大',
@@ -364,8 +363,8 @@ const triggerSet: TriggerSet<Data> = {
         'The General\'s Wing': '阿里達烏斯之翼',
         'Void Of Repentance': '懺悔區',
         'timegate(?!s)': '時空門',
-        // 'timegates active': '', // FIXME '时空门激活'
-        // 'timestop': '', // FIXME '时停'
+        'timegates active': '時空門啟動',
+        'timestop': '時停',
       },
     },
     {
