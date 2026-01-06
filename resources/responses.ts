@@ -356,6 +356,10 @@ export const Responses = {
   stackInTower: (sev?: Severity) => staticResponse(defaultAlertText(sev), Outputs.stackInTower),
   stackMiddle: (sev?: Severity) => staticResponse(defaultInfoText(sev), Outputs.stackMiddle),
   doritoStack: (sev?: Severity) => staticResponse(defaultAlertText(sev), Outputs.doritoStack),
+  // for mechanics where you stack with your partner
+  stackPartner: (sev?: Severity) => staticResponse(defaultInfoText(sev), Outputs.stackPartner),
+  // for light party stacks (usually targeting both healers)
+  healerGroups: (sev?: Severity) => staticResponse(defaultInfoText(sev), Outputs.healerGroups),
   spreadThenStack: (sev?: Severity) => {
     return staticResponse(defaultAlertText(sev), Outputs.spreadThenStack);
   },
