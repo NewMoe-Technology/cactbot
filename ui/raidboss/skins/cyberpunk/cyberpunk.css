@@ -1,0 +1,65 @@
+timer-bar::part(timerbar-bg) {
+  background: rgba(15, 15, 20, 0.8) !important;
+  border-radius: 0;
+  /* 将斜纹斜线放在背景层，这样它们就不会随进度条缩放而变扁 */
+  background-image:
+    repeating-linear-gradient(-45deg, rgba(0, 255, 195, 0.1) 0, rgba(0, 255, 195, 0.1) 2px, transparent 2px, transparent 10px) !important;
+}
+
+.timeline-bar-color {
+  /* 进度条使用纯色渐变 + 强力辉光 */
+  background: linear-gradient(90deg, #00ffc3, #00cca0) !important;
+  box-shadow: 0 0 15px #00ffc3cc;
+}
+
+.timeline-bar-color.soon {
+  background: linear-gradient(90deg, #ff00ff, #cc00cc) !important;
+  box-shadow: 0 0 15px #ff00ffcc;
+}
+
+
+timer-bar::part(text) {
+  color: #fff;
+  font-family: 'Microsoft Yahei UI', 'Microsoft Yahei', monospace;
+  font-weight: 800;
+  text-transform: uppercase;
+  text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000,
+    0 0 8px #00ffc3;
+  line-height: 1.3rem;
+}
+
+timer-bar::part(timerbar-righttext) {
+  color: #00ffc3;
+  font-family: Consolas, monospace;
+  font-weight: 800;
+  text-shadow: 0 0 5px #000;
+  line-height: 1.2rem;
+}
+
+.info-text {
+  color: #00ffc3;
+  font-family: 'Microsoft Yahei UI', 'Microsoft Yahei', sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px #000, 0 0 5px #00ffc3;
+}
+
+.alert-text {
+  color: #f0f;
+  font-family: 'Microsoft Yahei UI', 'Microsoft Yahei', sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px #000, 0 0 5px #f0f;
+}
+
+.alarm-text {
+  color: #f00;
+  font-family: 'Microsoft Yahei UI', 'Microsoft Yahei', sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px #000, 0 0 5px #f00;
+}

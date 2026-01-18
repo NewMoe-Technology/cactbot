@@ -1,0 +1,65 @@
+
+timer-bar::part(timerbar-bg) {
+  background-color: #0b0b0b !important;
+}
+
+/* timer-bar::part(timerbar-fg) {
+} */
+
+timer-bar::part(timerbar-root) {
+  border-radius: 4px;
+  border: none;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1) !important;
+}
+
+.timeline-bar-color {
+  background: linear-gradient(90deg, #0088ff, #00eeff) !important;
+}
+
+.timeline-bar-color.soon {
+  background: linear-gradient(90deg, #ff8800, #ffbb00) !important;
+}
+
+timer-bar::part(text) {
+  color: #fff;
+  font-family: 'Microsoft Yahei UI', 'Microsoft Yahei', sans-serif;
+  font-weight: 700;
+  text-shadow: 0 0 5px #000;
+  line-height: 1.3rem;
+}
+
+timer-bar::part(timerbar-righttext) {
+  font-family: Consolas, monospace;
+  line-height: 1.2rem;
+}
+
+.info-text {
+  color: #00eeff;
+  text-shadow:
+    0 0 2px rgba(0, 238, 255, 0.3),
+    1px 1px 3px rgba(0, 0, 0, 0.9);
+  font-weight: 800;
+  font-family: 'Microsoft Yahei UI', 'Microsoft Yahei', sans-serif;
+}
+
+.alert-text {
+  color: #ffaa00;
+  text-shadow:
+    0 0 2px rgba(255, 170, 0, 0.3),
+    1px 1px 3px rgba(0, 0, 0, 0.9);
+  text-transform: uppercase;
+  font-weight: 800;
+  font-family: 'Microsoft Yahei UI', 'Microsoft Yahei', sans-serif;
+}
+
+.alarm-text {
+  color: #ff4400;
+  text-shadow:
+    0 0 2px rgba(255, 68, 0, 0.3),
+    1px 1px 4px rgba(0, 0, 0, 1);
+  text-transform: uppercase;
+  font-weight: 900;
+  font-family: 'Microsoft Yahei UI', 'Microsoft Yahei', sans-serif;
+  letter-spacing: 1px;
+}

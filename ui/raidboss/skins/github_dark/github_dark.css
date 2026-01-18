@@ -1,0 +1,64 @@
+timer-bar::part(timerbar-bg) {
+  background: #161b22 !important;
+}
+
+timer-bar::part(timerbar-root) {
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid #30363d !important;
+}
+
+timer-bar::part(timerbar-fg) {
+  border: none;
+}
+
+.timeline-bar-color {
+  background:
+    linear-gradient(90deg, #58a6ff99, #79c0ff);
+  /* 进度条大幅提亮 */
+  border-radius: 4px;
+  box-shadow: 0 0 12px rgba(121, 192, 255, 0.4);
+}
+
+.timeline-bar-color.soon {
+  background: linear-gradient(90deg, #f8514999, #ff7b72);
+  /* 警告颜色提亮 */
+  box-shadow: 0 0 12px rgba(255, 123, 114, 0.4);
+}
+
+timer-bar::part(text) {
+  color: #f0f6fc;
+  /* 文字提亮到极致 */
+  font-family: 'Microsoft Yahei UI', 'Microsoft Yahei', sans-serif;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  line-height: 1.3rem;
+}
+
+timer-bar::part(timerbar-righttext) {
+  color: #c9d1d9;
+  font-family: Consolas, monospace;
+  font-weight: 600;
+  line-height: 1.2rem;
+}
+
+.info-text {
+  color: #58a6ff;
+  font-family: 'Microsoft Yahei UI', 'Microsoft Yahei', sans-serif;
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(88, 166, 255, 0.4);
+}
+
+.alert-text {
+  color: #d29922;
+  font-family: 'Microsoft Yahei UI', 'Microsoft Yahei', sans-serif;
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(210, 153, 34, 0.4);
+}
+
+.alarm-text {
+  color: #f85149;
+  font-family: 'Microsoft Yahei UI', 'Microsoft Yahei', sans-serif;
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(248, 81, 73, 0.4);
+}
