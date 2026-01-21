@@ -676,9 +676,9 @@ Options.Triggers.push({
       },
       'replaceText': {
         '--hammer--': '--Hammer--',
-        '\(fake\)': 'falsch',
-        '\(proximity\)': 'Distanz',
-        '\(summon\)': 'Beschwörung',
+        '\\(fake\\)': '(falsch)',
+        '\\(proximity\\)': '(Distanz)',
+        '\\(summon\\)': '(Beschwörung)',
         'Advent of the Eighth': 'Lehre des Kometen',
         'As Above, So Below': 'Flamme von Leben und Tod',
         'Balance': 'Seelenabrechnung',
@@ -787,9 +787,9 @@ Options.Triggers.push({
       },
       'replaceText': {
         '--hammer--': '--Marteau--',
-        '\(fake\)': 'Faux',
-        '\(proximity\)': 'Proche',
-        '\(summon\)': 'Invocation',
+        '\\(fake\\)': '(Faux)',
+        '\\(proximity\\)': '(Proche)',
+        '\\(summon\\)': '(Invocation)',
         'Advent of the Eighth': 'Anneaux astraux',
         'As Above, So Below': 'Flamme de vie, flamme de mort',
         '(?<! )Balance': 'Jugement pananimique',
@@ -1004,9 +1004,9 @@ Options.Triggers.push({
       },
       'replaceText': {
         '--hammer--': '--锤子--',
-        '\(fake\)': '(假)',
-        '\(proximity\)': '(距离衰减)',
-        '\(summon\)': '(召唤)',
+        '\\(fake\\)': '(假)',
+        '\\(proximity\\)': '(距离衰减)',
+        '\\(summon\\)': '(召唤)',
         'Advent of the Eighth': '彗星环',
         'As Above, So Below': '生死抉择之炎',
         'Balance': '灵魂的清算',
@@ -1089,7 +1089,6 @@ Options.Triggers.push({
     },
     {
       'locale': 'tc',
-      'missingTranslations': true,
       'replaceSync': {
         'Azeyma(?!\')': '阿澤瑪',
         'Azeyma\'s Heat': '阿澤瑪的幻象',
@@ -1114,16 +1113,16 @@ Options.Triggers.push({
         'The Twin Halls': '雙面宮',
       },
       'replaceText': {
-        // '--hammer--': '', // FIXME '--锤子--'
-        // '\(fake\)': '', // FIXME '(假)'
-        // '\(proximity\)': '', // FIXME '(距离衰减)'
-        // '\(summon\)': '', // FIXME '(召唤)'
+        '--hammer--': '--錘子--',
+        '\\(fake\\)': '(假)',
+        '\\(proximity\\)': '(距離衰減)',
+        '\\(summon\\)': '(召喚)',
         'Advent of the Eighth': '彗星環',
         'As Above, So Below': '生死抉擇之炎',
         'Balance': '靈魂的清算',
         'Bolts from the Blue': '天雷',
         'Boltloop': '雷圈',
-        // 'Bronze Lightning': '', // FIXME '轰雷'
+        'Bronze Lightning': '轟雷流電',
         'Bronze Work': '轟雷之杖',
         'Broken World': '破壞之彗星',
         'Builder\'s Build': '工藝神造',
@@ -1225,9 +1224,9 @@ Options.Triggers.push({
       },
       'replaceText': {
         '--hammer--': '--망치--',
-        '\(fake\)': '가짜',
-        '\(proximity\)': '거리감쇠',
-        '\(summon\)': '소환',
+        '\\(fake\\)': '(가짜)',
+        '\\(proximity\\)': '(거리감쇠)',
+        '\\(summon\\)': '(소환)',
         'Advent of the Eighth': '혜성륜',
         'As Above, So Below': '생사택일의 화염',
         'Balance': '혼 청산',
