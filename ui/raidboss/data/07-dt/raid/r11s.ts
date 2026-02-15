@@ -18,6 +18,10 @@ type WeaponInfo = {
 };
 
 export interface Data extends RaidbossData {
+  readonly triggerSetConfig: {
+    majesticMeteowrathTetherDir: 'cw' | 'ccw';
+    twoWayFireballBaitDir: 'ew' | 'ns';
+  };
   phase: Phase;
   actorPositions: { [id: string]: { x: number; y: number; heading: number } };
   weapons: {
@@ -110,6 +114,54 @@ const ultimateTrophyWeaponsMap: (WeaponInfo | undefined)[] = [
 const triggerSet: TriggerSet<Data> = {
   id: 'AacHeavyweightM3Savage',
   zoneId: ZoneId.AacHeavyweightM3Savage,
+  config: [
+    {
+      id: 'majesticMeteowrathTetherDir',
+      name: {
+        en: 'Majestic Meteowrath Tether Direction',
+        ko: '분노의 챔피언 메테오 선 처리 방향',
+      },
+      comment: {
+        en: 'Direction to stretch tethers during Majestic Meteowrath.',
+        ko: '분노의 챔피언 메테오 선 처리 방향을 설정합니다.',
+      },
+      type: 'select',
+      options: {
+        en: {
+          'Clockwise': 'cw',
+          'Counter Clockwise': 'ccw',
+        },
+        ko: {
+          '시계방향': 'cw',
+          '반시계방향': 'ccw',
+        },
+      },
+      default: 'cw',
+    },
+    {
+      id: 'twoWayFireballBaitDir',
+      name: {
+        en: 'Two-Way Fireball Bait Direction',
+        ko: '두 갈래 회전화염 유도 위치',
+      },
+      comment: {
+        en: 'Direction to bait the two-way fireball.',
+        ko: '두 갈래 회전화염 유도 방향을 설정합니다.',
+      },
+      type: 'select',
+      options: {
+        en: {
+          'East/West': 'ew',
+          'North/South': 'ns',
+        },
+        ko: {
+          '동/서': 'ew',
+          '북/남': 'ns',
+        },
+      },
+      default: 'ew',
+    },
+  ],
   timelineFile: 'r11s.txt',
   initData: () => ({
     phase: 'one',
@@ -177,6 +229,7 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         partySpread: {
           en: 'Party Spread',
+          de: 'Party verteilen',
           cn: '人群分散',
           ko: '본대 산개',
         },
@@ -191,6 +244,7 @@ const triggerSet: TriggerSet<Data> = {
         },
         text: {
           en: '${party}/${tank}',
+          de: '${party}/${tank}',
           cn: '${party}/${tank}',
           ko: '${party}/${tank}',
         },
@@ -227,6 +281,7 @@ const triggerSet: TriggerSet<Data> = {
         },
         text: {
           en: '${party}/${tank}',
+          de: '${party}/${tank}',
           cn: '${party}/${tank}',
           ko: '${party}/${tank}',
         },
@@ -265,16 +320,19 @@ const triggerSet: TriggerSet<Data> = {
         move: Outputs.moveAway,
         bait: {
           en: 'Bait Gust',
+          de: 'Böe ködern',
           cn: '诱导强风',
           ko: '강풍 유도',
         },
         mechanicThenMove: {
           en: '${mech} => ${move}',
+          de: '${mech} => ${move}',
           cn: '${mech} => ${move}',
           ko: '${mech} => ${move}',
         },
         mechanicThenBait: {
           en: '${mech} => ${bait}',
+          de: '${mech} => ${bait}',
           cn: '${mech} => ${bait}',
           ko: '${mech} => ${bait}',
         },
@@ -324,6 +382,7 @@ const triggerSet: TriggerSet<Data> = {
         protean: Outputs.protean,
         text: {
           en: '${dir}: ${weapon} (1st later)',
+          de: '${dir}: ${weapon} (erste später)',
           cn: '${dir}: ${weapon} (稍后第一波)',
           ko: '${dir}: ${weapon} (곧 1번째)',
         },
@@ -395,6 +454,7 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         text: {
           en: '${weapon1} => ${weapon2} => ${weapon3}',
+          de: '${weapon1} => ${weapon2} => ${weapon3}',
           cn: '${weapon1} => ${weapon2} => ${weapon3}',
           ko: '${weapon1} => ${weapon2} => ${weapon3}',
         },
@@ -477,11 +537,13 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         baitPuddlesThenStack: {
           en: 'Bait 3x Puddles => Stack',
+          de: 'Ködere Fläche x3 => Sammeln',
           cn: '诱导3次圈圈 => 分摊',
           ko: '장판 유도 3x => 쉐어',
         },
         baitPuddlesThenSpread: {
           en: 'Bait 3x Puddles => Spread',
+          de: 'Ködere Fläche x3 => Verteilen',
           cn: '诱导3次圈圈 => 分散',
           ko: '장판 유도 3x => 산개',
         },
@@ -499,6 +561,7 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         text: {
           en: 'AoE x6 => Big AoE',
+          de: 'AoE x6 => Große AoE',
           cn: '6 次 AOE => 大 AOE',
           ko: '전체 공격 x6 => 강한 전체 공격',
         },
@@ -558,11 +621,13 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         northSouth: {
           en: 'N/S Mid / ${dir} Outer + Partner Stacks',
+          de: 'N/S Mitte / ${dir} Außen + mit Partner sammeln',
           cn: '上/下中间 / ${dir} 外侧 + 队友分摊',
           ko: '북/남 중간 / ${dir} 바깥 + 파트너 쉐어',
         },
         eastWest: {
           en: 'E/W Mid / ${dir} Outer + Partner Stacks',
+          de: 'O/W Mitte / ${dir} Außen + mit Partner sammeln',
           cn: '左/右中间 / ${dir} 外侧 + 队友分摊',
           ko: '동/서 중간 / ${dir} 바깥 + 파트너 쉐어',
         },
@@ -590,6 +655,7 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         bait: {
           en: 'Bait Gust',
+          de: 'Böe ködern',
           cn: '诱导强风',
           ko: '강풍 유도',
         },
@@ -653,16 +719,19 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         wildCharge: {
           en: 'Wild Charge (behind tank)',
+          de: 'Wilde Rage (hinter einen Tank)',
           cn: '挡枪分摊 (坦克后)',
           ko: '직선 쉐어 (탱커 뒤로)',
         },
         wildChargeMeteor: {
           en: 'Wild Charge (behind meteor)',
+          de: 'Wilde Rage (hinter einen Meteor)',
           cn: '挡枪分摊 (陨石后)',
           ko: '직선 쉐어 (돌 뒤로)',
         },
         wildChargeTank: {
           en: 'Wild Charge (be in front)',
+          de: 'Wilde Rage (sei Vorne)',
           cn: '挡枪分摊 (人群前)',
           ko: '직선 쉐어 (앞에 있기)',
         },
@@ -685,6 +754,7 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         losMeteor: {
           en: 'LoS behind 3x meteor',
+          de: 'LoS hinter Meteor x3',
           cn: '躲在三连陨石后',
           ko: '돌 뒤에 숨기 3x',
         },
@@ -698,6 +768,7 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         flatliner: {
           en: 'Short knockback to sides',
+          de: 'Kurzer Rückstoß zu den Seiten',
           fr: 'Légère poussée vers les côtés',
           cn: '向两侧短距离击飞',
           ko: '양 옆으로 짧은 넉백',
@@ -790,6 +861,7 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         fireBreathLater: {
           en: 'Bait Fire Breath (later)',
+          de: 'Köder Feueratem (später)',
           cn: '诱导火焰吐息 (稍后)',
           ko: '화염 숨결 유도 (나중에)',
         },
@@ -831,11 +903,13 @@ const triggerSet: TriggerSet<Data> = {
         ...Directions.outputStringsIntercardDir,
         stretchTetherDirLater: {
           en: 'Tether on YOU: Stretch ${dir} (later)',
+          de: 'Verbindung auf DIR: Langziehen ${dir} (später)',
           cn: '连线点名: 向${dir}拉远 (稍后)',
           ko: '선 대상자: ${dir}쪽으로 늘이기 (나중에)',
         },
         stretchTetherLater: {
           en: 'Tether on YOU: Stretch (later)',
+          de: 'Verbindung auf DIR: Langziehen (später)',
           cn: '连线点名: 拉远 (稍后)',
           ko: '선 대상자: 늘이기 (나중에)',
         },
@@ -903,38 +977,45 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         knockbackTowers: {
           en: 'Get Knockback Towers',
+          de: 'Nimm Rückstoß-Türme',
           fr: 'Prenez une tour (poussée)',
           cn: '踩击飞塔',
           ko: '넉백탑 들어가기',
         },
         fireBreathTowers: {
           en: '${mech1} => ${mech2}',
+          de: '${mech1} => ${mech2}',
           cn: '${mech1} => ${mech2}',
           ko: '${mech1} => ${mech2}',
         },
         tetherTowers: {
           en: '${mech1} => ${mech2}',
+          de: '${mech1} => ${mech2}',
           cn: '${mech1} => ${mech2}',
           ko: '${mech1} => ${mech2}',
         },
         baitFireBreath: {
           en: 'Bait Near',
+          de: 'Nahe ködern',
           cn: '靠近引导',
           ko: '가까이 유도',
         },
         avoidFireBreath: Outputs.outOfHitbox,
         northSouthSafe: {
           en: 'Tower Knockback to Same Platform',
+          de: 'Turm-Rückstoß auf die gleiche Plattform',
           cn: '被塔击飞到同一平台',
           ko: '같은 플랫폼으로 넉백',
         },
         eastSafe: {
           en: 'Tower Knockback Across to East',
+          de: 'Turm-Rückstoß Richtung Osten',
           cn: '被塔击飞到右侧平台',
           ko: '동쪽 플랫폼으로 넉백',
         },
         westSafe: {
           en: 'Tower Knockback Across to West',
+          de: 'Turm-Rückstoß Richtung Westen',
           cn: '被塔击飞到左侧平台',
           ko: '서쪽 플랫폼으로 넉백',
         },
@@ -1002,11 +1083,13 @@ const triggerSet: TriggerSet<Data> = {
         },
         back: {
           en: 'Inner Back',
+          de: 'Innen Hinten',
           cn: '内侧后',
           ko: '안쪽 뒤',
         },
         front: {
           en: 'Inner Front',
+          de: 'Innen Vorne',
           cn: '内侧前',
           ko: '안쪽 앞',
         },
@@ -1021,21 +1104,25 @@ const triggerSet: TriggerSet<Data> = {
         },
         fireBreathOnYou: {
           en: 'Fire Breath on YOU',
+          de: 'Feueratem auf DIR',
           cn: '火焰吐息点名',
           ko: '화염 숨결 대상자',
         },
         fireBreathMechsPlayerWest: {
           en: '${mech1} + ${mech2} => ${dir}',
+          de: '${mech1} + ${mech2} => ${dir}',
           cn: '${mech1} + ${mech2} => ${dir}',
           ko: '${mech1} + ${mech2} => ${dir}',
         },
         fireBreathMechsPlayerEast: {
           en: '${mech1} + ${mech2} => ${dir}',
+          de: '${mech1} + ${mech2} => ${dir}',
           cn: '${mech1} + ${mech2} => ${dir}',
           ko: '${mech1} + ${mech2} => ${dir}',
         },
         fireBreathMechs: {
           en: '${mech1} + ${mech2} => ${mech3}',
+          de: '${mech1} + ${mech2} => ${mech3}',
           cn: '${mech1} + ${mech2} => ${mech3}',
           ko: '${mech1} + ${mech2} => ${mech3}',
         },
@@ -1107,11 +1194,13 @@ const triggerSet: TriggerSet<Data> = {
         },
         back: {
           en: 'Outer Back',
+          de: 'Außen Hinten',
           cn: '外侧后',
           ko: '바깥쪽 뒤',
         },
         front: {
           en: 'Outer Front',
+          de: 'Außen Vorne',
           cn: '外侧前',
           ko: '바깥쪽 앞',
         },
@@ -1126,6 +1215,7 @@ const triggerSet: TriggerSet<Data> = {
         },
         baitThenStretchMechs: {
           en: '${mech1} => ${mech2}  + ${mech3}',
+          de: '${mech1} => ${mech2}  + ${mech3}',
           cn: '${mech1} => ${mech2}  + ${mech3}',
           ko: '${mech1} => ${mech2}  + ${mech3}',
         },
@@ -1139,16 +1229,19 @@ const triggerSet: TriggerSet<Data> = {
         },
         stretchTetherDir: {
           en: 'Stretch ${dir}',
+          de: 'Langiehen ${dir}',
           cn: '向${dir}拉远',
           ko: '${dir}쪽으로 늘이기',
         },
         tetherMechsPlayerEast: {
           en: '${mech1} => ${mech2} + ${dir}',
+          de: '${mech1} => ${mech2} + ${dir}',
           cn: '${mech1} => ${mech2} + ${dir}',
           ko: '${mech1} => ${mech2} + ${dir}',
         },
         tetherMechsPlayerWest: {
           en: '${mech1} => ${mech2} + ${dir}',
+          de: '${mech1} => ${mech2} + ${dir}',
           cn: '${mech1} => ${mech2} + ${dir}',
           ko: '${mech1} => ${mech2} + ${dir}',
         },
@@ -1195,6 +1288,7 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         westSafe: {
           en: 'Tower Knockback to West',
+          de: 'Turm-Rückstoß zum Westen',
           fr: 'Prenez une tour (poussée vers l\'Ouest)',
           cn: '被塔击飞到左侧平台',
           ko: '탑 넉백 서쪽으로',
@@ -1209,6 +1303,7 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         eastSafe: {
           en: 'Tower Knockback to East',
+          de: 'Turm-Rückstoß zum Osten',
           fr: 'Prenez une tour (poussée vers l\'Est)',
           cn: '被塔击飞到右侧平台',
           ko: '탑 넉백 동쪽으로',
@@ -1270,11 +1365,13 @@ const triggerSet: TriggerSet<Data> = {
         se: Outputs.dirSE,
         comboDir: {
           en: 'Go ${dir1}/${dir2} => Bait Impacts, Avoid Corners',
+          de: 'Geh ${dir1}/${dir2} => Köder Impakts, Ecken vermeiden',
           cn: '去${dir1}/${dir2} => 引导火圈, 躲避角落',
           ko: '${dir1}/${dir2} 이동 => 장판 유도, 구석 피하기',
         },
         getMiddle: {
           en: 'Proximity AoE; Get Middle => Bait Puddles',
+          de: 'Distanz-AoE; Geh in die Mitte => Flächen ködern',
           cn: '靠近AoE; 去中间 => 引导圈圈',
           ko: '거리감쇠 징; 중앙으로 => 장판 유도',
         },
@@ -1326,8 +1423,10 @@ const triggerSet: TriggerSet<Data> = {
           return;
 
         const portalDirNum = Directions.xyTo8DirNum(actor.x, actor.y, center.x, center.y);
-        // TODO: Make config for options?
-        const stretchDirNum = (portalDirNum + 5) % 8;
+
+        const stretchDirNum = data.triggerSetConfig.majesticMeteowrathTetherDir === 'ccw'
+          ? (portalDirNum + 3) % 8
+          : (portalDirNum + 5) % 8;
         const stretchDir = Directions.output8Dir[stretchDirNum] ?? 'unknown';
         return output.stretchTetherDir!({ dir: output[stretchDir]!() });
       },
@@ -1335,6 +1434,7 @@ const triggerSet: TriggerSet<Data> = {
         ...Directions.outputStrings8Dir,
         stretchTetherDir: {
           en: 'Stretch Tether ${dir}',
+          de: 'Verbindungen langziehen ${dir}',
           cn: '向${dir}拉线',
           ko: '${dir}쪽으로 선 늘이기',
         },
@@ -1345,20 +1445,41 @@ const triggerSet: TriggerSet<Data> = {
       type: 'StartsUsing',
       netRegex: { id: 'B7BD', source: 'The Tyrant', capture: false },
       alertText: (data, _matches, output) => {
+        const baitDir = data.triggerSetConfig.twoWayFireballBaitDir === 'ns'
+          ? 'northSouth'
+          : 'eastWest';
         if (data.hadEclipticTether)
-          return output.twoWayBehind!();
-        return output.twoWayFront!();
+          return output.twoWayBehind!({ dir: output[baitDir]!() });
+        return output.twoWayFront!({ dir: output[baitDir]!() });
       },
       outputStrings: {
+        eastWest: {
+          en: 'East/West',
+          de: 'Osten/Westen',
+          fr: 'Est/Ouest',
+          cn: '左/右',
+          ko: '동/서',
+          tc: '東/西',
+        },
+        northSouth: {
+          en: 'North/South',
+          de: 'Norden/Süden',
+          fr: 'Nord/Sud',
+          cn: '上/下',
+          ko: '북/남',
+          tc: '北/南',
+        },
         twoWayFront: {
-          en: 'East/West Line Stack, Be in Front',
-          cn: '左/右向直线分摊，站前方',
-          ko: '동/서 직선 쉐어, 앞에 있기',
+          en: '${dir} Line Stack, Be in Front',
+          de: '${dir} in einer Linie Sammeln, sei vorne',
+          cn: '${dir}向直线分摊，站前方',
+          ko: '${dir} 직선 쉐어, 앞에 있기',
         },
         twoWayBehind: {
-          en: 'Move; East/West Line Stack, Get behind',
-          cn: '移动; 左/右向直线分摊，站后方',
-          ko: '이동; 동/서 직선 쉐어, 뒤로 가기',
+          en: 'Move; ${dir} Line Stack, Get behind',
+          de: 'Geh ${dir}, in einer Linie Sammeln, sei hinten',
+          cn: '移动; ${dir}向直线分摊，站后方',
+          ko: '이동; ${dir} 직선 쉐어, 뒤로 가기',
         },
       },
     },
@@ -1374,11 +1495,13 @@ const triggerSet: TriggerSet<Data> = {
       outputStrings: {
         fourWayFront: {
           en: 'Intercardinal Line Stack, Be in Front',
+          de: 'Interkardinal in einer Linie sammeln, sei vorne',
           cn: '四角分摊, 站前方',
           ko: '대각선 쉐어, 앞에 있기',
         },
         fourWayBehind: {
           en: 'Intercardinal Line Stack, Get behind',
+          de: 'Interkardinal in einer Linie sammeln, sei hinten',
           cn: '四角分摊, 站后方',
           ko: '대각선 쉐어, 뒤로 가기',
         },
@@ -1429,26 +1552,31 @@ const triggerSet: TriggerSet<Data> = {
         },
         stack6x: {
           en: 'Stack 6x',
+          de: 'Sammeln 6x',
           cn: '6连分摊',
           ko: '쉐어 6번',
         },
         stack7x: {
           en: 'Stack 7x',
+          de: 'Sammeln 7x',
           cn: '7连分摊',
           ko: '쉐어 7번',
         },
         heartbreaker1: {
           en: '${tower} => ${stack}',
+          de: '${tower} => ${stack}',
           cn: '${tower} => ${stack}',
           ko: '${tower} => ${stack}',
         },
         heartbreaker2: {
           en: '${tower} => ${stack}',
+          de: '${tower} => ${stack}',
           cn: '${tower} => ${stack}',
           ko: '${tower} => ${stack}',
         },
         heartbreaker3: {
           en: '${tower} => ${stack}',
+          de: '${tower} => ${stack}',
           cn: '${tower} => ${stack}',
           ko: '${tower} => ${stack}',
         },
@@ -1460,6 +1588,179 @@ const triggerSet: TriggerSet<Data> = {
       'locale': 'en',
       'replaceText': {
         'Majestic Meteowrath/Majestic Meteorain/Fire Breath': 'Fire Breath + Meteor Lines',
+      },
+    },
+    {
+      'locale': 'de',
+      'replaceSync': {
+        'Comet': 'Komet',
+        'Maelstrom': 'Mahlstrom',
+        'The Tyrant': '(?:der|die|das) Tyrann',
+      },
+      'replaceText': {
+        '\\(Axe\\)': '(Axt)',
+        '\\(Scythe\\)': '(Sense)',
+        '\\(Scythe/Axe\\)': '(Sense/Axt)',
+        '\\(castbar\\)': '(wirken)',
+        '\\(split\\)': '(teilen)',
+        '--Fire Breath Markers--': '--Feueratem Markierungen--',
+        '--Meteor Markers': '--Meteor Markierungen',
+        '--Meteor(?! Markers)': '--Meteor',
+        '--jump ': '--Sprung',
+        'scythe--': 'Sense--',
+        '--tethers--': '--Verbindungen--',
+        'Arcadion Avalanche': 'Arkadionbruch',
+        'Assault Apex': 'Waffenlawine',
+        'Assault Evolved': 'Waffensturm',
+        'Atomic Impact': 'Fusionseinschlag',
+        'Charybdistopia': 'Charybdis des Herrschers',
+        '(?<! )Comet(?!ite)': 'Komet',
+        'Cometite': 'Mini-Komet',
+        'Cosmic Kiss': 'Einschlag',
+        'Crown of Arcadia': 'Wort des Herrschers',
+        'Crushing Comet': 'Super-Komet',
+        'Dance of Domination(?! Trophy)': 'Unangefochtene Überlegenheit',
+        'Dance of Domination Trophy': 'Überlegene Waffenkunst',
+        'Ecliptic Stampede': 'Meteo-Stampede',
+        'Explosion': 'Explosion',
+        'Eye of the Hurricane': 'Hurrikan des Herrschers',
+        'Fearsome Fireball': 'Fürstliches Feuer',
+        '(?<!--)Fire Breath': 'Feueratem',
+        'Fire and Fury': 'Feueratem & Flammenschweif',
+        'Flatliner': 'Herzstopper',
+        'Foregone Fatality': 'Strahl der Verdammnis',
+        'Four-way Fireball': 'Vierfaches Drehfeuer',
+        'Great Wall of Fire': 'Feuerstrom',
+        'Heartbreak Kick': 'Herzensbrecher-Kick',
+        'Heartbreaker': 'Herzensbrecher',
+        'Heavy Hitter': 'Zerteilen',
+        'Immortal Reign': 'Unsterblichkeit des Herrschers',
+        '(?<! )Impact': 'Impakt',
+        'Majestic Meteor(?!ain)': 'Herrscher-Meteo',
+        'Majestic Meteorain': 'Herrscher-Meteorregen',
+        'Majestic Meteowrath': 'Herrscher-Meteo des Zorns',
+        'Mammoth Meteor': 'Giga-Meteo',
+        'Massive Meteor': 'Super-Meteo',
+        '(?<! )Meteorain': 'Meteorregen',
+        'One and Only': 'Alles für einen',
+        'Orbital Omen': 'Orbitalachse',
+        'Powerful Gust': 'Starke Bö',
+        'Raw Steel(?! )': 'Waffenspalter',
+        'Raw Steel Trophy': 'Spaltende Waffenkunst',
+        'Shockwave': 'Schockwelle',
+        'Triple Tyrannhilation': 'Drillingsstern-Tyrannensturz',
+        '(?<! )Trophy Weapons': 'Waffentrophäen',
+        'Two-way Fireball': 'Zweifaches Drehfeuer',
+        'Ultimate Trophy Weapons': 'Unantastbare Waffentrophäen',
+        'Void Stardust': 'Kometenschauer',
+        '(?<! )Weapon(?!s)': 'Waffe',
+        'Weighty Impact': 'Mega-Einschlag',
+      },
+    },
+    {
+      'locale': 'fr',
+      'missingTranslations': true,
+      'replaceSync': {
+        'Comet': 'comète',
+        'Maelstrom': 'maelström',
+        'The Tyrant': 'The Tyrant',
+      },
+      'replaceText': {
+        'Arcadion Avalanche': 'Écrasement de l\'Arcadion',
+        'Assault Apex': 'Avalanche d\'armes',
+        'Assault Evolved': 'Arsenal d\'assaut',
+        'Atomic Impact': 'Impact de canon dissolvant',
+        'Charybdistopia': 'Maelström',
+        '(?<! )Comet(?!ite)': 'comète',
+        'Cometite': 'Petite comète',
+        'Cosmic Kiss': 'Impact de canon',
+        'Crown of Arcadia': 'Souverain de l\'Arcadion',
+        'Crushing Comet': 'Comète imposante',
+        'Dance of Domination(?! Trophy)': 'Danse de la domination',
+        'Dance of Domination Trophy': 'Génération d\'arme : domination',
+        'Ecliptic Stampede': 'Ruée de météores',
+        'Explosion': 'Explosion',
+        'Eye of the Hurricane': 'Ouragan',
+        'Fearsome Fireball': 'Rayon incandescent',
+        'Fire Breath': 'Souffle enflammé',
+        'Fire and Fury': 'Queue enflammée',
+        'Flatliner': 'Dernière ligne',
+        'Foregone Fatality': 'Pluie fatale',
+        'Great Wall of Fire': 'Courants de feu',
+        'Heartbreak Kick': 'Talon déchirant',
+        'Heartbreaker': 'Ruine-cœur',
+        'Heavy Hitter': 'Lacération lourde',
+        'Immortal Reign': 'Règne immortel',
+        '(?<! )Impact': 'Impact',
+        'Majestic Meteor(?!ain)': 'Météore du champion',
+        'Majestic Meteorain': 'Pluie de météores du champion',
+        'Majestic Meteowrath': 'Fureur météorique du champion',
+        'Mammoth Meteor': 'Météore gigantesque',
+        'Massive Meteor': 'Météore imposant',
+        '(?<! )Meteorain': 'Pluie de météorites',
+        'One and Only': 'Seul et unique',
+        'Orbital Omen': 'Pluie orbitale',
+        'Powerful Gust': 'Ouragan violent',
+        'Raw Steel(?! )': 'Écrasement du tyran',
+        'Raw Steel Trophy': 'Génération d\'arme : écrasement',
+        'Shockwave': 'Onde de choc',
+        '(?<! )Trophy Weapons': 'Armes trophées',
+        'Ultimate Trophy Weapons': 'Armes trophées ultimes',
+        'Void Stardust': 'Pluie de comètes',
+        'Weighty Impact': 'Impact de canon massif',
+      },
+    },
+    {
+      'locale': 'ja',
+      'missingTranslations': true,
+      'replaceSync': {
+        'Comet': 'コメット',
+        'Maelstrom': 'ミールストーム',
+        'The Tyrant': 'ザ・タイラント',
+      },
+      'replaceText': {
+        'Arcadion Avalanche': 'アルカディア・クラッシュ',
+        'Assault Apex': 'ウェポンアバランチ',
+        'Assault Evolved': 'ウェポンアサルト',
+        'Atomic Impact': '融解着弾',
+        'Charybdistopia': 'ザ・ミールストーム',
+        '(?<! )Comet(?!ite)': 'コメット',
+        'Cometite': 'プチコメット',
+        'Cosmic Kiss': '着弾',
+        'Crown of Arcadia': 'キング・オブ・アルカディア',
+        'Crushing Comet': 'ヘビーコメット',
+        'Dance of Domination(?! Trophy)': 'ダンス・オブ・ドミネーション',
+        'Dance of Domination Trophy': 'ウェポンジェネレート：ドミネーション',
+        'Ecliptic Stampede': 'メテオスタンピード',
+        'Explosion': '爆発',
+        'Eye of the Hurricane': 'ザ・ハリケーン',
+        'Fearsome Fireball': 'ビッグファイア',
+        'Fire Breath': 'ファイアブレス',
+        'Fire and Fury': 'ファイア・アンド・テイル',
+        'Flatliner': 'フラットライナー',
+        'Foregone Fatality': 'フェイタルライン',
+        'Great Wall of Fire': 'ファイアストリーム',
+        'Heartbreak Kick': 'ハートブレイクキック',
+        'Heartbreaker': 'ハートブレイカー',
+        'Heavy Hitter': '重斬撃',
+        'Immortal Reign': 'イモータルレイン',
+        '(?<! )Impact': '衝撃',
+        'Majestic Meteor(?!ain)': 'チャンピオンズ・メテオ',
+        'Majestic Meteorain': 'チャンピオンズ・メテオライン',
+        'Majestic Meteowrath': 'チャンピオンズ・メテオラース',
+        'Mammoth Meteor': 'ヒュージメテオ',
+        'Massive Meteor': 'ヘビーメテオ',
+        '(?<! )Meteorain': 'メテオレイン',
+        'One and Only': 'ワン・アンド・オンリー',
+        'Orbital Omen': 'オービタルライン',
+        'Powerful Gust': '強風',
+        'Raw Steel(?! )': 'ウェポンバスター',
+        'Raw Steel Trophy': 'ウェポンジェネレート：バスター',
+        'Shockwave': '衝撃波',
+        '(?<! )Trophy Weapons': 'トロフィーウェポンズ',
+        'Ultimate Trophy Weapons': 'アルティメット・トロフィーウェポンズ',
+        'Void Stardust': 'コメットレイン',
+        'Weighty Impact': '重着弾',
       },
     },
     {
@@ -1537,7 +1838,7 @@ const triggerSet: TriggerSet<Data> = {
       'missingTranslations': true,
       'replaceSync': {
         'Comet': '혜성',
-        'Maelstrom': '대격동',
+        'Maelstrom': '대소용돌이',
         'The Tyrant': '더 타이런트',
       },
       'replaceText': {
@@ -1594,7 +1895,7 @@ const triggerSet: TriggerSet<Data> = {
         'Raw Steel Trophy Axe': '무기 생성: 맹격 도끼',
         'Raw Steel Trophy Scythe': '무기 생성: 맹격 낫',
         'Shockwave': '충격파',
-        // 'Triple Tyrannhilation': 'Triple Tyrannhilation',
+        'Triple Tyrannhilation': '폭군 강하: 삼형제별',
         '(?<! )Trophy Weapons': '무기 트로피',
         // 'Two-way Fireball': 'Two-way Fireball',
         'Ultimate Trophy Weapons': '궁극의 무기 트로피',
