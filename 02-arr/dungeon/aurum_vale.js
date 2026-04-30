@@ -1,6 +1,10 @@
 Options.Triggers.push({
   id: 'TheAurumVale',
   zoneId: ZoneId.TheAurumVale,
+  comments: {
+    en: 'pre-7.4 rework',
+    cn: '7.4改版前',
+  },
   triggers: [
     {
       id: 'Aurum Vale GoldLungs/Burrs',
