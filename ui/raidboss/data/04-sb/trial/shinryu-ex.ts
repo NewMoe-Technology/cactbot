@@ -17,15 +17,6 @@ const triggerSet: TriggerSet<Data> = {
   zoneId: ZoneId.TheMinstrelsBalladShinryusDomain,
   timelineFile: 'shinryu-ex.txt',
   triggers: [
-    {
-      id: 'ShinryuEx Heart Cleanup',
-      type: 'RemovedCombatant',
-      netRegex: { name: 'Shinryu', capture: false },
-      run: (data) => {
-        // Explicitly clear so ugly heart message doesn't appear after wipe.
-        delete data.phase;
-      },
-    },
     { // Earthen Fury
       id: 'ShinryuEx Phase 1',
       type: 'StartsUsing',
