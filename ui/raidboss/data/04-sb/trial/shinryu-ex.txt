@@ -46,7 +46,7 @@ hideall "--sync--"
 224.9 "--Reiryu Adds--"
 
 233.3 "--Tail Marker (tank)--"
-251.5 "Tail Slap" Ability { id: "260D", source: "Tail" }
+251.5 "Tail Slap" Ability { id: "25E2", source: "Tail" }
 268.5 "Summon Icicle" Ability { id: "25EE", source: "Left Wing" }
 269.1 "Icicle Impact" Ability { id: "25EF", source: "Icicle" }
 272.4 "Akh Morn 3" Ability { id: "25F3", source: "Shinryu" } duration 3.2

@@ -1,4 +1,5 @@
 import Conditions from '../../../../../resources/conditions';
+import outputs from '../../../../../resources/outputs';
 import { Responses } from '../../../../../resources/responses';
 import ZoneId from '../../../../../resources/zone_id';
 import { RaidbossData } from '../../../../../types/data';
@@ -25,25 +26,25 @@ const triggerSet: TriggerSet<Data> = {
         delete data.phase;
       },
     },
-    {
+    { // Earthen Fury
       id: 'ShinryuEx Phase 1',
       type: 'StartsUsing',
       netRegex: { id: '25DE', source: 'Shinryu', capture: false },
       run: (data) => data.phase = 1,
     },
-    {
+    { // Dark Matter
       id: 'ShinryuEx Phase 2',
       type: 'StartsUsing',
       netRegex: { id: '25E7', source: 'Shinryu', capture: false },
       run: (data) => data.phase = 2,
     },
-    {
+    { // Protostar
       id: 'ShinryuEx Phase 3',
       type: 'StartsUsing',
       netRegex: { id: '25E4', source: 'Shinryu', capture: false },
       run: (data) => data.phase = 3,
     },
-    {
+    { // Tidal Wave enrage
       id: 'ShinryuEx Phase 4',
       type: 'StartsUsing',
       netRegex: { id: '264E', source: 'Shinryu', capture: false },
@@ -52,7 +53,7 @@ const triggerSet: TriggerSet<Data> = {
     {
       id: 'ShinryuEx Akh Morn',
       type: 'StartsUsing',
-      netRegex: { id: '25F3', source: 'Shinryu' },
+      netRegex: { id: '25F3', source: 'Shinryu', capture: true },
       alertText: (data, matches, output) => {
         if (matches.target === data.me)
           return output.akhMornOnYou!();
@@ -102,13 +103,7 @@ const triggerSet: TriggerSet<Data> = {
       infoText: (_data, _matches, output) => output.text!(),
       outputStrings: {
         text: {
-          en: 'Ice: Stack and Stop',
-          de: 'Eis: Stack und Stehenbleiben',
-          fr: 'Glace : Packez-vous et arrêtez',
-          ja: '氷: スタック 動かない',
-          cn: '冰地面：集合停止移动',
-          ko: '얼음: 집합하고 이동하지 않기',
-          tc: '冰地面：集合停止移動',
+          en: 'Ice: Stack + don\'t move',
         },
       },
     },
@@ -162,7 +157,7 @@ const triggerSet: TriggerSet<Data> = {
       },
       outputStrings: {
         stopToGetFrozen: {
-          en: 'stop to get frozen',
+          en: 'Stop + Get frozen',
           de: 'Stopp! Einfrieren lassen',
           fr: 'Arrêtez, laissez-vous geler',
           ja: '止まれ、凍結',
@@ -189,7 +184,7 @@ const triggerSet: TriggerSet<Data> = {
       alertText: (_data, _matches, output) => output.text!(),
       outputStrings: {
         text: {
-          en: 'out of water',
+          en: 'Out of water',
           de: 'Raus aus dem Wasser',
           fr: 'Sortez de l\'eau',
           ja: '水から離れ',
@@ -217,7 +212,7 @@ const triggerSet: TriggerSet<Data> = {
       },
       outputStrings: {
         baitBoltKeepMoving: {
-          en: 'bait bolt, keep moving',
+          en: 'Bait bolt + keep moving',
           de: 'Blitz ködern, weiterbewegen',
           fr: 'Attirez la foudre, continuez à bouger',
           ja: '稲妻: 動き続ける',
@@ -247,23 +242,12 @@ const triggerSet: TriggerSet<Data> = {
       },
       condition: (data) => data.phase === 3,
       delaySeconds: 9.5,
-      alarmText: (_data, _matches, output) => output.text!(),
-      outputStrings: {
-        text: {
-          en: 'move away',
-          de: 'wegbewegen',
-          fr: 'Éloignez-vous',
-          ja: '移動',
-          cn: '躲开原地',
-          ko: '떨어지기',
-          tc: '躲開原地',
-        },
-      },
+      response: Responses.moveAway('alarm'),
     },
     {
       id: 'ShinryuEx Icicle Left',
       type: 'Ability',
-      netRegex: { id: '25EF', source: 'Icicle' },
+      netRegex: { id: '25EF', source: 'Icicle', capture: true },
       condition: (_data, matches) => {
         return Math.round(parseFloat(matches.x)) === -30 &&
           Math.round(parseFloat(matches.y)) === -15;
@@ -271,7 +255,7 @@ const triggerSet: TriggerSet<Data> = {
       alarmText: (_data, _matches, output) => output.text!(),
       outputStrings: {
         text: {
-          en: 'icicle, lean west',
+          en: 'Icicle, lean west',
           de: 'Eiszapfen, nach westen',
           fr: 'Stalactite, penchez vers l\'ouest',
           ja: 'アイシクル: 西へ',
@@ -292,7 +276,7 @@ const triggerSet: TriggerSet<Data> = {
       alarmText: (_data, _matches, output) => output.text!(),
       outputStrings: {
         text: {
-          en: 'icicle, lean east',
+          en: 'Icicle, lean east',
           de: 'Eiszapfen, nach Osten',
           fr: 'Stalactite, penchez vers l\'est',
           ja: 'アイシクル: 東へ',
@@ -308,18 +292,7 @@ const triggerSet: TriggerSet<Data> = {
       netRegex: { id: '25DA', source: 'Shinryu', capture: false },
       delaySeconds: 3,
       durationSeconds: 5,
-      infoText: (_data, _matches, output) => output.text!(),
-      outputStrings: {
-        text: {
-          en: 'Knockback, look for water',
-          de: 'Rückstoß, nach Wasser schauen',
-          fr: 'Poussée, cherchez l\'eau',
-          ja: 'ノックバック、水を探せ',
-          cn: '击退，确认水圈位置',
-          ko: '넉백, 물기둥 확인',
-          tc: '擊退，確認水圈位置',
-        },
-      },
+      response: Responses.knockback(),
     },
     {
       id: 'ShinryuEx Final Tidal Wave',
@@ -380,14 +353,14 @@ const triggerSet: TriggerSet<Data> = {
       },
     },
     {
-      // TODO: can't find the id of this, so using all of them.
-      id: 'ShinryuEx Divebomb',
+      // TODO: math out locations and call directions if we get a log containing any of these IDs.
+      id: 'ShinryuEx Gyre Charge',
       type: 'StartsUsing',
       netRegex: { id: ['1FA8', '1FF4', '2603'], source: 'Shinryu', capture: false },
       alarmText: (_data, _matches, output) => output.text!(),
       outputStrings: {
         text: {
-          en: 'avoid divebomb',
+          en: 'Avoid divebomb',
           de: 'Divebomb ausweichen',
           fr: 'Évitez la bombe plongeante',
           ja: 'ダイブボムに避け',
@@ -448,18 +421,7 @@ const triggerSet: TriggerSet<Data> = {
       id: 'ShinryuEx Breath',
       type: 'StartsUsing',
       netRegex: { id: '264A', source: 'Shinryu', capture: false },
-      alertText: (_data, _matches, output) => output.text!(),
-      outputStrings: {
-        text: {
-          en: 'front cleave',
-          de: 'Frontalcleave',
-          fr: 'Cleave devant',
-          ja: '正面から離れ',
-          cn: '离开正面',
-          ko: '범위 밖으로',
-          tc: '離開正面',
-        },
-      },
+      response: Responses.awayFromFront(),
     },
     {
       id: 'ShinryuEx Final Left Wing',
@@ -470,7 +432,7 @@ const triggerSet: TriggerSet<Data> = {
       run: (data) => data.finalWing = true,
       outputStrings: {
         text: {
-          en: 'kill left first',
+          en: 'Kill left first',
           de: 'linken Flügel zuerst',
           fr: 'Tuez l\'aile gauche d\'abord',
           ja: 'レフトウィングに攻撃',
@@ -489,7 +451,7 @@ const triggerSet: TriggerSet<Data> = {
       run: (data) => data.finalWing = true,
       outputStrings: {
         text: {
-          en: 'kill right first',
+          en: 'Kill right first',
           de: 'rechten Flügel zuerst',
           fr: 'Tuez l\'aile droite d\'abord',
           ja: 'ライトウィングに攻撃',
@@ -513,7 +475,7 @@ const triggerSet: TriggerSet<Data> = {
       },
       outputStrings: {
         breakTethersThenStack: {
-          en: 'break tethers then stack',
+          en: 'Break tethers => stack',
           de: 'Kette zerreissen, dann stack',
           fr: 'Cassez les liens, puis packez-vous',
           ja: '鎖を引き、集合',
@@ -540,7 +502,7 @@ const triggerSet: TriggerSet<Data> = {
       alarmText: (_data, _matches, output) => output.text!(),
       outputStrings: {
         text: {
-          en: 'tail marker on you',
+          en: 'Tail marker on YOU',
           de: 'Schweifmarker auf dir',
           fr: 'Marqueur Queue sur VOUS',
           ja: '自分にテイル',
@@ -578,15 +540,7 @@ const triggerSet: TriggerSet<Data> = {
           ko: '어스 피하기',
           tc: '遠離大地動搖',
         },
-        earthshakerOnYou: {
-          en: 'earthshaker on you',
-          de: 'Erdstoss auf dir',
-          fr: 'Secousse sur VOUS',
-          ja: '自分にアースシェーカー',
-          cn: '大地动摇点名',
-          ko: '어스 대상자',
-          tc: '大地動搖點名',
-        },
+        earthshakerOnYou: outputs.earthshakerOnYou,
       },
     },
     {
@@ -600,6 +554,7 @@ const triggerSet: TriggerSet<Data> = {
   timelineReplace: [
     {
       'locale': 'de',
+      'missingTranslations': true,
       'replaceSync': {
         'Hakkinryu': 'Hakkinryu',
         'Left Wing': 'link(?:e|er|es|en) Schwinge',
@@ -653,6 +608,7 @@ const triggerSet: TriggerSet<Data> = {
     },
     {
       'locale': 'fr',
+      'missingTranslations': true,
       'replaceSync': {
         'Hakkinryu': 'Hakkinryu',
         'Icicle': 'stalactite',
@@ -759,6 +715,7 @@ const triggerSet: TriggerSet<Data> = {
     },
     {
       'locale': 'cn',
+      'missingTranslations': true,
       'replaceSync': {
         'Cocoon': '光茧',
         'Icicle': '冰柱',
@@ -811,6 +768,7 @@ const triggerSet: TriggerSet<Data> = {
     },
     {
       'locale': 'tc',
+      'missingTranslations': true,
       'replaceSync': {
         'Cocoon': '光繭',
         'Icicle': '冰柱',
@@ -863,6 +821,7 @@ const triggerSet: TriggerSet<Data> = {
     },
     {
       'locale': 'ko',
+      'missingTranslations': true,
       'replaceSync': {
         'Hakkinryu': '백금룡',
         'Left Wing': '왼쪽 날개',
