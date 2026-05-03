@@ -985,10 +985,8 @@ const zoneReplace: ZoneReplace[] = [
   },
   { // Shinryu Unreal
     fileMap: {
-      'ui/raidboss/data/04-sb/trial/shinryu-ex.ts':
-        'ui/raidboss/data/07-dt/trial/shinryu-un.ts',
-      'ui/raidboss/data/04-sb/trial/shinryu-ex.txt':
-        'ui/raidboss/data/07-dt/trial/shinryu-un.txt',
+      'ui/raidboss/data/04-sb/trial/shinryu-ex.ts': 'ui/raidboss/data/07-dt/trial/shinryu-un.ts',
+      'ui/raidboss/data/04-sb/trial/shinryu-ex.txt': 'ui/raidboss/data/07-dt/trial/shinryu-un.txt',
       'ui/oopsyraidsy/data/04-sb/trial/shinryu-ex.ts':
         'ui/oopsyraidsy/data/07-dt/trial/shinryu-un.ts',
     },
@@ -1000,7 +998,6 @@ const zoneReplace: ZoneReplace[] = [
     },
     // Primary offset 9E5C
     // Secondary offset 9E2D
-
 
     id: {
       '1DD1': 'BC2D', // Unknown, not seen in modern logs
