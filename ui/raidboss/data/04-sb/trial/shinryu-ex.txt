@@ -24,7 +24,7 @@ hideall "--sync--"
 67.9 "Tail Slap" Ability { id: "25E2", source: "Tail" }
 79.8 "Hypernova / Levinbolt" Ability { id: ["25E8", "25EA"], source: "Right Wing" }
 90.9 "Dragonfist" Ability { id: "2610", source: "Shinryu" }
-97.8 "Ice Storm" Ability { id: "25F1", source: "Left Wing" } # sometimes 3 seconds earlier?
+94.8 "Ice Storm" Ability { id: "25F1", source: "Left Wing" }
 108.0 "Akh Morn 1" Ability { id: "25F3", source: "Shinryu" } duration 3.2
 110.1 "Akh Rhai" Ability { id: "25F5", source: "Shinryu" } duration 5.3
 116.3 "Summon Icicle" Ability { id: "25EE", source: "Left Wing" }
