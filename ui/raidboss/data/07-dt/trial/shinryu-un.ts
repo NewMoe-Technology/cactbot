@@ -411,7 +411,7 @@ const triggerSet: TriggerSet<Data> = {
       id: 'ShinryuUn Wormwail',
       type: 'StartsUsing',
       netRegex: { id: 'C475', source: 'Shinryu', capture: false },
-      response: Responses.getUnder(),
+      response: Responses.getUnder('alert'),
     },
     {
       id: 'ShinryuUn Breath',

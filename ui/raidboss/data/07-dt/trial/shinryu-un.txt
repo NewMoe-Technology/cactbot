@@ -50,12 +50,14 @@ hideall "--sync--"
 208.2 "Diamond Dust" Ability { id: "C458", source: "Shinryu" }
 224.9 "--Reiryu Adds--"
 
+# The timing on the Icicle here appears to be here or 3s later.
+# We leave the earlier visual in place to let players anticipate it.
 233.3 "--Tail Marker (tank)--"
 251.5 "Tail Slap" Ability { id: "C43E", source: "Tail" }
-268.5 "Summon Icicle" Ability { id: "C44A", source: "Left Wing" }
-269.1 "Icicle Impact" Ability { id: "C44B", source: "Icicle" }
+268.5 "Summon Icicle" #Ability { id: "C44A", source: "Left Wing" }
+269.1 "Icicle Impact" #Ability { id: "C44B", source: "Icicle" }
 272.4 "Akh Morn 3" Ability { id: "C44F", source: "Shinryu" } duration 3.2
-273.6 "Spikesicle" Ability { id: "C44C", source: "Icicle" }
+273.6 "Spikesicle" #Ability { id: "C44C", source: "Icicle" }
 274.5 "Akh Rhai" Ability { id: "C451", source: "Shinryu" } duration 5.3
 285.3 "Super Cyclone 1" #Ability { id: "C468", source: "Shinryu" }
 287.4 "Super Cyclone 2" #Ability { id: "C468", source: "Shinryu" }
