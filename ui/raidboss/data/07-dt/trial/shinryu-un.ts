@@ -4,7 +4,7 @@
 // Source: ui/raidboss/data/04-sb/trial/shinryu-ex.ts
 
 import Conditions from '../../../../../resources/conditions';
-import outputs from '../../../../../resources/outputs';
+import Outputs from '../../../../../resources/outputs';
 import { Responses } from '../../../../../resources/responses';
 import ZoneId from '../../../../../resources/zone_id';
 import { RaidbossData } from '../../../../../types/data';
@@ -536,7 +536,7 @@ const triggerSet: TriggerSet<Data> = {
           ko: '어스 피하기',
           tc: '遠離大地動搖',
         },
-        earthshakerOnYou: outputs.earthshakerOnYou,
+        earthshakerOnYou: Outputs.earthshakerOnYou,
       },
     },
     {
