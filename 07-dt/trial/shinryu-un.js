@@ -85,7 +85,9 @@ Options.Triggers.push({
       outputStrings: {
         text: {
           en: 'Ice: Stack + don\'t move',
+          de: 'Eis: Sammeln + nicht bewegen',
           cn: '冰: 集合 + 不要动',
+          ko: '얼음: 모이기 + 이동 멈추기',
         },
       },
     },
@@ -533,7 +535,6 @@ Options.Triggers.push({
   timelineReplace: [
     {
       'locale': 'de',
-      'missingTranslations': true,
       'replaceSync': {
         'Hakkinryu': 'Hakkinryu',
         'Left Wing': 'link(?:e|er|es|en) Schwinge',
@@ -799,7 +800,6 @@ Options.Triggers.push({
     },
     {
       'locale': 'ko',
-      'missingTranslations': true,
       'replaceSync': {
         'Hakkinryu': '백금룡',
         'Left Wing': '왼쪽 날개',
