@@ -12,7 +12,7 @@
         "url": "https://github.com/NewMoe-Technology/FFXIV_ACT_Plugin_CN/raw/main/SDK/3.0.0.3-CN7.41/FFXIV_ACT_Plugin_SDK_CN_3.0.0.3.zip",
         "dest": "plugin/ThirdParty/FFXIV_ACT",
         "strip": 0,
-        "hash": ["sha256", "6a7927f455a25cc14cdb8a210aebd0797b64e5f216b15fac6edf907d4a1280c5"],
+        "hash": ["sha256", "c6051ee8acd3332df2ef004c33a2a6cdd1dcdd57fb2416234319bb004fe1dc05"],
     },
     "OverlayPlugin": {
         "url": "https://github.com/OverlayPlugin/OverlayPlugin/releases/download/v0.19.86/OverlayPlugin-0.19.86.zip",
