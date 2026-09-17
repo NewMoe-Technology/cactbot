@@ -461,6 +461,14 @@ const jobLocalizedAbbr: Record<Job, LocaleText> = {
     ko: '픽토',
     tc: '繪靈',
   },
+  BST: {
+    en: 'BST',
+    de: 'BST',
+    fr: 'DRE',
+    ja: '魔獣使い',
+    cn: '驯兽',
+    ko: '마수',
+  },
 };
 
 const jobLocalizedFull: Record<Job, LocaleText> = {
@@ -850,6 +858,14 @@ const jobLocalizedFull: Record<Job, LocaleText> = {
     cn: '绘灵法师',
     ko: '픽토맨서',
     tc: '繪靈法師',
+  },
+  BST: {
+    en: 'Beastmaster',
+    de: 'Bestienbändiger',
+    fr: 'dresseur',
+    ja: '魔獣使い',
+    cn: '驯兽师',
+    ko: '마수조련사',
   },
 };
 
